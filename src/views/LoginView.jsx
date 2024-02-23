@@ -40,7 +40,7 @@ const LoginView = ({ navigation }) => {
                 style={stylesLoginView.textInput}
                 onChangeText={(text) => setEmail(text)}
                 value={email}
-                placeholder="Your Email Address"
+                // placeholder="Your Email Address"
               />
             </View>
           </View>
@@ -53,7 +53,7 @@ const LoginView = ({ navigation }) => {
                 style={stylesLoginView.textInput}
                 onChangeText={(text) => setPassword(text)}
                 value={password}
-                placeholder="Enter Your Password"
+                // placeholder="Enter Your Password"
                 secureTextEntry={true}              />
 
             </View>
@@ -70,7 +70,6 @@ const LoginView = ({ navigation }) => {
             <ButtonColor navigation={navigation} to={"sectionTwo"}>Login</ButtonColor>
           </TouchableOpacity>
 
-          <Text style={stylesLoginView.signinText}>Or Sign in with</Text>
           <Text
             style={stylesLoginView.signupText}
             onPress={() => navigation.navigate("signup")}>

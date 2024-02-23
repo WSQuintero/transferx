@@ -23,10 +23,11 @@ const styles = StyleSheet.create({
   button: {
     width: 50,
     height: 50,
-    backgroundColor: '#2d2ade',
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop:40,
+    marginLeft:10,
   },
 });
 
