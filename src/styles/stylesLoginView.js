@@ -29,16 +29,17 @@ const stylesLoginView = StyleSheet.create({
   },
   title: {
     fontFamily: "Roboto",
-    fontSize: 27,
-    color: "#333333",
-    fontWeight: "bold"
+    fontSize: 24,
+    color: "#F4F3F5",
+    fontWeight: "bold",
+    marginTop: 35
   },
   subtitle: {
     fontFamily: "Roboto",
     fontSize: 16,
-    color: "#666666",
+    color: "#B3B3B3",
     textAlign: "center",
-    marginTop: 10
+    marginTop: 20
   },
   inputContainer: {
     width: "100%",
@@ -52,11 +53,11 @@ const stylesLoginView = StyleSheet.create({
   inputLabel: {
     fontFamily: "Roboto",
     fontSize: 15,
-    color: "#333333",
+    color: "#F4F3F5",
     fontWeight: "bold"
   },
   textInputContainer: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#10231D",
     borderRadius: 10,
     marginTop: 5,
     padding: 8,
@@ -67,7 +68,8 @@ const stylesLoginView = StyleSheet.create({
     fontFamily: "Roboto",
     height: 40,
     paddingHorizontal: 10,
-    flex: 1
+    flex: 1,
+    color: "#F4F3F5"
   },
   loginButton: {
     paddingVertical: 10,
@@ -95,7 +97,10 @@ const stylesLoginView = StyleSheet.create({
     justifyContent: "space-between"
   },
   forgot: {
-    color: "#828282"
+    color: "#F4F3F5",
+    width: "100%",
+    textAlign: "right",
+    fontSize: 14
   },
   signinText: {
     fontFamily: "Roboto",
@@ -118,15 +123,13 @@ const stylesLoginView = StyleSheet.create({
   },
   signupText: {
     fontFamily: "Roboto",
-    position: "absolute",
-    bottom: 20,
     textAlign: "center",
     width: "100%",
-    color: "#666666"
+    color: "#F4F3F5"
   },
   signupTextBold: {
     fontWeight: "bold",
-    color: "black"
+    color: "#C3F53C"
   }
 })
 

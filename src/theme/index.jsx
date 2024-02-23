@@ -4,19 +4,10 @@ import { NativeBaseProvider, extendTheme } from "native-base";
 export const Theme = extendTheme({
   colors: {
     primary: {
-      900: "#2d2ade",
-      800: "#2d2ade",
-      700: "#2d2ade",
-      600: "#2d2ade",
-      500: "#2d2ade",
-      400: "#2d2ade",
-      300: "#2d2ade",
-      200: "#2d2ade",
-      100: "#2d2ade",
-      50: "#2d2ade",
+      900: "#081414",
     },
     common: {
-      background: "#e6f0fe",
+      background: "#07140f",
     },
   },
   config: {

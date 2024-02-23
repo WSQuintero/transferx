@@ -1,4 +1,4 @@
-import { View, Dimensions, ImageBackground } from "react-native";
+import { View, Dimensions, ImageBackground, Image } from "react-native";
 import React from "react";
 import useLoadFonts from "../customHooks/useLoadFonts";
 
@@ -7,14 +7,25 @@ const PageWrapper = ({ children }) => {
   const fontsLoaded=useLoadFonts()
 
   return (
-    <ImageBackground
-    source={require("../../assets/union.png")}
-    style={{ flex: 1, height: height, width: width, resizeMode: "cover" }}
-    >
+
       <View style={{ flex: 1, position: "relative" }}>
+<Image
+  source={require("../../assets/squad.png")}
+  style={{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "250%",
+    height: "30%",
+    resizeMode: "cover",
+    opacity: 0.1
+  }}
+/>
+      <Image source={require("../../assets/Polygon 2.png") } style={{position:"absolute",top:0,left:0}}></Image>
+      <Image source={require("../../assets/Polygon 3.png") } style={{position:"absolute",bottom:0,right:0}}></Image>
         {children}
       </View>
-    </ImageBackground>
+
   );
 };
 

@@ -1,40 +1,36 @@
 {
   "expo": {
-    "name": "Mira",
-    "slug": "mira",
+    "name": "transferx",
+    "slug": "transferx",
     "owner": "solstar",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/favicon.png",
     "userInterfaceStyle": "light",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/favicon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#081412"
     },
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/favicon.png",
+        "backgroundColor": "#081412"
       },
-      "package": "com.miraai.com"
+      "package": "com.transferx.com"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "7e57f04c-478e-47d6-b73a-d31f196e4b31"
+        "projectId": "71fcffe0-78d5-47b0-adfb-c5f90a253ce6"
       }
     },
-    "plugins": [
-      "expo-font"
-    ]
+    "plugins": ["expo-font"]
   }
 }

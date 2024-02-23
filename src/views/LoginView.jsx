@@ -25,15 +25,11 @@ const LoginView = ({ navigation }) => {
   return (
     <PageWrapper>
       <View style={stylesLoginView.container}>
-        <View style={stylesLoginView.containerArrow}>
-        <BackButton />
-
-        </View>
-
         <View style={stylesLoginView.content}>
-          <Text style={stylesLoginView.title}>Log in</Text>
+    <Image source={require('../../assets/image.png')} style={{width:"50%",objectFit:"contain"}}></Image>
+          <Text style={stylesLoginView.title}>Log in to Your Account</Text>
           <Text style={stylesLoginView.subtitle}>
-            Please login with your MIRA account
+          Welcome back! Please enter your details
           </Text>
 
           <View style={stylesLoginView.inputContainer}>
@@ -59,12 +55,11 @@ const LoginView = ({ navigation }) => {
                 value={password}
                 placeholder="Enter Your Password"
                 secureTextEntry={true}              />
-            <Image source={require('../../assets/icons/Icon.png')} style={stylesLoginView.icon}></Image>
 
             </View>
             <View style={stylesLoginView.rememberCheck}>
 
-            <RememberMeCheckBox/>
+            {/* <RememberMeCheckBox/> */}
             <Text style={stylesLoginView.forgot}>Forgot Password</Text>
             </View>
           </View>
@@ -76,21 +71,6 @@ const LoginView = ({ navigation }) => {
           </TouchableOpacity>
 
           <Text style={stylesLoginView.signinText}>Or Sign in with</Text>
-          <View style={stylesLoginView.socialButtons}>
-            <TouchableOpacity style={stylesLoginView.socialButton}>
-              <Image
-                source={require("../../assets/google_logo.png")}
-                style={stylesLoginView.socialIcon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={stylesLoginView.socialButton}>
-              <Image
-                source={require("../../assets/facebook_logo.png")}
-                style={stylesLoginView.socialIcon}
-              />
-            </TouchableOpacity>
-          </View>
-
           <Text
             style={stylesLoginView.signupText}
             onPress={() => navigation.navigate("signup")}>

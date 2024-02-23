@@ -18,16 +18,16 @@ const ButtonColor = ({ children, navigation, to }) => {
 
 const styles = StyleSheet.create({
   button: {
-    width: 320,
+    width: 350,
     height: 50,
-    backgroundColor: "#2D2ADE",
-    borderRadius: 20,
+    backgroundColor: "#C3F53C",
+    borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10
   },
   buttonText: {
-    color: "#FFFFFF",
+    color: "#05000F",
     fontWeight: "bold",
     fontSize: 16,
     fontFamily: "Roboto",

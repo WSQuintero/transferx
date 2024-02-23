@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import useLoadFonts from '../customHooks/useLoadFonts';
 
@@ -14,7 +14,7 @@ const BackButton = () => {
 
   return (
     <TouchableOpacity style={styles.button} onPress={handlePress}>
-      <Ionicons name="ios-arrow-back" size={24} color="white" />
+<AntDesign name="arrowleft" size={24} color="white" />
     </TouchableOpacity>
   );
 };
