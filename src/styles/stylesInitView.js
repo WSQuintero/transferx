@@ -4,8 +4,7 @@ const stylesInitView = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    padding: 20
+    alignItems: "center"
   },
   icon: {
     width: "30%",
@@ -14,35 +13,34 @@ const stylesInitView = StyleSheet.create({
     marginBottom: 20
   },
   title: {
-    marginTop: 80,
     fontFamily: "Roboto",
     fontSize: 30,
     maxWidth: 350,
     textAlign: "center",
     marginBottom: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "#F4F3F5"
   },
   subtitle: {
     fontFamily: "Roboto",
     maxWidth: 300,
     textAlign: "center",
-    marginBottom: 40
+    color: "#B3B3B3"
   },
   optionsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "30%",
-    marginBottom: 40
+    width: "12%",
+    marginBottom: 30
   },
   optionButton: {
-    width: 30,
-    height: 30,
+    width: 5,
+    height: 5,
     borderRadius: 15,
-    backgroundColor: "#F0F7FF",
+    backgroundColor: "#C3F53C",
     alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20
+    justifyContent: "center"
   },
   optionIndicator: {
     width: 10,
@@ -51,10 +49,10 @@ const stylesInitView = StyleSheet.create({
     backgroundColor: "gray"
   },
   selectedOption: {
-    backgroundColor: "#2D2ADE"
+    backgroundColor: "#C3F53C"
   },
   selectedIndicator: {
-    backgroundColor: "white"
+    backgroundColor: "#C3F53C"
   },
   buttonContainer: {
     width: "100%",

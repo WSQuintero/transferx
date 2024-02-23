@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#05000F",
-    fontWeight: "bold",
     fontSize: 14,
     fontFamily: "Roboto",
     zIndex:1060
