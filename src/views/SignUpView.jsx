@@ -15,15 +15,16 @@ const SignUpView = ({ navigation }) => {
 
   return (
     <PageWrapper>
-      <View style={stylesSignUp.backButton}>
-        <BackButton />
-      </View>
+
       <View style={stylesSignUp.container}>
         <View style={stylesSignUp.centerContent}>
-          <Text style={stylesSignUp.title}>Sign Up</Text>
-          <Text style={stylesSignUp.subtitle}>Please sign up to continue</Text>
+        <Image source={require('../../assets/image.png')} style={{width:"50%",objectFit:"contain"}}></Image>
+          <Text style={stylesSignUp.title}>Log in to Your Account</Text>
+          <Text style={stylesSignUp.subtitle}>
+          Welcome back! Please enter your details
+          </Text>
           <View style={stylesSignUp.inputContainer}>
-            <Text style={stylesSignUp.inputLabel}>Name</Text>
+            <Text style={stylesSignUp.inputLabel}>Full Name</Text>
             <View style={stylesSignUp.textInputContainer}>
               <Image
                 source={require("../../assets/icons/16.png")}
@@ -33,7 +34,6 @@ const SignUpView = ({ navigation }) => {
                 style={stylesSignUp.input}
                 onChangeText={(text) => setName(text)}
                 value={name}
-                placeholder="Your Name"
                 placeholderTextColor="#BFBFBF"
               />
             </View>
@@ -50,12 +50,27 @@ const SignUpView = ({ navigation }) => {
                 style={stylesSignUp.input}
                 onChangeText={(text) => setEmail(text)}
                 value={email}
-                placeholder="Your Email Address"
                 placeholderTextColor="#BFBFBF"
               />
             </View>
           </View>
 
+          <View style={stylesSignUp.inputContainer}>
+            <Text style={stylesSignUp.inputLabel}>Phone</Text>
+            <View style={stylesSignUp.textInputContainer}>
+              <Image
+                source={require("../../assets/icons/34.png")}
+                style={stylesSignUp.icon}
+              />
+              <TextInput
+                style={stylesSignUp.input}
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                placeholderTextColor="#BFBFBF"
+              />
+
+            </View>
+          </View>
           <View style={stylesSignUp.inputContainer}>
             <Text style={stylesSignUp.inputLabel}>Password</Text>
             <View style={stylesSignUp.textInputContainer}>
@@ -67,30 +82,26 @@ const SignUpView = ({ navigation }) => {
                 style={stylesSignUp.input}
                 onChangeText={(text) => setPassword(text)}
                 value={password}
-                placeholder="Enter Your Password"
                 secureTextEntry={true}
                 placeholderTextColor="#BFBFBF"
               />
-                            <Image
-                source={require("../../assets/icons/Icon.png")}
-                style={stylesSignUp.iconRight}
-              />
+
             </View>
           </View>
 
-          <TyCcheckBox />
           <View style={stylesSignUp.button}>
             <ButtonColor navigation={navigation} to={"login"}>
-              Sign Up
+            Get Started
             </ButtonColor>
           </View>
-        </View>
-        <Text
+          <Text
           style={stylesSignUp.footerText}
           onPress={() => navigation.navigate("login")}>
           Already have account?
-          <Text style={stylesSignUp.signupTextBold}> Sign In</Text>
+          <Text style={stylesSignUp.signupTextBold}> Sign Up</Text>
         </Text>
+        </View>
+
       </View>
     </PageWrapper>
   )

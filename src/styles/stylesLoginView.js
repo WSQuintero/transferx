@@ -52,9 +52,8 @@ const stylesLoginView = StyleSheet.create({
   },
   inputLabel: {
     fontFamily: "Roboto",
-    fontSize: 15,
-    color: "#F4F3F5",
-    fontWeight: "bold"
+    fontSize: 13,
+    color: "#F4F3F5"
   },
   textInputContainer: {
     backgroundColor: "#10231D",

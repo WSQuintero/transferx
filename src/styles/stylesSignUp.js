@@ -3,21 +3,7 @@ import { StyleSheet } from "react-native"
 const stylesSignUp = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 30,
-    marginBottom: 60
-  },
-  backButton: {
-    position: "absolute",
-    top: 100,
-    left: 20,
-    zIndex: 1,
-    padding: 10,
-    borderRadius: 50,
-    backgroundColor: "#f0f0f0"
-  },
-  backButtonIcon: {
-    width: 20,
-    height: 20
+    paddingHorizontal: 20
   },
   centerContent: {
     flex: 1,
@@ -26,30 +12,32 @@ const stylesSignUp = StyleSheet.create({
   },
   title: {
     fontFamily: "Roboto",
-    fontSize: 27,
-    color: "#333333",
-    fontWeight: "bold"
+    fontSize: 24,
+    color: "#F4F3F5",
+    fontWeight: "bold",
+    marginTop: 20
   },
   subtitle: {
+    fontFamily: "Roboto",
     fontSize: 16,
-    color: "#666666",
+    color: "#B3B3B3",
     textAlign: "center",
-    marginTop: 10
+    marginTop: 20,
+    marginBottom: 20
   },
   inputContainer: {
-    width: "100%",
-    marginTop: 30
+    width: "100%"
   },
   inputLabel: {
     fontFamily: "Roboto",
-    fontSize: 15,
-    color: "#333333",
-    fontWeight: "bold"
+    fontSize: 13,
+    color: "#F4F3F5",
+    marginBottom: 10,
+    marginTop: 10
   },
   textInputContainer: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#10231D",
     borderRadius: 10,
-    marginTop: 5,
     flexDirection: "row",
     alignItems: "center"
   },
@@ -64,45 +52,42 @@ const stylesSignUp = StyleSheet.create({
     marginRight: 10
   },
   input: {
-    backgroundColor: "#ffffff",
     borderRadius: 10,
-    marginTop: 5,
-    height: 50,
+    marginTop: 30,
+    height: 30,
     width: "80%",
     padding: 10
   },
   signupButton: {
     backgroundColor: "#2d2ade",
-    paddingVertical: 10,
+    marginBottom: 20,
+
     paddingHorizontal: 20,
     borderRadius: 20,
-    marginTop: 30,
+
     width: 260
   },
   signupButtonText: {
     color: "#ffffff",
     textAlign: "center",
-    fontSize: 16
+    fontSize: 14,
+    marginBottom: 20
   },
   footerText: {
-    marginTop: 30,
     textAlign: "center",
     width: "100%",
-    color: "#666666",
+    color: "#F4F3F5",
     zIndex: 1,
-    position: "absolute",
-    bottom: 1,
-    marginLeft: 25
+    marginTop: 0
   },
   backButton: {
-    marginTop: 50,
     marginLeft: 20
   },
   button: {
-    marginTop: 50
+    marginTop: 30
   },
   signupTextBold: {
-    fontWeight: "bold"
+    color: "#C3F53C"
   }
 })
 
