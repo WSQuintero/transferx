@@ -18,6 +18,7 @@ import HistoryChat from "../views/HistoryChat"
 import { NavigationContainer } from "@react-navigation/native"
 import ConfirmationCodeView from "../views/ConfirmationCodeView"
 import Dashboard from "../views/Dashboard"
+import RecentTransactionsView from "../views/RecentTransactionsView"
 
 const Stack = createNativeStackNavigator()
 
@@ -58,6 +59,7 @@ const Navigation = () => {
             <Stack.Screen name="sectionSeven" component={Congratulations} />
             <Stack.Screen name="sectionEight" component={ChatWithOptionsSection} />
             <Stack.Screen name="sectionNine" component={HistoryChat} />
+            <Stack.Screen name="recentTransactionsView" component={RecentTransactionsView} />
 
           </Stack.Navigator>
         </MyContextProvider>

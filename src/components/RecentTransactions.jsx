@@ -1,13 +1,15 @@
-import React from "react"
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native"
+import React from "react";
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 
-const RecentTransactions = () => {
+const RecentTransactions = ({ navigation }) => {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.cardContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>Recent Transactions</Text>
-          <Text style={[styles.titleText, { color: "#C3F53C" }]}>View All</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("recentTransactionsView")}>
+            <Text style={[styles.titleText, { color: "#C3F53C" }]}>View All</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.contentContainer}>
@@ -23,10 +25,9 @@ const RecentTransactions = () => {
             </View>
             <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
           </View>
-
-
         </View>
 
+        {/* Tarjeta 2 */}
         <View style={styles.contentContainer}>
           <Image
             source={require("../../assets/google.png")}
@@ -35,15 +36,14 @@ const RecentTransactions = () => {
 
           <View style={styles.detailsContainer}>
             <View style={styles.subContainer}>
-              <Text style={styles.boldText}>USDC Recharge</Text>
+              <Text style={styles.boldText}>Google Payment</Text>
               <Text style={styles.price}>$410.00</Text>
             </View>
             <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
           </View>
-
-
         </View>
 
+        {/* Tarjeta 3 */}
         <View style={styles.contentContainer}>
           <Image
             source={require("../../assets/visa.png")}
@@ -52,15 +52,14 @@ const RecentTransactions = () => {
 
           <View style={styles.detailsContainer}>
             <View style={styles.subContainer}>
-              <Text style={styles.boldText}>USDC Recharge</Text>
+              <Text style={styles.boldText}>Visa Transaction</Text>
               <Text style={styles.price}>$720.00</Text>
             </View>
             <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
           </View>
-
-
         </View>
 
+        {/* Tarjeta 4 */}
         <View style={styles.contentContainer}>
           <Image
             source={require("../../assets/facebook.png")}
@@ -69,15 +68,14 @@ const RecentTransactions = () => {
 
           <View style={styles.detailsContainer}>
             <View style={styles.subContainer}>
-              <Text style={styles.boldText}>USDC Recharge</Text>
+              <Text style={styles.boldText}>Facebook Purchase</Text>
               <Text style={styles.price}>$600.00</Text>
             </View>
             <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
           </View>
-
-
         </View>
 
+        {/* Tarjeta 5 */}
         <View style={styles.contentContainer}>
           <Image
             source={require("../../assets/check.png")}
@@ -86,15 +84,14 @@ const RecentTransactions = () => {
 
           <View style={styles.detailsContainer}>
             <View style={styles.subContainer}>
-              <Text style={styles.boldText}>USDC Recharge</Text>
+              <Text style={styles.boldText}>Check Deposit</Text>
               <Text style={styles.price}>$53.00</Text>
             </View>
             <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
           </View>
-
-
         </View>
 
+        {/* Tarjeta 6 */}
         <View style={styles.contentContainer}>
           <Image
             source={require("../../assets/congratulations.png")}
@@ -103,18 +100,16 @@ const RecentTransactions = () => {
 
           <View style={styles.detailsContainer}>
             <View style={styles.subContainer}>
-              <Text style={styles.boldText}>USDC Recharge</Text>
+              <Text style={styles.boldText}>Congratulations Reward</Text>
               <Text style={styles.price}>$60.00</Text>
             </View>
             <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
           </View>
-
-
         </View>
       </View>
     </ScrollView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -167,6 +162,6 @@ const styles = StyleSheet.create({
   price: {
     color: "white"
   }
-})
+});
 
-export default RecentTransactions
+export default RecentTransactions;

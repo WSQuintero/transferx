@@ -32,7 +32,7 @@ const Dashboard = ({ navigation }) => {
       <HeaderDashboard/>
       <CreditCardComponent/>
       <QuickActionSection/>
-      <RecentTransactions/>
+      <RecentTransactions navigation={navigation}/>
       <FooterMenu/>
     </PageWrapper>
   )
