@@ -90,7 +90,7 @@ const SignUpView = ({ navigation }) => {
           </View>
 
           <View style={stylesSignUp.button}>
-            <ButtonColor navigation={navigation} to={"login"}>
+            <ButtonColor navigation={navigation} to={"SelectInformationBankView"}>
             Get Started
             </ButtonColor>
           </View>

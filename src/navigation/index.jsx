@@ -19,6 +19,7 @@ import { NavigationContainer } from "@react-navigation/native"
 import ConfirmationCodeView from "../views/ConfirmationCodeView"
 import Dashboard from "../views/Dashboard"
 import RecentTransactionsView from "../views/RecentTransactionsView"
+import SelectInformationBankView from "../views/SelectInformationBankView"
 
 const Stack = createNativeStackNavigator()
 
@@ -50,6 +51,7 @@ const Navigation = () => {
             <Stack.Screen name="initview" component={InitView} />
             <Stack.Screen name="login" component={LoginView} />
             <Stack.Screen name="signup" component={SignUpView} />
+            <Stack.Screen name="SelectInformationBankView" component={SelectInformationBankView} />
             <Stack.Screen name="sectionTwo" component={ConfirmationCodeView} />
             {/* <Stack.Screen name="sectionTwo" component={StylistIA} /> */}
             <Stack.Screen name="sectionThree" component={Dashboard} />
