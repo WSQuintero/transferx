@@ -9,7 +9,7 @@
     "userInterfaceStyle": "light",
     "assetBundlePatterns": ["**/*"],
     "splash": {
-      "image": "./assets/favicon.png",
+      "image": "./assets/completesize.png",
       "resizeMode": "contain",
       "backgroundColor": "#081412"
     },

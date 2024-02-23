@@ -127,7 +127,7 @@ const InitView = ({ navigation }) => {
             <Text style={{ color: "#000000" }}>{textButton}</Text>
           </Button>
         </View>
-        <TouchableOpacity onPress={() => console.log("Skip clickeado")}>
+        <TouchableOpacity onPress={() =>  navigation.navigate("login")}>
           <Text
             style={{
               marginTop: 10,

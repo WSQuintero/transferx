@@ -122,7 +122,7 @@ const ConfirmationCodeView = ({ navigation }) => {
             onPress={handleLogin}
             style={stylesConfrrmationCodeView.loginButton}
           >
-            <ButtonColor navigation={navigation} to={"sectionTwo"}>Confirm</ButtonColor>
+            <ButtonColor navigation={navigation} to={"sectionThree"}>Confirm</ButtonColor>
           </TouchableOpacity>
         </View>
       </View>

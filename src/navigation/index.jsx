@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { Theme } from "../theme"
 import useAuth from "../hooks/useAuth"
-import BodyTypeSelector from "../views/BodyTypeSelector"
 import EyesTypeSelector from "../views/EyesTypeSelector"
 import { MyContextProvider, MyProvider } from "../context/context" // Importa MyProvider desde el contexto
 import StylesTypeSelector from "../views/StylesTypeSelector"
@@ -18,6 +17,7 @@ import ChatWithOptionsSection from "../views/ChatWithOptions"
 import HistoryChat from "../views/HistoryChat"
 import { NavigationContainer } from "@react-navigation/native"
 import ConfirmationCodeView from "../views/ConfirmationCodeView"
+import Dashboard from "../views/Dashboard"
 
 const Stack = createNativeStackNavigator()
 
@@ -51,7 +51,7 @@ const Navigation = () => {
             <Stack.Screen name="signup" component={SignUpView} />
             <Stack.Screen name="sectionTwo" component={ConfirmationCodeView} />
             {/* <Stack.Screen name="sectionTwo" component={StylistIA} /> */}
-            <Stack.Screen name="sectionThree" component={BodyTypeSelector} />
+            <Stack.Screen name="sectionThree" component={Dashboard} />
             <Stack.Screen name="sectionFour" component={EyesTypeSelector} />
             <Stack.Screen name="sectionFive" component={StylesTypeSelector} />
             <Stack.Screen name="sectionSix" component={OcassionsTypeSelector} />

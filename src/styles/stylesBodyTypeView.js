@@ -2,12 +2,9 @@ import { StyleSheet } from "react-native"
 
 const stylesBodyTypeView = StyleSheet.create({
   container: {
-    alignItems: "center",
-    paddingTop: 20
+    alignItems: "center"
   },
-  imageContainer: {
-    marginTop: 20
-  },
+
   image: {
     width: 150,
     height: 150,
@@ -16,7 +13,6 @@ const stylesBodyTypeView = StyleSheet.create({
   title: {
     fontFamily: "Roboto",
     fontSize: 24,
-    marginTop: 20,
     fontWeight: "bold"
   },
   subtitle: {
