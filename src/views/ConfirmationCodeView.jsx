@@ -18,12 +18,20 @@ const ConfirmationCodeView = ({ navigation }) => {
   const [four, setFour] = useState("");
   const [five, setFive] = useState("");
   const [six, setSix] = useState("");
+  const inputOneRef = useRef(null); // Change from inputRef to inputOneRef
   const inputTwoRef = useRef(null);
   const inputThreeRef = useRef(null);
   const inputFourRef = useRef(null);
   const inputFiveRef = useRef(null);
   const inputSixRef = useRef(null);
   const fontsLoaded = useLoadFonts();
+
+  const handleBlur = (ref) => {
+    ref.current.setNativeProps({
+      style: { borderColor: 'gray' }
+    });
+  };
+
 
   const handleLogin = () => {
     navigation.navigate("sectionTwo");
@@ -53,6 +61,7 @@ const ConfirmationCodeView = ({ navigation }) => {
           maxLength={1}
           onFocus={() => handleFocus(inputOneRef)}
           onBlur={() => handleBlur(inputOneRef)}
+          ref={inputOneRef} // Set ref to inputOneRef
         />
       </View>
       <View style={stylesConfrrmationCodeView.textInputContainer}>

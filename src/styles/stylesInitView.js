@@ -4,7 +4,8 @@ const stylesInitView = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    height: 50
   },
   icon: {
     width: "30%",
