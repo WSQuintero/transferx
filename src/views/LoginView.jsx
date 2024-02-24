@@ -26,7 +26,7 @@ const LoginView = ({ navigation }) => {
     <PageWrapper>
       <View style={stylesLoginView.container}>
         <View style={stylesLoginView.content}>
-    <Image source={require('../../assets/image.png')} style={{width:"50%",objectFit:"contain"}}></Image>
+    <Image source={require('../../assets/image.png')} style={{width:"80%",objectFit:"contain"}}></Image>
           <Text style={stylesLoginView.title}>Log in to Your Account</Text>
           <Text style={stylesLoginView.subtitle}>
           Welcome back! Please enter your details

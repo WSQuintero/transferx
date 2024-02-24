@@ -15,10 +15,9 @@ const PageWrapper = ({ children }) => {
     position: "absolute",
     top: 0,
     left: 0,
-    width: "250%",
+    width: "100%",
     height: "30%",
-    resizeMode: "cover",
-    opacity: 0.1
+    resizeMode: "contain",
   }}
 />
       <Image source={require("../../assets/Polygon 2.png") } style={{position:"absolute",top:0,left:0}}></Image>

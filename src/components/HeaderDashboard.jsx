@@ -13,7 +13,7 @@ const HeaderDashboard = () => {
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.greetingText}>Good Morning!</Text>
-          <Text style={styles.nameText}>Mario C.</Text>
+          <Text style={styles.nameText}>Mario Cardona.</Text>
         </View>
       </View>
       <View style={styles.rightContainer}>

@@ -1,3 +1,4 @@
+import { AntDesign, Entypo, FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
@@ -9,20 +10,20 @@ const FooterMenu = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.iconContainer} onPress={() => handlePress("Dashboard")}>
-        <Image source={require('../../assets/icons/dashboard.png')} style={styles.icon} />
-        <Text style={styles.labelDash}>Dashboard</Text>
+      <Entypo name="wallet" size={24} color="#C3F53C" />
+              <Text style={styles.labelDash}>Wallet</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.iconContainer} onPress={() => handlePress("Gastos")}>
-        <Image source={require('../../assets/icons/expenses.png')} style={styles.icon} />
-        <Text style={styles.label}>Expenses</Text>
+      <FontAwesome name="exchange" size={24} color="white" />
+              <Text style={styles.label}>Exchange</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.iconContainer} onPress={() => handlePress("Notificaciones")}>
-        <Image source={require('../../assets/icons/notifications.png')} style={styles.icon} />
-        <Text style={styles.label}>Notifications</Text>
+      <MaterialIcons name="room-service" size={24} color="white" />
+              <Text style={styles.label}>Services</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.iconContainer} onPress={() => handlePress("Contacto")}>
-        <Image source={require('../../assets/icons/contact.png')} style={styles.icon} />
-        <Text style={styles.label}>Contact</Text>
+      <AntDesign name="creditcard" size={24} color="white" />
+              <Text style={styles.label}>Card</Text>
       </TouchableOpacity>
     </View>
   );

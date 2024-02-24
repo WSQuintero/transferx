@@ -37,7 +37,7 @@ const SelectInformationBankView = ({ navigation }) => {
         <View style={SelectInformationBankViewStyle.centerContent}>
           <Image
             source={require("../../assets/image.png")}
-            style={{ width: "50%", aspectRatio: 1 }}
+            style={{ width: "50%", aspectRatio: 1,objectFit:"contain" }}
           />
           <Text style={SelectInformationBankViewStyle.title}>Information Bank</Text>
           <Text style={SelectInformationBankViewStyle.subtitle}>
