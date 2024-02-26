@@ -31,6 +31,9 @@ const SelectInformationBankView = ({ navigation }) => {
     // Agrega más bancos aquí si es necesario
   ];
 
+  const handleSignUp=()=>{
+    navigation.navigate("confirmationCode")
+  }
   return (
     <PageWrapper>
       <View style={SelectInformationBankViewStyle.container}>
@@ -94,7 +97,7 @@ const SelectInformationBankView = ({ navigation }) => {
           </View>
 
           <View style={SelectInformationBankViewStyle.button}>
-            <ButtonColor navigation={navigation} to={"confirmationCode"}>
+            <ButtonColor navigation={navigation}  handleSignUp={handleSignUp}>
               Get Started
             </ButtonColor>
           </View>
