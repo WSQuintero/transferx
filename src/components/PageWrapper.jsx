@@ -8,7 +8,7 @@ const PageWrapper = ({ children }) => {
 
   return (
 
-      <View style={{ flex: 1, position: "relative" }}>
+      <View style={{ flex: 1, position: "relative",zIndex:0 }}>
 <Image
   source={require("../../assets/squad.png")}
   style={{

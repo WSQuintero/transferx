@@ -93,8 +93,8 @@ const stylesExchangeView = StyleSheet.create({
   mainContainer: {
     flexDirection: "row",
     width: "100%",
-    height: 60,
-    marginTop: 20
+    height: 50,
+    marginTop: 10
   },
   leftContainer: {
     width: "20%",
@@ -123,6 +123,9 @@ const stylesExchangeView = StyleSheet.create({
     color: "white",
     fontSize: 16,
     marginBottom: 10
+  },
+  containerButton: {
+    marginTop: 20
   }
 })
 

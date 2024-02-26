@@ -5,6 +5,7 @@ import BackButton from "../components/BackButton"
 import PageWrapper from "../components/PageWrapper"
 import stylesExchangeView from "../styles/stylesExchangeView"
 import { AntDesign } from "@expo/vector-icons"
+import ButtonColor from "../components/ButtonColor"
 
 function Exchange() {
   const [usdtTether, setUsdtTether] = useState("")
@@ -108,6 +109,9 @@ function Exchange() {
               </Text>
             </View>
           </View>
+        </View>
+        <View style={stylesExchangeView.containerButton}>
+      <ButtonColor>Confirm</ButtonColor>
         </View>
       </View>
     </PageWrapper>

@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     color: "#05000F",
     fontSize: 14,
     fontFamily: "Roboto",
-    zIndex:1060
+    zIndex:1060,
+    fontWeight:"bold"
   }
 })
 

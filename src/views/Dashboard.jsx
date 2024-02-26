@@ -17,6 +17,7 @@ import HeaderDashboard from "../components/HeaderDashboard"
 import QuickActionSection from "../components/QuickActionSection"
 import RecentTransactions from "../components/RecentTransactions"
 import FooterMenu from "../components/FooterMenu"
+import ComingSoonCard from "../components/ComingSoonCard"
 
 const Dashboard = ({ navigation }) => {
   const [selectedCard, setSelectedCard] = useState(null)
@@ -28,6 +29,7 @@ const Dashboard = ({ navigation }) => {
   }
 
   return (
+    <>
     <PageWrapper>
       <HeaderDashboard/>
       <CreditCardComponent/>
@@ -35,6 +37,8 @@ const Dashboard = ({ navigation }) => {
       <RecentTransactions navigation={navigation}/>
       <FooterMenu/>
     </PageWrapper>
+    <ComingSoonCard navigation={navigation}/>
+    </>
   )
 }
 

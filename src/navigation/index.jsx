@@ -20,6 +20,7 @@ import Dashboard from "../views/Dashboard"
 import RecentTransactionsView from "../views/RecentTransactionsView"
 import SelectInformationBankView from "../views/SelectInformationBankView"
 import Exchange from "../views/Exchange"
+import ComingSoon from "../components/ComingSoonCard"
 
 const Stack = createNativeStackNavigator()
 
@@ -54,15 +55,16 @@ const Navigation = () => {
             <Stack.Screen name="SelectInformationBankView" component={SelectInformationBankView} />
             <Stack.Screen name="sectionTwo" component={ConfirmationCodeView} /> */}
             {/* <Stack.Screen name="sectionTwo" component={StylistIA} /> */}
-            {/* <Stack.Screen name="sectionThree" component={Dashboard} />
-            <Stack.Screen name="sectionFour" component={EyesTypeSelector} />
-            <Stack.Screen name="sectionFive" component={StylesTypeSelector} />
-            <Stack.Screen name="sectionSix" component={OcassionsTypeSelector} />
-            <Stack.Screen name="sectionSeven" component={Congratulations} />
-            <Stack.Screen name="sectionEight" component={ChatWithOptionsSection} />
-            <Stack.Screen name="sectionNine" component={HistoryChat} />
-            <Stack.Screen name="recentTransactionsView" component={RecentTransactionsView} /> */}
-            <Stack.Screen name="exchangeView" component={Exchange} />
+            <Stack.Screen name="sectionThree" component={Dashboard} />
+            {/* <Stack.Screen name="sectionFour" component={EyesTypeSelector} /> */}
+            {/* <Stack.Screen name="sectionFive" component={StylesTypeSelector} /> */}
+            {/* <Stack.Screen name="sectionSix" component={OcassionsTypeSelector} /> */}
+            {/* <Stack.Screen name="sectionSeven" component={Congratulations} /> */}
+            {/* <Stack.Screen name="sectionEight" component={ChatWithOptionsSection} /> */}
+            {/* <Stack.Screen name="sectionNine" component={HistoryChat} /> */}
+            {/* <Stack.Screen name="recentTransactionsView" component={RecentTransactionsView} /> */}
+            {/* <Stack.Screen name="exchangeView" component={Exchange} /> */}
+            {/* <Stack.Screen name="comingSoon" component={ComingSoon} /> */}
           </Stack.Navigator>
         </MyContextProvider>
       )}
