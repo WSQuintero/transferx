@@ -21,6 +21,7 @@ import RecentTransactionsView from "../views/RecentTransactionsView"
 import SelectInformationBankView from "../views/SelectInformationBankView"
 import Exchange from "../views/Exchange"
 import ComingSoon from "../components/ComingSoonCard"
+import ContactView from "../views/ContactView"
 
 const Stack = createNativeStackNavigator()
 
@@ -55,7 +56,7 @@ const Navigation = () => {
             <Stack.Screen name="SelectInformationBankView" component={SelectInformationBankView} />
             <Stack.Screen name="sectionTwo" component={ConfirmationCodeView} /> */}
             {/* <Stack.Screen name="sectionTwo" component={StylistIA} /> */}
-            <Stack.Screen name="sectionThree" component={Dashboard} />
+            {/* <Stack.Screen name="sectionThree" component={Dashboard} /> */}
             {/* <Stack.Screen name="sectionFour" component={EyesTypeSelector} /> */}
             {/* <Stack.Screen name="sectionFive" component={StylesTypeSelector} /> */}
             {/* <Stack.Screen name="sectionSix" component={OcassionsTypeSelector} /> */}
@@ -65,6 +66,7 @@ const Navigation = () => {
             {/* <Stack.Screen name="recentTransactionsView" component={RecentTransactionsView} /> */}
             {/* <Stack.Screen name="exchangeView" component={Exchange} /> */}
             {/* <Stack.Screen name="comingSoon" component={ComingSoon} /> */}
+            <Stack.Screen name="contactView" component={ContactView} />
           </Stack.Navigator>
         </MyContextProvider>
       )}
