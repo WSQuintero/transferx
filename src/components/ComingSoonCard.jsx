@@ -1,8 +1,11 @@
 import React from "react"
-import { Image, View, StyleSheet, Text } from "react-native"
+import { Image, View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import ButtonColor from "./ButtonColor"
 
-function ComingSoonCard({navigation}) {
+function ComingSoonCard({navigation,setOpenCard,message}) {
+  const handleSignUp=()=>{
+    navigation.navigate("exchange")
+  }
   return (
     <View style={styles.container}>
       <View style={styles.overlay} />
@@ -16,10 +19,12 @@ function ComingSoonCard({navigation}) {
             source={require("../../assets/completesize.png")}
             style={styles.imageLogo}
           />
+          <TouchableOpacity onPress={()=>setOpenCard(false)}>
           <Image
             source={require("../../assets/x.png")}
             style={styles.imageClose}
           />
+          </TouchableOpacity>
         </View>
 
         <View>
@@ -30,11 +35,10 @@ function ComingSoonCard({navigation}) {
         </View>
         <Text style={styles.title}>Exciting Features on the Horizon!</Text>
         <Text style={styles.text}>
-          our upcoming features are 'Coming Soon' and will bring more
-          convenience and innovation to your fingertips
+          {message}
         </Text>
         <View style={styles.containerButton}>
-          <ButtonColor >Go to home</ButtonColor>
+          <ButtonColor navigation={navigation} to={"exchange"} handleSignUp={handleSignUp}>Go to home</ButtonColor>
         </View>
       </View>
     </View>

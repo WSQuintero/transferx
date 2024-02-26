@@ -127,12 +127,8 @@ const ConfirmationCodeView = ({ navigation }) => {
           >
             Don’t receive the OTP yet? <Text style={stylesConfrrmationCodeView.signupTextBold}> Resend OTP</Text>
           </Text>
-          <TouchableOpacity
-            onPress={handleLogin}
-            style={stylesConfrrmationCodeView.loginButton}
-          >
-            <ButtonColor navigation={navigation} to={"sectionThree"}>Confirm</ButtonColor>
-          </TouchableOpacity>
+
+            <ButtonColor navigation={navigation} to={"login"} handleSignUp={handleLogin}>Confirm</ButtonColor>
         </View>
       </View>
     </PageWrapper>

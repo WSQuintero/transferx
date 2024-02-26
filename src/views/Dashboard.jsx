@@ -23,7 +23,7 @@ const Dashboard = ({ navigation }) => {
   const [selectedCard, setSelectedCard] = useState(null)
   const { pageTellMeAboutYou, setPageTellMeAboutYou } = useContext(MyContext)
   const fontsLoaded = useLoadFonts()
-
+  const [openCard,setOpenCard]=useState(true)
   const handleCardPress = (index) => {
     setSelectedCard(index)
   }
@@ -35,9 +35,11 @@ const Dashboard = ({ navigation }) => {
       <CreditCardComponent/>
       <QuickActionSection/>
       <RecentTransactions navigation={navigation}/>
-      <FooterMenu/>
+      <FooterMenu actual={"card"} navigation={navigation}/>
     </PageWrapper>
-    <ComingSoonCard navigation={navigation}/>
+    {openCard&&(
+      <ComingSoonCard navigation={navigation} setOpenCard={setOpenCard} openCard={openCard} message={"La sección Card estará disponible muy pronto"}/>
+    )}
     </>
   )
 }

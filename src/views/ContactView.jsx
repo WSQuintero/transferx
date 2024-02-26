@@ -3,9 +3,12 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import PageWrapper from "../components/PageWrapper";
 import stylesContactView from "../styles/stylesContactView";
 import BackButton from "../components/BackButton";
+import FooterMenu from "../components/FooterMenu";
 
-function ContactView() {
+function ContactView({navigation}) {
+
   return (
+    <>
     <PageWrapper>
       <BackButton/>
       <View style={stylesContactView.generalContainer}>
@@ -82,6 +85,8 @@ function ContactView() {
         </View>
     </View>
     </PageWrapper>
+    <FooterMenu actual="contact" navigation={navigation}/>
+    </>
   );
 }
 

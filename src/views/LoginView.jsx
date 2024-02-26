@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import PageWrapper from "../components/PageWrapper"
 import BackButton from "../components/BackButton"
 import useLoadFonts from "../customHooks/useLoadFonts"
@@ -17,9 +17,27 @@ const LoginView = ({ navigation }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const fontsLoaded = useLoadFonts()
+  // const $Auth = useMemo(() => new AuthService(), [])
 
-  const handleLogin = () => {
-    navigation.navigate("sectionTwo")
+  const handleLogin = async () => {
+    navigation.navigate("exchange")
+
+    // try {
+    //   const { status, data } = await $Auth.SignIn({
+    //     email,
+    //     password
+    //   })
+
+    //   if (status) {
+    //     // Registro exitoso, puedes navegar a la siguiente pantalla
+    //     navigation.navigate("sectionTwo")
+    //         } else {
+    //     // Manejar el caso de error, por ejemplo, mostrar un mensaje al usuario
+    //     console.error("Error en el registro:", data)
+    //   }
+    // } catch (error) {
+    //   // console.error("Error en la petición:", error)
+    // }
   }
 
   return (
@@ -64,11 +82,7 @@ const LoginView = ({ navigation }) => {
             </View>
           </View>
 
-          <TouchableOpacity
-            onPress={handleLogin}
-            style={stylesLoginView.loginButton}>
-            <ButtonColor navigation={navigation} to={"sectionTwo"}>Login</ButtonColor>
-          </TouchableOpacity>
+            <ButtonColor navigation={navigation} to={"exchange"} handleSignUp={handleLogin}>Login</ButtonColor>
 
           <Text
             style={stylesLoginView.signupText}

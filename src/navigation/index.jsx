@@ -1,27 +1,19 @@
 import React, { useState } from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import useAuth from "../hooks/useAuth"
-import EyesTypeSelector from "../views/EyesTypeSelector"
 import { MyContextProvider, MyProvider } from "../context/context" // Importa MyProvider desde el contexto
-import StylesTypeSelector from "../views/StylesTypeSelector"
-import Congratulations from "../views/Congratulations"
 import LoginView from "../views/LoginView"
 import SignUpView from "../views/SignUpView"
 import InitView from "../views/initView"
-import ImageWithOverlay from "../components/ImageWithOverlay"
-import StylistIA from "../views/StylistIA"
-import ChatInput from "../components/ChatInput"
-import OcassionsTypeSelector from "../views/OcassionsTypeSelector"
-import ChatWithOptionsSection from "../views/ChatWithOptions"
-import HistoryChat from "../views/HistoryChat"
 import { NavigationContainer } from "@react-navigation/native"
 import ConfirmationCodeView from "../views/ConfirmationCodeView"
 import Dashboard from "../views/Dashboard"
 import RecentTransactionsView from "../views/RecentTransactionsView"
 import SelectInformationBankView from "../views/SelectInformationBankView"
 import Exchange from "../views/Exchange"
-import ComingSoon from "../components/ComingSoonCard"
 import ContactView from "../views/ContactView"
+import ServicesView from "../views/ServicesView"
+import WalletView from "../views/WalletView"
 
 const Stack = createNativeStackNavigator()
 
@@ -50,23 +42,17 @@ const Navigation = () => {
               headerShown: false,
               contentStyle: { backgroundColor: "#07140f" }
             }}>
-            {/* <Stack.Screen name="initview" component={InitView} />
+            <Stack.Screen name="initview" component={InitView} />
             <Stack.Screen name="login" component={LoginView} />
             <Stack.Screen name="signup" component={SignUpView} />
             <Stack.Screen name="SelectInformationBankView" component={SelectInformationBankView} />
-            <Stack.Screen name="sectionTwo" component={ConfirmationCodeView} /> */}
-            {/* <Stack.Screen name="sectionTwo" component={StylistIA} /> */}
-            {/* <Stack.Screen name="sectionThree" component={Dashboard} /> */}
-            {/* <Stack.Screen name="sectionFour" component={EyesTypeSelector} /> */}
-            {/* <Stack.Screen name="sectionFive" component={StylesTypeSelector} /> */}
-            {/* <Stack.Screen name="sectionSix" component={OcassionsTypeSelector} /> */}
-            {/* <Stack.Screen name="sectionSeven" component={Congratulations} /> */}
-            {/* <Stack.Screen name="sectionEight" component={ChatWithOptionsSection} /> */}
-            {/* <Stack.Screen name="sectionNine" component={HistoryChat} /> */}
-            {/* <Stack.Screen name="recentTransactionsView" component={RecentTransactionsView} /> */}
-            {/* <Stack.Screen name="exchangeView" component={Exchange} /> */}
-            {/* <Stack.Screen name="comingSoon" component={ComingSoon} /> */}
-            <Stack.Screen name="contactView" component={ContactView} />
+            <Stack.Screen name="confirmationCode" component={ConfirmationCodeView} />
+            <Stack.Screen name="recentTransactionsView" component={RecentTransactionsView} />
+            <Stack.Screen name="wallet" component={WalletView} />
+            <Stack.Screen name="exchange" component={Exchange} />
+            <Stack.Screen name="services" component={ServicesView} />
+            <Stack.Screen name="card" component={Dashboard} />
+            <Stack.Screen name="contact" component={ContactView} />
           </Stack.Navigator>
         </MyContextProvider>
       )}

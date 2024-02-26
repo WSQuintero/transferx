@@ -44,27 +44,29 @@ const stylesSignUp = StyleSheet.create({
   icon: {
     width: 20,
     height: 20,
-    marginLeft: 10
+    marginLeft: 10,
+    tintColor: "#F4F3F5" // Cambiado a blanco
   },
   iconRight: {
     width: 20,
     height: 20,
-    marginRight: 10
+    marginRight: 10,
+    tintColor: "#F4F3F5" // Cambiado a blanco
   },
   input: {
     borderRadius: 10,
-    marginTop: 30,
-    height: 30,
-    width: "80%",
-    padding: 10
+    marginTop: 10, // Reducido el espacio superior
+    marginBottom: 10, // Agregado espacio inferior
+    height: 40, // Aumentado el alto del input
+    width: "100%", // Ajustado el ancho del input
+    paddingHorizontal: 10, // Añadido padding horizontal
+    color: "#F4F3F5" // Cambiado a blanco
   },
   signupButton: {
     backgroundColor: "#2d2ade",
     marginBottom: 20,
-
     paddingHorizontal: 20,
     borderRadius: 20,
-
     width: 260
   },
   signupButtonText: {

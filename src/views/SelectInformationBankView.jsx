@@ -94,7 +94,7 @@ const SelectInformationBankView = ({ navigation }) => {
           </View>
 
           <View style={SelectInformationBankViewStyle.button}>
-            <ButtonColor navigation={navigation} to={"login"}>
+            <ButtonColor navigation={navigation} to={"confirmationCode"}>
               Get Started
             </ButtonColor>
           </View>

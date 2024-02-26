@@ -10,12 +10,14 @@ const stylesExchangeView = StyleSheet.create({
   },
   container: {
     width: "100%",
-    paddingHorizontal: 30,
-    alignItems: "center"
+    height: 500,
+    overflow: "scroll",
+    paddingHorizontal: 20
+    // alignItems: "center"
   },
   containerChange: {
     width: "98%",
-    minHeight: "30%",
+    minHeight: 300, // Cambiado a un valor fijo para evitar problemas de desbordamiento
     marginTop: 20,
     marginBottom: 20, // Agregamos un margen inferior
     backgroundColor: "#10231D",
@@ -80,7 +82,7 @@ const stylesExchangeView = StyleSheet.create({
   },
   buttonArrow: {
     backgroundColor: "#C3F53C",
-    width: 40,
+    width: 100,
     height: 40,
     borderRadius: 20,
     alignItems: "center",

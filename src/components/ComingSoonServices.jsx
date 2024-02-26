@@ -1,8 +1,11 @@
 import React from "react"
-import { Image, View, StyleSheet, Text } from "react-native"
+import { Image, View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import ButtonColor from "./ButtonColor"
 
-function ComingSoonServices({navigation}) {
+function ComingSoonServices({navigation,setOpenCard}) {
+  const handleSignUp=()=>{
+    navigation.navigate("exchange")
+  }
   return (
     <View style={styles.container}>
       <View style={styles.overlay} />
@@ -16,10 +19,12 @@ function ComingSoonServices({navigation}) {
             source={require("../../assets/completesize.png")}
             style={styles.imageLogo}
           />
+          <TouchableOpacity onPress={()=>setOpenCard(false)}>
           <Image
             source={require("../../assets/x.png")}
             style={styles.imageClose}
           />
+          </TouchableOpacity>
         </View>
 
         <View>
@@ -34,7 +39,7 @@ function ComingSoonServices({navigation}) {
           convenience and innovation to your fingertips
         </Text>
         <View style={styles.containerButton}>
-          <ButtonColor >Go to home</ButtonColor>
+          <ButtonColor navigation={navigation} to={"exchange"} handleSignUp={handleSignUp}>Go to home</ButtonColor>
         </View>
       </View>
     </View>
@@ -55,7 +60,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    backgroundColor: "rgba(0, 0, 0)",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
     height: "100%",
     width: "100%"
   },

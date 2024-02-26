@@ -2,11 +2,11 @@ import React from "react"
 import { TouchableOpacity, Text, StyleSheet } from "react-native"
 import useLoadFonts from "../customHooks/useLoadFonts"
 
-const ButtonColor = ({ children, navigation, to }) => {
+const ButtonColor = ({ children, handleSignUp }) => {
   const fontsLoaded=useLoadFonts()
 
   return (
-    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(`${to}`)}>
+    <TouchableOpacity style={styles.button} onPress={handleSignUp}>
       <Text
         style={styles.buttonText}
         >

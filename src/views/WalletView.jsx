@@ -3,7 +3,7 @@ import ComingSoonServices from "../components/ComingSoonServices"
 import FooterMenu from "../components/FooterMenu"
 import { View } from "react-native"
 
-function ServicesView({navigation}) {
+function WalletView({navigation}) {
   const[openCard,setOpenCard]=useState(true)
   return (
     <>
@@ -12,10 +12,10 @@ function ServicesView({navigation}) {
     </View>
       <FooterMenu actual="services" navigation={navigation} />
       {openCard&&(
-        <ComingSoonServices navigation={navigation} setOpenCard={setOpenCard} message={"Los servicios estarán disponibles muy pronto "}/>
+        <ComingSoonServices navigation={navigation} setOpenCard={setOpenCard} message={"La sección Wallet estará disponible muy pronto"} />
       )}
     </>
   )
 }
 
-export default ServicesView
+export default WalletView
