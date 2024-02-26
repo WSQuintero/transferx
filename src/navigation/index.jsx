@@ -33,7 +33,7 @@ const Navigation = () => {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
-            contentStyle: { backgroundColor: Theme.colors.common.background }
+            contentStyle: { backgroundColor: "#07140f" }
           }}
           screenListeners={({ route }) => ({
             state: () => {
@@ -46,7 +46,7 @@ const Navigation = () => {
           <Stack.Navigator
             screenOptions={{
               headerShown: false,
-              contentStyle: { backgroundColor: Theme.colors.common.background }
+              contentStyle: { backgroundColor: "#07140f" }
             }}>
             <Stack.Screen name="initview" component={InitView} />
             <Stack.Screen name="login" component={LoginView} />

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, ScrollView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-import { NativeBaseProvider, Icon } from 'native-base';
+import { AntDesign } from '@expo/vector-icons';
 import useLoadFonts from '../customHooks/useLoadFonts';
+import { Ionicons } from '@expo/vector-icons';
 
 const ImageSliderFaces = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -59,11 +60,11 @@ const ImageSliderFaces = () => {
         </View>
       </ScrollView>
       <TouchableOpacity style={styles.arrowLeft} onPress={handlePrev}>
-        <Icon name="arrow-back" />
-      </TouchableOpacity>
+      <AntDesign name="caretleft" size={24} color="black" />
+            </TouchableOpacity>
       <TouchableOpacity style={styles.arrowRight} onPress={handleNext}>
-        <Icon name="arrow-forward" />
-      </TouchableOpacity>
+      <Ionicons name="arrow-forward-circle-outline" size={24} color="black" />
+            </TouchableOpacity>
     </View>
   );
 };
