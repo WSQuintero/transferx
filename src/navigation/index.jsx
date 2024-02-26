@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { Theme } from "../theme"
 import useAuth from "../hooks/useAuth"
 import EyesTypeSelector from "../views/EyesTypeSelector"
 import { MyContextProvider, MyProvider } from "../context/context" // Importa MyProvider desde el contexto
@@ -20,6 +19,7 @@ import ConfirmationCodeView from "../views/ConfirmationCodeView"
 import Dashboard from "../views/Dashboard"
 import RecentTransactionsView from "../views/RecentTransactionsView"
 import SelectInformationBankView from "../views/SelectInformationBankView"
+import Exchange from "../views/Exchange"
 
 const Stack = createNativeStackNavigator()
 
@@ -48,21 +48,21 @@ const Navigation = () => {
               headerShown: false,
               contentStyle: { backgroundColor: "#07140f" }
             }}>
-            <Stack.Screen name="initview" component={InitView} />
+            {/* <Stack.Screen name="initview" component={InitView} />
             <Stack.Screen name="login" component={LoginView} />
             <Stack.Screen name="signup" component={SignUpView} />
             <Stack.Screen name="SelectInformationBankView" component={SelectInformationBankView} />
-            <Stack.Screen name="sectionTwo" component={ConfirmationCodeView} />
+            <Stack.Screen name="sectionTwo" component={ConfirmationCodeView} /> */}
             {/* <Stack.Screen name="sectionTwo" component={StylistIA} /> */}
-            <Stack.Screen name="sectionThree" component={Dashboard} />
+            {/* <Stack.Screen name="sectionThree" component={Dashboard} />
             <Stack.Screen name="sectionFour" component={EyesTypeSelector} />
             <Stack.Screen name="sectionFive" component={StylesTypeSelector} />
             <Stack.Screen name="sectionSix" component={OcassionsTypeSelector} />
             <Stack.Screen name="sectionSeven" component={Congratulations} />
             <Stack.Screen name="sectionEight" component={ChatWithOptionsSection} />
             <Stack.Screen name="sectionNine" component={HistoryChat} />
-            <Stack.Screen name="recentTransactionsView" component={RecentTransactionsView} />
-
+            <Stack.Screen name="recentTransactionsView" component={RecentTransactionsView} /> */}
+            <Stack.Screen name="exchangeView" component={Exchange} />
           </Stack.Navigator>
         </MyContextProvider>
       )}
