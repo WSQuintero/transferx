@@ -114,6 +114,9 @@ const stylesLoginView = StyleSheet.create({
   },
   selectedInput: {
     borderColor: "blue" // Color del borde cuando está seleccionado
+  },
+  buttonContainer: {
+    marginTop: 40
   }
 })
 

@@ -8,22 +8,30 @@ import AuthService from "../services/AuthService"
 import ModalError from "../components/ModalError"
 
 const SignUpView = ({ navigation }) => {
-  const [name, setName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [cellphone, setCellPhone] = useState("")
-  const [password, setPassword] = useState("")
-  const $Auth = useMemo(() => new AuthService(), [])
-  const [showErrorModal, setShowErrorModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+const {  name,
+  setName,
+  lastName,
+  setLastName,
+  email,
+  setEmail,
+  cellphone,
+  setCellPhone,
+  password,
+  setPassword,
+  showErrorModal,
+  setShowErrorModal,
+  errorMessage,
+  setErrorMessage,$Auth}=useContext(MyContext)
 
-  const validation = () => {
+  const validation = async () => {
+    // Verificar que todos los campos estén llenos
     if (!name || !lastName || !email || !cellphone || !password) {
       setErrorMessage("Todos los campos deben estar llenos");
       setShowErrorModal(true);
       return false;
     }
 
+    // Validar el formato de la contraseña
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
     if (!passwordPattern.test(password)) {
       setErrorMessage("La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número, un carácter especial y tener una longitud mínima de 8 caracteres.");
@@ -31,6 +39,7 @@ const SignUpView = ({ navigation }) => {
       return false;
     }
 
+    // Validar el formato del correo electrónico
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
       setErrorMessage("Por favor, introduce una dirección de correo electrónico válida.");
@@ -38,13 +47,16 @@ const SignUpView = ({ navigation }) => {
       return false;
     }
 
+    // Verificar si el usuario ya existe antes de intentar registrarlo
+
+
     return true;
   }
 
 
   const handleSignUp = async () => {
     if (!validation()) {
-      return; // Detener el proceso si la validación falla
+      return;
     }
 
     const { status, data } = await $Auth.signUp({
@@ -55,22 +67,20 @@ const SignUpView = ({ navigation }) => {
       password
     });
 
+    if (data.data.message === "User already exists") {
+      setErrorMessage("El usuario ya está registrado. Por favor, inicia sesión o utiliza otra dirección de correo electrónico.");
+      setShowErrorModal(true);
+      return;
+    }
+
     if (status) {
       navigation.navigate("confirmationCode");
     } else {
-      console.error("Error en el registro:", data);
+      // console.error("Error en el registro:", data);
     }
   }
 
 
-  useEffect(() => {
-    if (showErrorModal) {
-      setTimeout(() => {
-        setShowErrorModal(false)
-        setErrorMessage("")
-      }, 2000)
-    }
-  }, [showErrorModal])
 
   return (
     <PageWrapper>

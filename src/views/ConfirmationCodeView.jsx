@@ -1,47 +1,82 @@
-import React, { useRef, useState } from "react";
-import PageWrapper from "../components/PageWrapper";
-import BackButton from "../components/BackButton";
-import useLoadFonts from "../customHooks/useLoadFonts";
-import stylesConfrrmationCodeView from "../styles/stylesConfrrmationCodeView";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import ButtonColor from "../components/ButtonColor";
+import React, { useContext, useRef, useState } from "react"
+import PageWrapper from "../components/PageWrapper"
+import BackButton from "../components/BackButton"
+import useLoadFonts from "../customHooks/useLoadFonts"
+import stylesConfrrmationCodeView from "../styles/stylesConfrrmationCodeView"
+import { View, Text, TextInput, TouchableOpacity } from "react-native"
+import ButtonColor from "../components/ButtonColor"
+import { MyContext } from "../context/context"
+import ModalError from "../components/ModalError"
 
 const ConfirmationCodeView = ({ navigation }) => {
-  const [one, setOne] = useState("");
-  const [two, setTwo] = useState("");
-  const [three, setThree] = useState("");
-  const [four, setFour] = useState("");
-  const [five, setFive] = useState("");
-  const [six, setSix] = useState("");
-  const inputOneRef = useRef(null); // Change from inputRef to inputOneRef
-  const inputTwoRef = useRef(null);
-  const inputThreeRef = useRef(null);
-  const inputFourRef = useRef(null);
-  const inputFiveRef = useRef(null);
-  const inputSixRef = useRef(null);
-  const fontsLoaded = useLoadFonts();
+  const [one, setOne] = useState("")
+  const [two, setTwo] = useState("")
+  const [three, setThree] = useState("")
+  const [four, setFour] = useState("")
+  const [five, setFive] = useState("")
+  const [six, setSix] = useState("")
+  const inputOneRef = useRef(null)
+  const inputTwoRef = useRef(null)
+  const inputThreeRef = useRef(null)
+  const inputFourRef = useRef(null)
+  const inputFiveRef = useRef(null)
+  const inputSixRef = useRef(null)
+  const fontsLoaded = useLoadFonts()
+  const {
+    cellphone,
+    $Auth,
+    errorMessage,
+    setErrorMessage,
+    showErrorModal,
+    setShowErrorModal
+  } = useContext(MyContext)
+  const [code, setCode] = useState("")
+
 
   const handleBlur = (ref) => {
     ref.current.setNativeProps({
-      style: { borderColor: 'gray' }
-    });
-  };
-
-
-  const handleLogin = () => {
-    navigation.navigate("sectionTwo");
-  };
+      style: { borderColor: "gray" }
+    })
+  }
 
   const handleFocus = (ref) => {
     ref.current.setNativeProps({
-      style: { borderColor: '#C3F53C' }
-    });
-  };
+      style: { borderColor: "#C3F53C" }
+    })
+  }
+
+const updateCode = () => {
+  setCode(`${one}${two}${three}${four}${five}${six}`);
+};
+
+  const handleConfirmateOtp = async () => {
+    const { status, data } = await $Auth.confirmCellphone({
+      cellphone,
+      code:`${one}${two}${three}${four}${five}${six}`
+    })
+
+
+    if (status) {
+      navigation.navigate("SelectInformationBankView")
+    } else {
+      setErrorMessage("Por favor intenta nuevamente, ha habido un error")
+      setShowErrorModal(true)
+      console.log(data)
+    }
+  }
+
+  const handleResendConfirmateOtp=async()=>{
+    const { status, data } = await $Auth.resendConfirmationCode({
+      cellphone
+    })
+
+    if (status) {
+      console.log("Se envió el código a tu celular")
+    } else {
+      setErrorMessage("Por favor intenta nuevamente, ha habido un error")
+      setShowErrorModal(true)
+    }
+  }
   return (
     <PageWrapper>
       <BackButton />
@@ -49,90 +84,123 @@ const ConfirmationCodeView = ({ navigation }) => {
         <View style={stylesConfrrmationCodeView.content}>
           <Text style={stylesConfrrmationCodeView.title}>OTP Verification</Text>
           <Text style={stylesConfrrmationCodeView.subtitle}>
-            To sign up your account, enter the 6-digit code we sent to +613135345423
+            To sign up your account, enter the 6-digit code we sent to
+            +57{cellphone}
           </Text>
 
           <View style={stylesConfrrmationCodeView.inputContainer}>
-      <View style={stylesConfrrmationCodeView.textInputContainer}>
-        <TextInput
-          style={stylesConfrrmationCodeView.textInput}
-          onChangeText={(text) => setOne(text)}
-          value={one}
-          maxLength={1}
-          onFocus={() => handleFocus(inputOneRef)}
-          onBlur={() => handleBlur(inputOneRef)}
-          ref={inputOneRef} // Set ref to inputOneRef
-        />
-      </View>
-      <View style={stylesConfrrmationCodeView.textInputContainer}>
-        <TextInput
-          style={stylesConfrrmationCodeView.textInput}
-          onChangeText={(text) => setTwo(text)}
-          value={two}
-          maxLength={1}
-          onFocus={() => handleFocus(inputTwoRef)}
-          onBlur={() => handleBlur(inputTwoRef)}
-          ref={inputTwoRef}
-        />
-      </View>
-      <View style={stylesConfrrmationCodeView.textInputContainer}>
-        <TextInput
-          style={stylesConfrrmationCodeView.textInput}
-          onChangeText={(text) => setThree(text)}
-          value={three}
-          maxLength={1}
-          onFocus={() => handleFocus(inputThreeRef)}
-          onBlur={() => handleBlur(inputThreeRef)}
-          ref={inputThreeRef}
-        />
-      </View>
-      <View style={stylesConfrrmationCodeView.textInputContainer}>
-        <TextInput
-          style={stylesConfrrmationCodeView.textInput}
-          onChangeText={(text) => setFour(text)}
-          value={four}
-          maxLength={1}
-          onFocus={() => handleFocus(inputFourRef)}
-          onBlur={() => handleBlur(inputFourRef)}
-          ref={inputFourRef}
-        />
-      </View>
-      <View style={stylesConfrrmationCodeView.textInputContainer}>
-        <TextInput
-          style={stylesConfrrmationCodeView.textInput}
-          onChangeText={(text) => setFive(text)}
-          value={five}
-          maxLength={1}
-          onFocus={() => handleFocus(inputFiveRef)}
-          onBlur={() => handleBlur(inputFiveRef)}
-          ref={inputFiveRef}
-        />
-      </View>
-      <View style={stylesConfrrmationCodeView.textInputContainer}>
-        <TextInput
-          style={stylesConfrrmationCodeView.textInput}
-          onChangeText={(text) => setSix(text)}
-          value={six}
-          maxLength={1}
-          onFocus={() => handleFocus(inputSixRef)}
-          onBlur={() => handleBlur(inputSixRef)}
-          ref={inputSixRef}
-        />
-      </View>
-    </View>
+            <View style={stylesConfrrmationCodeView.textInputContainer}>
+              <TextInput
+                style={stylesConfrrmationCodeView.textInput}
+                onChangeText={(text) => {
+                  setOne(text)
+                  updateCode()
+                }}
+                value={one}
+                maxLength={1}
+                onFocus={() => handleFocus(inputOneRef)}
+                onBlur={() => handleBlur(inputOneRef)}
+                ref={inputOneRef}
+              />
+            </View>
+            <View style={stylesConfrrmationCodeView.textInputContainer}>
+              <TextInput
+                style={stylesConfrrmationCodeView.textInput}
+                onChangeText={(text) => {
+                  setTwo(text)
+                  updateCode()
+                }}
+                value={two}
+                maxLength={1}
+                onFocus={() => handleFocus(inputTwoRef)}
+                onBlur={() => handleBlur(inputTwoRef)}
+                ref={inputTwoRef}
+              />
+            </View>
+            <View style={stylesConfrrmationCodeView.textInputContainer}>
+              <TextInput
+                style={stylesConfrrmationCodeView.textInput}
+                onChangeText={(text) => {
+                  setThree(text)
+                  updateCode()
+                }}
+                value={three}
+                maxLength={1}
+                onFocus={() => handleFocus(inputThreeRef)}
+                onBlur={() => handleBlur(inputThreeRef)}
+                ref={inputThreeRef}
+              />
+            </View>
+            <View style={stylesConfrrmationCodeView.textInputContainer}>
+              <TextInput
+                style={stylesConfrrmationCodeView.textInput}
+                onChangeText={(text) => {
+                  setFour(text)
+                  updateCode()
+                }}
+                value={four}
+                maxLength={1}
+                onFocus={() => handleFocus(inputFourRef)}
+                onBlur={() => handleBlur(inputFourRef)}
+                ref={inputFourRef}
+              />
+            </View>
+            <View style={stylesConfrrmationCodeView.textInputContainer}>
+              <TextInput
+                style={stylesConfrrmationCodeView.textInput}
+                onChangeText={(text) => {
+                  setFive(text)
+                  updateCode()
+                }}
+                value={five}
+                maxLength={1}
+                onFocus={() => handleFocus(inputFiveRef)}
+                onBlur={() => handleBlur(inputFiveRef)}
+                ref={inputFiveRef}
+              />
+            </View>
+            <View style={stylesConfrrmationCodeView.textInputContainer}>
+              <TextInput
+                style={stylesConfrrmationCodeView.textInput}
+                onChangeText={(text) => {
+                  setSix(text)
+                  updateCode()
+                }}
+                value={six}
+                maxLength={1}
+                onFocus={() => handleFocus(inputSixRef)}
+                onBlur={() => handleBlur(inputSixRef)}
+                ref={inputSixRef}
+              />
+            </View>
+          </View>
 
           <Text
             style={stylesConfrrmationCodeView.signupText}
-            onPress={() => navigation.navigate("signup")}
-          >
-            Don’t receive the OTP yet? <Text style={stylesConfrrmationCodeView.signupTextBold}> Resend OTP</Text>
+            onPress={handleResendConfirmateOtp}>
+            Don’t receive the OTP yet?{" "}
+            <Text style={stylesConfrrmationCodeView.signupTextBold}>
+              {" "}
+              Resend OTP
+            </Text>
           </Text>
+                <View
+            style={stylesConfrrmationCodeView.buttonContainer}
 
-            <ButtonColor navigation={navigation} to={"login"} handleSignUp={handleLogin}>Confirm</ButtonColor>
+                >
+
+          <ButtonColor
+            navigation={navigation}
+            to={"login"}
+            handleSignUp={handleConfirmateOtp}>
+            Confirm
+          </ButtonColor>
+                </View>
         </View>
       </View>
+      <ModalError errorMessage={errorMessage} showErrorModal={showErrorModal} />
     </PageWrapper>
-  );
-};
+  )
+}
 
-export default ConfirmationCodeView;
+export default ConfirmationCodeView

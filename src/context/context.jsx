@@ -1,21 +1,52 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from "react"
+import AuthService from "../services/AuthService"
 
 // Crear el contexto
-const MyContext = createContext();
+const MyContext = createContext()
 
 // Componente proveedor del contexto
 const MyContextProvider = ({ children }) => {
-  const [pageTellMeAboutYou,setPageTellMeAboutYou]=useState()
-  const [dataSignUp,setDataSignUp]=useState({})
+  const [name, setName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [cellphone, setCellPhone] = useState("")
+  const [password, setPassword] = useState("")
+  const [showErrorModal, setShowErrorModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
+  const $Auth = useMemo(() => new AuthService(), [])
+
 
   useEffect(() => {
-    console.log(dataSignUp);
-  }, [dataSignUp]);
+    if (showErrorModal) {
+      setTimeout(() => {
+        setShowErrorModal(false)
+        setErrorMessage("")
+      }, 2000)
+    }
+  }, [showErrorModal])
+
   return (
-    <MyContext.Provider value={{ pageTellMeAboutYou,setPageTellMeAboutYou,dataSignUp,setDataSignUp }}>
+    <MyContext.Provider
+      value={{
+        name,
+        setName,
+        lastName,
+        setLastName,
+        email,
+        setEmail,
+        cellphone,
+        setCellPhone,
+        password,
+        setPassword,
+        showErrorModal,
+        setShowErrorModal,
+        errorMessage,
+        setErrorMessage,
+        $Auth
+      }}>
       {children}
     </MyContext.Provider>
-  );
-};
+  )
+}
 
-export { MyContext, MyContextProvider };
+export { MyContext, MyContextProvider }

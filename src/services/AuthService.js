@@ -42,5 +42,34 @@ export default class AuthService {
     }
   }
 
-  // Otros métodos de la clase...
+  async confirmCellphone({ cellphone, code }) {
+    try {
+      const response = await axios.post(
+        "https://transferx-backend.concilbot.com/api/v1/users/validate-cellphone",
+        {
+          cellphone,
+          code
+        }
+      )
+
+      return { status: true, data: response.data }
+    } catch (error) {
+      return { status: false, data: error.response }
+    }
+  }
+
+  async resendConfirmationCode({ cellphone }) {
+    try {
+      const response = await axios.post(
+        "https://transferx-backend.concilbot.com/api/v1/users/resend-otp-cod",
+        {
+          cellphone
+        }
+      )
+
+      return { status: true, data: response.data }
+    } catch (error) {
+      return { status: false, data: error.response }
+    }
+  }
 }
