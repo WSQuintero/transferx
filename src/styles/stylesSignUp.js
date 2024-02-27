@@ -15,15 +15,15 @@ const stylesSignUp = StyleSheet.create({
     fontSize: 24,
     color: "#F4F3F5",
     fontWeight: "bold",
-    marginTop: 20
+    marginTop: 10
   },
   subtitle: {
     fontFamily: "Roboto",
     fontSize: 16,
     color: "#B3B3B3",
     textAlign: "center",
-    marginTop: 20,
-    marginBottom: 20
+    marginTop: 10,
+    marginBottom: 5
   },
   inputContainer: {
     width: "100%"
@@ -33,7 +33,7 @@ const stylesSignUp = StyleSheet.create({
     fontSize: 13,
     color: "#F4F3F5",
     marginBottom: 10,
-    marginTop: 10
+    marginTop: 5
   },
   textInputContainer: {
     backgroundColor: "#10231D",
@@ -55,7 +55,7 @@ const stylesSignUp = StyleSheet.create({
   },
   input: {
     borderRadius: 10,
-    marginTop: 10, // Reducido el espacio superior
+    marginTop: 5, // Reducido el espacio superior
     marginBottom: 10, // Agregado espacio inferior
     height: 40, // Aumentado el alto del input
     width: "100%", // Ajustado el ancho del input
@@ -86,10 +86,13 @@ const stylesSignUp = StyleSheet.create({
     marginLeft: 20
   },
   button: {
-    marginTop: 30
+    marginTop: 40
   },
   signupTextBold: {
     color: "#C3F53C"
+  },
+  buttonContainer: {
+    marginTop: 10
   }
 })
 

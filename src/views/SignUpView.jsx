@@ -1,10 +1,11 @@
-import React, { useContext, useMemo, useState } from "react"
-import { View, Text, TextInput, Image, TouchableOpacity } from "react-native"
+import React, { useContext, useEffect, useMemo, useState } from "react"
+import { View, Text, TextInput, Image, TouchableOpacity, Modal } from "react-native"
 import ButtonColor from "../components/ButtonColor"
 import PageWrapper from "../components/PageWrapper"
 import stylesSignUp from "../styles/stylesSignUp"
 import { MyContext } from "../context/context"
 import AuthService from "../services/AuthService"
+import ModalError from "../components/ModalError"
 
 const SignUpView = ({ navigation }) => {
   const [name, setName] = useState("")
@@ -12,31 +13,64 @@ const SignUpView = ({ navigation }) => {
   const [email, setEmail] = useState("")
   const [cellphone, setCellPhone] = useState("")
   const [password, setPassword] = useState("")
-  // const $Auth = useMemo(() => new AuthService(), [])
+  const $Auth = useMemo(() => new AuthService(), [])
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const validation = () => {
+    if (!name || !lastName || !email || !cellphone || !password) {
+      setErrorMessage("Todos los campos deben estar llenos");
+      setShowErrorModal(true);
+      return false;
+    }
+
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    if (!passwordPattern.test(password)) {
+      setErrorMessage("La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número, un carácter especial y tener una longitud mínima de 8 caracteres.");
+      setShowErrorModal(true);
+      return false;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setErrorMessage("Por favor, introduce una dirección de correo electrónico válida.");
+      setShowErrorModal(true);
+      return false;
+    }
+
+    return true;
+  }
+
 
   const handleSignUp = async () => {
-    navigation.navigate("SelectInformationBankView")
+    if (!validation()) {
+      return; // Detener el proceso si la validación falla
+    }
 
-    // try {
-    //   const { status, data } = await $Auth.signUp({
-    //     firstname: name,
-    //     lastname: lastName,
-    //     email,
-    //     cellphone,
-    //     password
-    //   })
+    const { status, data } = await $Auth.signUp({
+      firstname: name,
+      lastname: lastName,
+      email,
+      cellphone,
+      password
+    });
 
-    //   if (status) {
-    //     // Registro exitoso, puedes navegar a la siguiente pantalla
-    //     navigation.navigate("SelectInformationBankView")
-    //   } else {
-    //     // Manejar el caso de error, por ejemplo, mostrar un mensaje al usuario
-    //     console.error("Error en el registro:", data)
-    //   }
-    // } catch (error) {
-    //   // console.error("Error en la petición:", error)
-    // }
+    if (status) {
+      navigation.navigate("confirmationCode");
+    } else {
+      console.error("Error en el registro:", data);
+    }
   }
+
+
+  useEffect(() => {
+    if (showErrorModal) {
+      setTimeout(() => {
+        setShowErrorModal(false)
+        setErrorMessage("")
+      }, 2000)
+    }
+  }, [showErrorModal])
 
   return (
     <PageWrapper>
@@ -44,11 +78,11 @@ const SignUpView = ({ navigation }) => {
         <View style={stylesSignUp.centerContent}>
           <Image
             source={require("../../assets/image.png")}
-            style={{ width: "50%", objectFit: "contain" }}
+            style={{ width: "80%",objectFit:"contain" }}
           />
-          <Text style={stylesSignUp.title}>Log in to Your Account</Text>
+          <Text style={stylesSignUp.title}>Sign up to Your Account</Text>
           <Text style={stylesSignUp.subtitle}>
-            Welcome back! Please enter your details
+            Welcome, please enter your details
           </Text>
           <View style={stylesSignUp.inputContainer}>
             <Text style={stylesSignUp.inputLabel}>Nombres</Text>
@@ -126,15 +160,18 @@ const SignUpView = ({ navigation }) => {
               />
             </View>
           </View>
+          <View style={stylesSignUp.buttonContainer}>
           <ButtonColor handleSignUp={handleSignUp}>Get Started</ButtonColor>
+          </View>
           <Text
             style={stylesSignUp.footerText}
             onPress={() => navigation.navigate("login")}>
             Already have an account?{" "}
-            <Text style={stylesSignUp.signupTextBold}>Sign Up</Text>
+            <Text style={stylesSignUp.signupTextBold}>Sign In</Text>
           </Text>
         </View>
       </View>
+    <ModalError showErrorModal={showErrorModal} errorMessage={errorMessage}/>
     </PageWrapper>
   )
 }

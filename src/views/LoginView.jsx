@@ -30,7 +30,7 @@ const LoginView = ({ navigation }) => {
 
     //   if (status) {
     //     // Registro exitoso, puedes navegar a la siguiente pantalla
-    //     navigation.navigate("sectionTwo")
+    //     navigation.navigate("exchange")
     //         } else {
     //     // Manejar el caso de error, por ejemplo, mostrar un mensaje al usuario
     //     console.error("Error en el registro:", data)

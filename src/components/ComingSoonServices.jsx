@@ -2,7 +2,7 @@ import React from "react"
 import { Image, View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import ButtonColor from "./ButtonColor"
 
-function ComingSoonServices({navigation,setOpenCard}) {
+function ComingSoonServices({navigation,setOpenCard,message}) {
   const handleSignUp=()=>{
     navigation.navigate("exchange")
   }
@@ -35,8 +35,7 @@ function ComingSoonServices({navigation,setOpenCard}) {
         </View>
         <Text style={styles.title}>Exciting Features on the Horizon!</Text>
         <Text style={styles.text}>
-          our upcoming features are 'Coming Soon' and will bring more
-          convenience and innovation to your fingertips
+        {message}
         </Text>
         <View style={styles.containerButton}>
           <ButtonColor navigation={navigation} to={"exchange"} handleSignUp={handleSignUp}>Go to home</ButtonColor>

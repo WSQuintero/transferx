@@ -10,7 +10,7 @@ export default class AuthService {
   async signUp({ firstname, lastname, email, cellphone, password }) {
     try {
       const response = await axios.post(
-        "http://transferx-backend.concilbot.com/api/v1/users/signup",
+        "https://transferx-backend.concilbot.com/api/v1/users/signup",
         {
           firstname,
           lastname,
@@ -29,7 +29,7 @@ export default class AuthService {
   async signIn({ email, password }) {
     try {
       const response = await axios.post(
-        "http://transferx-backend.concilbot.com/api/v1/users/signin",
+        "https://transferx-backend.concilbot.com/api/v1/users/signin",
         {
           email,
           password
