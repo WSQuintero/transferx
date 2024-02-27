@@ -30,8 +30,6 @@ const ConfirmationCodeView = ({ navigation }) => {
     showErrorModal,
     setShowErrorModal
   } = useContext(MyContext)
-  const [code, setCode] = useState("")
-
 
   const handleBlur = (ref) => {
     ref.current.setNativeProps({
@@ -45,9 +43,7 @@ const ConfirmationCodeView = ({ navigation }) => {
     })
   }
 
-const updateCode = () => {
-  setCode(`${one}${two}${three}${four}${five}${six}`);
-};
+
 
   const handleConfirmateOtp = async () => {
     const { status, data } = await $Auth.confirmCellphone({
@@ -77,6 +73,7 @@ const updateCode = () => {
       setShowErrorModal(true)
     }
   }
+
   return (
     <PageWrapper>
       <BackButton />
@@ -94,7 +91,7 @@ const updateCode = () => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setOne(text)
-                  updateCode()
+
                 }}
                 value={one}
                 maxLength={1}
@@ -108,7 +105,7 @@ const updateCode = () => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setTwo(text)
-                  updateCode()
+
                 }}
                 value={two}
                 maxLength={1}
@@ -122,7 +119,7 @@ const updateCode = () => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setThree(text)
-                  updateCode()
+
                 }}
                 value={three}
                 maxLength={1}
@@ -136,7 +133,7 @@ const updateCode = () => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setFour(text)
-                  updateCode()
+
                 }}
                 value={four}
                 maxLength={1}
@@ -150,7 +147,7 @@ const updateCode = () => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setFive(text)
-                  updateCode()
+
                 }}
                 value={five}
                 maxLength={1}
@@ -164,7 +161,7 @@ const updateCode = () => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setSix(text)
-                  updateCode()
+
                 }}
                 value={six}
                 maxLength={1}
