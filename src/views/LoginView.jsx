@@ -19,7 +19,8 @@ const LoginView = ({ navigation }) => {
     showErrorModal,
     setShowErrorModal,
     errorMessage,
-    setErrorMessage
+    setErrorMessage,
+    setToken
   } = useContext(MyContext)
 
   const validateErrorMessage = (errorMessage) => {
@@ -48,10 +49,10 @@ const LoginView = ({ navigation }) => {
 
       if (status ) {
           await AsyncStorage.setItem('sessionToken', data.data);
-        navigation.navigate('exchange');
+        navigation.navigate('SelectInformationBankView');
+        setToken(data.data)
       } else {
         validateErrorMessage(data.data.message);
-        console.log(data);
       }
     } catch (error) {
       console.error('Error en la petición:', error);
@@ -63,7 +64,7 @@ const LoginView = ({ navigation }) => {
       try {
         const sessionToken = await AsyncStorage.getItem('sessionToken');
         if (sessionToken) {
-          navigation.navigate('exchange');
+          navigation.navigate('SelectInformationBankView');
         }
       } catch (error) {
         console.error('Error al verificar el token de sesión:', error);
@@ -71,7 +72,7 @@ const LoginView = ({ navigation }) => {
       }
     };
 
-    checkSessionToken();
+    // checkSessionToken();
   }, [navigation, setShowErrorModal]);
 
   return (

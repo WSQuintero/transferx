@@ -47,9 +47,6 @@ const {  name,
       return false;
     }
 
-    // Verificar si el usuario ya existe antes de intentar registrarlo
-
-
     return true;
   }
 

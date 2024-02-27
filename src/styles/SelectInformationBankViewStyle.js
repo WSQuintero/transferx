@@ -2,13 +2,17 @@ import { StyleSheet } from "react-native"
 
 const SelectInformationBankViewStyle = StyleSheet.create({
   container: {
+    width: "100%",
     flex: 1,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    backgroundColor: "#10231D" // Color de fondo actualizado
   },
   centerContent: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    width: "100%"
   },
   title: {
     fontFamily: "Roboto",
@@ -27,7 +31,7 @@ const SelectInformationBankViewStyle = StyleSheet.create({
   },
   inputContainer: {
     width: "100%",
-    backgroundColor: ""
+    backgroundColor: "#10231D" // Color de fondo actualizado
   },
   inputLabel: {
     fontFamily: "Roboto",
@@ -37,58 +41,43 @@ const SelectInformationBankViewStyle = StyleSheet.create({
     marginTop: 10
   },
   textInputContainer: {
+    width: "100%",
     backgroundColor: "#10231D",
     borderRadius: 10,
     flexDirection: "row",
-    alignItems: "center"
-  },
-  icon: {
-    width: 20,
-    height: 20,
-    marginLeft: 10
-  },
-  iconRight: {
-    width: 20,
-    height: 20,
-    marginRight: 10
+    alignItems: "center",
+    borderWidth: 1, // Borde añadido
+    borderColor: "#BFBFBF" // Color del borde añadido
   },
   input: {
     borderRadius: 10,
-    marginTop: 30,
-    height: 30,
-    width: "80%",
-    padding: 10
-  },
-  signupButton: {
-    backgroundColor: "#2d2ade",
+    marginTop: 10,
     marginBottom: 20,
-
-    paddingHorizontal: 20,
-    borderRadius: 20,
-
-    width: 260
+    height: 40,
+    width: "100%",
+    paddingHorizontal: 10,
+    color: "#F4F3F5",
+    borderWidth: 1,
+    borderColor: "#BFBFBF"
   },
-  signupButtonText: {
-    color: "#ffffff",
-    textAlign: "center",
-    fontSize: 14,
-    marginBottom: 20
+  picker: {
+    width: "100%",
+    color: "#BFBFBF",
+    backgroundColor: "rgba(256, 256, 256, 0.1)",
+    borderRadius: 20,
+    borderColor: "#FFF", // Borde blanco
+    borderWidth: 1, // Borde añadido
+    padding: 10 // Añadido padding
+  },
+  button: {
+    marginTop: 30,
+    width: "100%"
   },
   footerText: {
     textAlign: "center",
     width: "100%",
     color: "#F4F3F5",
-    zIndex: 1,
-    marginTop: 0
-  },
-  backButton: {
-    marginLeft: 20
-  },
-  button: {
-    marginTop: 30
-  },
-  signupTextBold: {
-    color: "#C3F53C"
+    marginTop: 20
   }
 })
 

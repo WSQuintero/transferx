@@ -53,8 +53,7 @@ function Exchange({ navigation }) {
                 style={stylesExchangeView.buttonArrow}
                 onPress={() => setGetExchange(true)}
               >
-                {/* <AntDesign name="arrowdown" size={24} color="black" /> */}
-              <Text >
+                <Text>
                   Consultar
                 </Text>
               </TouchableOpacity>
@@ -131,5 +130,6 @@ function Exchange({ navigation }) {
     </>
   );
 }
+
 
 export default Exchange;
