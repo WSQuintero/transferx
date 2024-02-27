@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useContext } from "react"
+import React, { useMemo, useState, useContext,useEffect } from "react"
 import PageWrapper from "../components/PageWrapper"
 import BackButton from "../components/BackButton"
 import useLoadFonts from "../customHooks/useLoadFonts"
@@ -8,6 +8,7 @@ import RememberMeCheckBox from "../components/RememberMeCheckBox"
 import ButtonColor from "../components/ButtonColor"
 import { MyContext } from "../context/context"
 import ModalError from "../components/ModalError"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginView = ({ navigation }) => {
   const [email, setEmail] = useState("")
@@ -39,26 +40,39 @@ const LoginView = ({ navigation }) => {
   };
 
   const handleLogin = async () => {
-    // navigation.navigate("exchange")
-
     try {
       const { status, data } = await $Auth.signIn({
         email,
         password
-      })
+      });
 
-      if (status) {
-        // Registro exitoso, puedes navegar a la siguiente pantalla
-        navigation.navigate("exchange")
+      if (status ) {
+          await AsyncStorage.setItem('sessionToken', data.data);
+        navigation.navigate('exchange');
       } else {
-        // Manejar el caso de error, llamando a la función validateErrorMessage
-        validateErrorMessage(data.data.message)
-        console.log(data)
+        validateErrorMessage(data.data.message);
+        console.log(data);
       }
     } catch (error) {
-      console.error("Error en la petición:", error)
+      console.error('Error en la petición:', error);
     }
   }
+
+  useEffect(() => {
+    const checkSessionToken = async () => {
+      try {
+        const sessionToken = await AsyncStorage.getItem('sessionToken');
+        if (sessionToken) {
+          navigation.navigate('exchange');
+        }
+      } catch (error) {
+        console.error('Error al verificar el token de sesión:', error);
+        setShowErrorModal(true);
+      }
+    };
+
+    checkSessionToken();
+  }, [navigation, setShowErrorModal]);
 
   return (
     <PageWrapper>
