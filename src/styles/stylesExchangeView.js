@@ -48,6 +48,10 @@ const stylesExchangeView = StyleSheet.create({
     fontSize: 13,
     color: "#F4F3F5"
   },
+  inputLabelRed: {
+    color: "red",
+    fontSize: 15
+  },
   textInputContainer: {
     backgroundColor: "#081e18",
     borderRadius: 10,

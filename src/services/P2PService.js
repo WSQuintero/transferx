@@ -112,4 +112,21 @@ export default class P2PService {
       return { status: false, data: error.response }
     }
   }
+
+  async p2pRequest(token) {
+    try {
+      const response = await axios.get(
+        `https://transferx-backend.concilbot.com/api/v1/userP2P/`,
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      )
+
+      return { status: true, data: response.data }
+    } catch (error) {
+      return { status: false, data: error.response }
+    }
+  }
 }
