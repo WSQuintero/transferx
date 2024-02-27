@@ -21,7 +21,7 @@ const MyContextProvider = ({ children }) => {
       setTimeout(() => {
         setShowErrorModal(false)
         setErrorMessage("")
-      }, 2000)
+      }, 3000)
     }
   }, [showErrorModal])
 

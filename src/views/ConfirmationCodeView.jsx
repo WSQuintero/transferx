@@ -53,7 +53,8 @@ const ConfirmationCodeView = ({ navigation }) => {
 
 
     if (status) {
-      navigation.navigate("SelectInformationBankView")
+      navigation.navigate("login")
+      console.log(data)
     } else {
       setErrorMessage("Por favor intenta nuevamente, ha habido un error")
       setShowErrorModal(true)
@@ -71,6 +72,7 @@ const ConfirmationCodeView = ({ navigation }) => {
     } else {
       setErrorMessage("Por favor intenta nuevamente, ha habido un error")
       setShowErrorModal(true)
+      console.log(data.data)
     }
   }
 
