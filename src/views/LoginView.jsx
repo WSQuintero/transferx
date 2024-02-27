@@ -49,8 +49,9 @@ const LoginView = ({ navigation }) => {
 
       if (status ) {
           await AsyncStorage.setItem('sessionToken', data.data);
-        navigation.navigate('SelectInformationBankView');
+        navigation.navigate('exchange');
         setToken(data.data)
+        console.log(data.data)
       } else {
         validateErrorMessage(data.data.message);
       }
