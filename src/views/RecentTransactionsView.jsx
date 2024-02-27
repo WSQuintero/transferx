@@ -3,11 +3,14 @@ import PageWrapper from '../components/PageWrapper'
 import RecentTransactions from '../components/RecentTransactions'
 import BackButton from '../components/BackButton'
 import {MyContext} from "../context/context"
+import FooterMenu from '../components/FooterMenu'
+import { View } from 'react-native'
 
 function RecentTransactionsView({navigation}) {
   const {$Exchange,token}=useContext(MyContext)
   const [orders,setOrders]=useState()
   useEffect(()=>{
+
     const getOrders=async()=>{
       const {status,data}=await $Exchange.p2pGetAllRequest(token)
 
@@ -19,13 +22,16 @@ function RecentTransactionsView({navigation}) {
       }
     }
 
-    getOrders()
-  },[])
+    if($Exchange&&token){
+      getOrders()
+    }
+  },[$Exchange,token])
 
   return (
 <PageWrapper>
-  <BackButton/>
   <RecentTransactions navigation={navigation} orders={orders}/>
+  <FooterMenu actual="exchange" navigation={navigation} />
+
 </PageWrapper>
     )
 }

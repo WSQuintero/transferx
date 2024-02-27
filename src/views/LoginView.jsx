@@ -51,6 +51,7 @@ const LoginView = ({ navigation }) => {
           await AsyncStorage.setItem('sessionToken', data.data);
         navigation.navigate('exchange');
         setToken(data.data)
+        console.log(data)
       } else {
         validateErrorMessage(data.data.message);
       }

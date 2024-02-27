@@ -47,9 +47,9 @@ const Navigation = () => {
             <Stack.Screen name="signup" component={SignUpView} />
             <Stack.Screen name="SelectInformationBankView" component={SelectInformationBankView} />
             <Stack.Screen name="confirmationCode" component={ConfirmationCodeView} />
-            <Stack.Screen name="recentTransactionsView" component={RecentTransactionsView} />
+            <Stack.Screen name="exchange" component={RecentTransactionsView} />
             <Stack.Screen name="wallet" component={WalletView} />
-            <Stack.Screen name="exchange" component={Exchange} />
+            <Stack.Screen name="newExchange" component={Exchange} />
             <Stack.Screen name="services" component={ServicesView} />
             <Stack.Screen name="card" component={Dashboard} />
             <Stack.Screen name="contact" component={ContactView} />

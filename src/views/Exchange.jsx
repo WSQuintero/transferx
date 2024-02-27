@@ -157,7 +157,7 @@ function Exchange({ navigation }) {
           </View>
         </ScrollView>
       </PageWrapper>
-      <FooterMenu actual="exchange" navigation={navigation} />
+      {/* <FooterMenu actual="exchange" navigation={navigation} /> */}
     </>
   );
 }

@@ -19,12 +19,12 @@ function ComingSoonServices({navigation,setOpenCard,message}) {
             source={require("../../assets/completesize.png")}
             style={styles.imageLogo}
           />
-          <TouchableOpacity onPress={()=>setOpenCard(false)}>
+          {/* <TouchableOpacity onPress={()=>setOpenCard(false)}>
           <Image
             source={require("../../assets/x.png")}
             style={styles.imageClose}
           />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <View>
