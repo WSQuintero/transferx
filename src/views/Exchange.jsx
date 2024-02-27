@@ -7,6 +7,7 @@ import stylesExchangeView from "../styles/stylesExchangeView";
 import ButtonColor from "../components/ButtonColor";
 import FooterMenu from "../components/FooterMenu";
 import { MyContext } from "../context/context";
+import { formatNumber } from "../utils/Constants";
 
 function Exchange({ navigation }) {
   const [usdtTether, setUsdtTether] = useState("0");
@@ -24,11 +25,7 @@ function Exchange({ navigation }) {
     }
   };
 
-  function formatNumber(number) {
-    const [integerPart, decimalPart] = number.toString().split(".");
-    const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    return decimalPart ? `${formattedIntegerPart},${decimalPart}` : formattedIntegerPart;
-  }
+
 
   useEffect(() => {
     const fetchRate = async () => {

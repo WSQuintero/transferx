@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PageWrapper from '../components/PageWrapper'
 import RecentTransactions from '../components/RecentTransactions'
 import BackButton from '../components/BackButton'
@@ -6,13 +6,13 @@ import {MyContext} from "../context/context"
 
 function RecentTransactionsView({navigation}) {
   const {$Exchange,token}=useContext(MyContext)
-
+  const [orders,setOrders]=useState()
   useEffect(()=>{
     const getOrders=async()=>{
-      const {status,data}=await $Exchange.p2pRequest(token)
+      const {status,data}=await $Exchange.p2pGetAllRequest(token)
 
       if(status){
-        console.log(data)
+        setOrders(data.data)
       }else{
         console.log(data)
 
@@ -25,7 +25,7 @@ function RecentTransactionsView({navigation}) {
   return (
 <PageWrapper>
   <BackButton/>
-  <RecentTransactions navigation={navigation}/>
+  <RecentTransactions navigation={navigation} orders={orders}/>
 </PageWrapper>
     )
 }

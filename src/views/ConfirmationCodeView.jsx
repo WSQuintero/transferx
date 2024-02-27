@@ -54,7 +54,6 @@ const ConfirmationCodeView = ({ navigation }) => {
 
     if (status) {
       navigation.navigate("login")
-      console.log(data)
     } else {
       setErrorMessage("Por favor intenta nuevamente, ha habido un error")
       setShowErrorModal(true)

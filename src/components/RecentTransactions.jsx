@@ -1,112 +1,111 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Modal,
+  TextInput,
+} from "react-native";
+import { formatDateTime, formatNumber } from "../utils/Constants";
 
-const RecentTransactions = ({ navigation }) => {
+const RecentTransactions = ({ navigation, orders }) => {
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleOrderPress = (order) => {
+    setSelectedOrder(order);
+    setModalVisible(true);
+  };
+
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.cardContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.titleText}>Recent Transactions</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("recentTransactionsView")}>
-            <Text style={[styles.titleText, { color: "#C3F53C" }]}>View All</Text>
+          <Text style={styles.titleText}>Transacciones recientes</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("recentTransactionsView")}
+          >
+            <Text style={[styles.titleText, { color: "#C3F53C" }]}>
+              View All
+            </Text>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.contentContainer}>
-          <Image
-            source={require("../../assets/men.png")}
-            style={styles.image}
-          />
+        {orders?.map((order) => (
+          <TouchableOpacity
+            key={order.id}
+            onPress={() => handleOrderPress(order)}
+          >
+            <View style={styles.contentContainer}>
+              <Image
+                source={require("../../assets/transfer.png")}
+                style={styles.image}
+              />
 
-          <View style={styles.detailsContainer}>
-            <View style={styles.subContainer}>
-              <Text style={styles.boldText}>USDC Recharge</Text>
-              <Text style={styles.price}>$500.00</Text>
+              <View style={styles.detailsContainer}>
+                <View style={styles.subContainer}>
+                  <Text style={styles.boldText}>{order.state}</Text>
+                  <Text style={styles.price}>
+                    ${formatNumber(order.amount_currency_out)}
+                  </Text>
+                </View>
+                <Text style={styles.timeText}>
+                  {formatDateTime(order.created_at)}
+                </Text>
+              </View>
             </View>
-            <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
-          </View>
-        </View>
-
-        {/* Tarjeta 2 */}
-        <View style={styles.contentContainer}>
-          <Image
-            source={require("../../assets/google.png")}
-            style={styles.image}
-          />
-
-          <View style={styles.detailsContainer}>
-            <View style={styles.subContainer}>
-              <Text style={styles.boldText}>Google Payment</Text>
-              <Text style={styles.price}>$410.00</Text>
-            </View>
-            <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
-          </View>
-        </View>
-
-        {/* Tarjeta 3 */}
-        <View style={styles.contentContainer}>
-          <Image
-            source={require("../../assets/visa.png")}
-            style={styles.image}
-          />
-
-          <View style={styles.detailsContainer}>
-            <View style={styles.subContainer}>
-              <Text style={styles.boldText}>Visa Transaction</Text>
-              <Text style={styles.price}>$720.00</Text>
-            </View>
-            <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
-          </View>
-        </View>
-
-        {/* Tarjeta 4 */}
-        <View style={styles.contentContainer}>
-          <Image
-            source={require("../../assets/facebook.png")}
-            style={styles.image}
-          />
-
-          <View style={styles.detailsContainer}>
-            <View style={styles.subContainer}>
-              <Text style={styles.boldText}>Facebook Purchase</Text>
-              <Text style={styles.price}>$600.00</Text>
-            </View>
-            <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
-          </View>
-        </View>
-
-        {/* Tarjeta 5 */}
-        <View style={styles.contentContainer}>
-          <Image
-            source={require("../../assets/check.png")}
-            style={styles.image}
-          />
-
-          <View style={styles.detailsContainer}>
-            <View style={styles.subContainer}>
-              <Text style={styles.boldText}>Check Deposit</Text>
-              <Text style={styles.price}>$53.00</Text>
-            </View>
-            <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
-          </View>
-        </View>
-
-        {/* Tarjeta 6 */}
-        <View style={styles.contentContainer}>
-          <Image
-            source={require("../../assets/congratulations.png")}
-            style={styles.image}
-          />
-
-          <View style={styles.detailsContainer}>
-            <View style={styles.subContainer}>
-              <Text style={styles.boldText}>Congratulations Reward</Text>
-              <Text style={styles.price}>$60.00</Text>
-            </View>
-            <Text style={styles.timeText}>02:15 PM . Sept 17, 2023</Text>
-          </View>
-        </View>
+          </TouchableOpacity>
+        ))}
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>Detalle de la orden</Text>
+            {selectedOrder && (
+              <View style={styles.modalContent}>
+                <Text style={styles.modalText}>
+                  Solicitante: {selectedOrder.owner_account_bank_transfer}
+                </Text>
+                <Text style={styles.modalText}>
+                  Cuenta a transferir: {selectedOrder.number_account_bank_transfer}
+                </Text>
+                <Text style={styles.modalText}>
+                  Estado: {selectedOrder.state}
+                </Text>
+                <Text style={styles.modalText}>
+                  Monto solicitado: ${formatNumber(selectedOrder.amount_currency_out)} COPS
+                </Text>
+                <Text style={styles.modalText}>
+                  Fecha de solicitud: {formatDateTime(selectedOrder.created_at)}
+                </Text>
+                <TextInput style={styles.inputHash} placeholder="Pon tu hash"/>
+
+              </View>
+            )}
+                        <TouchableOpacity
+              style={styles.modalCloseButton}
+              onPress={() => setModalVisible(false)}
+            >
+               <Text style={styles.modalButtonText}>Enviar Hash</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalCloseButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.modalButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -122,45 +121,102 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   titleText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "white"
+    color: "white",
   },
   contentContainer: {
     flexDirection: "row",
     marginTop: 20,
-    padding: 10
+    padding: 10,
   },
   image: {
     width: 60,
     height: 60,
     borderRadius: 8,
-    objectFit:"contain"
+    objectFit: "contain",
   },
   detailsContainer: {
     marginLeft: 10,
     flex: 1,
     color: "white",
     borderBottomWidth: 1,
-    borderBottomColor: "gray"
+    borderBottomColor: "gray",
   },
   subContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 5
+    marginBottom: 5,
   },
   boldText: {
     fontWeight: "bold",
-    color: "white"
+    color: "white",
   },
   timeText: {
-    color: "#888"
+    color: "#888",
   },
   price: {
-    color: "white"
+    color: "white",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "#10231D",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 15,
+    color:"#F4F3F5"
+  },
+  modalContent: {
+    marginBottom: 20,
+    alignItems: "flex-start",
+  },
+  modalText: {
+    marginBottom: 10,
+    color:"#F4F3F5"
+
+  },
+  modalCloseButton: {
+    backgroundColor: "#C3F53C",
+    borderRadius: 10,
+    padding: 10,
+    elevation: 2,
+    width:200,
+    marginTop:10
+  },
+  modalButtonText: {
+    color: "#10231D",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  inputHash:{
+    height:40,
+    width:250,
+    backgroundColor:"white",
+    padding:10,
+    borderRadius:20,
+    marginTop:10
   }
 });
 

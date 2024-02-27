@@ -113,7 +113,29 @@ export default class P2PService {
     }
   }
 
-  async p2pRequest(token) {
+  async p2pRequest(token, amount) {
+    try {
+      const response = await axios.post(
+        `https://transferx-backend.concilbot.com/api/v1/userP2P/`,
+        {
+          amount_currency_in: amount,
+          hash_transfer_in:
+            "98322f96be989f2844bb663afbd906d26363a5ec9eb1de7499abd6b19cbf20a9"
+        },
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      )
+
+      return { status: true, data: response.data }
+    } catch (error) {
+      return { status: false, data: error.response }
+    }
+  }
+
+  async p2pGetAllRequest(token) {
     try {
       const response = await axios.get(
         `https://transferx-backend.concilbot.com/api/v1/userP2P/`,
