@@ -14,6 +14,7 @@ const MyContextProvider = ({ children }) => {
   const [password, setPassword] = useState("")
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
+  const [informationUser,setInformationUser]=useState()
   const $Auth = useMemo(() => new AuthService(), [])
   const [token,setToken]=useState()
   const $Exchange = useMemo(() => new P2PService(token), [])
@@ -47,7 +48,9 @@ const MyContextProvider = ({ children }) => {
         $Auth,
         $Exchange,
         token,
-        setToken
+        setToken,
+        informationUser,
+        setInformationUser
       }}>
       {children}
     </MyContext.Provider>

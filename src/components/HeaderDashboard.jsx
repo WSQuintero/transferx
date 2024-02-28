@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
-const HeaderDashboard = () => {
+const HeaderDashboard = ({informationUser}) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
@@ -13,7 +13,7 @@ const HeaderDashboard = () => {
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.greetingText}>Good Morning!</Text>
-          <Text style={styles.nameText}>Mario Cardona.</Text>
+          <Text style={styles.nameText}>{informationUser.user.firstname} {informationUser.user.lastname}</Text>
         </View>
       </View>
       <View style={styles.rightContainer}>

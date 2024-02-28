@@ -21,7 +21,7 @@ import ComingSoonCard from "../components/ComingSoonCard"
 
 const Dashboard = ({ navigation }) => {
   const [selectedCard, setSelectedCard] = useState(null)
-  const { pageTellMeAboutYou, setPageTellMeAboutYou } = useContext(MyContext)
+  const { pageTellMeAboutYou, setPageTellMeAboutYou,informationUser } = useContext(MyContext)
   const fontsLoaded = useLoadFonts()
   const [openCard,setOpenCard]=useState(true)
   const handleCardPress = (index) => {
@@ -31,7 +31,7 @@ const Dashboard = ({ navigation }) => {
   return (
     <>
     <PageWrapper>
-      <HeaderDashboard/>
+      <HeaderDashboard informationUser={informationUser}/>
       <CreditCardComponent/>
       <QuickActionSection/>
       <RecentTransactions navigation={navigation}/>

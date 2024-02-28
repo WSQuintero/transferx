@@ -9,6 +9,8 @@ import { View } from 'react-native'
 function RecentTransactionsView({navigation}) {
   const {$Exchange,token}=useContext(MyContext)
   const [orders,setOrders]=useState()
+  const[changedHash,setChangedHash]=useState(false)
+
   useEffect(()=>{
 
     const getOrders=async()=>{
@@ -16,6 +18,8 @@ function RecentTransactionsView({navigation}) {
 
       if(status){
         setOrders(data.data)
+        // console.log(data)
+
       }else{
         console.log(data)
 
@@ -25,11 +29,11 @@ function RecentTransactionsView({navigation}) {
     if($Exchange&&token){
       getOrders()
     }
-  },[$Exchange,token])
+  },[$Exchange,token,changedHash])
 
   return (
 <PageWrapper>
-  <RecentTransactions navigation={navigation} orders={orders}/>
+  <RecentTransactions navigation={navigation} orders={orders} exchange={$Exchange} token={token} setChangedHash={setChangedHash} setOrders={setOrders}/>
   <FooterMenu actual="exchange" navigation={navigation} />
 
 </PageWrapper>

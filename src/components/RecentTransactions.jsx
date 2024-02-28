@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   View,
   Text,
@@ -10,20 +10,68 @@ import {
   TextInput
 } from "react-native"
 import { formatDateTime, formatNumber } from "../utils/Constants"
+import ModalSuccess from "./ModalSuccess"
+import ModalError from "./ModalError"
 
-const RecentTransactions = ({ navigation, orders }) => {
+const RecentTransactions = ({ navigation, orders, exchange, token ,setChangedHash,setOrders}) => {
   const [selectedOrder, setSelectedOrder] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
+  const [hash, setHash] = useState()
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [succesMessage, setSuccesMessage] = useState()
+  const [showErrorModal, setShowErrorModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
+  const [order, setOrder] = useState()
 
   const handleOrderPress = (order) => {
     setSelectedOrder(order)
     setModalVisible(true)
   }
 
+  useEffect(() => {
+    if (showErrorModal) {
+      setTimeout(() => {
+        setShowErrorModal(false)
+        setErrorMessage("")
+      }, 3000)
+    }
+  }, [showErrorModal])
+
+  useEffect(() => {
+    if (showSuccessModal) {
+      setTimeout(() => {
+        setShowSuccessModal(false)
+        setSuccesMessage("")
+      }, 3000)
+    }
+  }, [showSuccessModal])
+
+  const handleUpdateHash = async () => {
+    setChangedHash(false)
+    const { status, data } = await exchange.p2pConfirmHash(
+      token,
+      order.id,
+      hash
+    )
+    if (status) {
+      setShowSuccessModal(true)
+      setSuccesMessage("Hash actualizado correctamente")
+      setChangedHash(true)
+      setModalVisible(false)
+      setSelectedOrder(null)
+      setHash("")
+
+    } else {
+      setShowErrorModal(true)
+      if(data.data.message ===`"hash_transfer_in" length must be at least 10 characters long`){
+        setErrorMessage("El hash debe tener mínimo 10 carácteres")
+      }
+    }
+  }
+
   return (
     <>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("newExchange")}>
+      <TouchableOpacity onPress={() => navigation.navigate("newExchange")}>
         <Text
           style={[
             styles.titleText,
@@ -35,9 +83,9 @@ const RecentTransactions = ({ navigation, orders }) => {
               padding: 5,
               width: "60%",
               textAlign: "center",
-              right:20,
-              position:"absolute",
-              top:50,
+              right: 20,
+              position: "absolute",
+              top: 50
             }
           ]}>
           Crear nueva orden
@@ -52,7 +100,10 @@ const RecentTransactions = ({ navigation, orders }) => {
           {orders?.map((order) => (
             <TouchableOpacity
               key={order.id}
-              onPress={() => handleOrderPress(order)}>
+              onPress={() => {
+                handleOrderPress(order)
+                setOrder(order)
+              }}>
               <View style={styles.contentContainer}>
                 <Image
                   source={require("../../assets/transfer.png")}
@@ -62,15 +113,19 @@ const RecentTransactions = ({ navigation, orders }) => {
                 <View style={styles.detailsContainer}>
                   <View style={styles.subContainer}>
                     <Text style={styles.boldText}>{order.state}</Text>
-                    <View style={{flexDirection:"column",gap:3,position:"relative"}}>
-                    <Text style={styles.price}>
-                      ${formatNumber(order.amount_currency_out)}
-                    </Text>
-                    <Text style={styles.send}>
-                      Enviar hash
-                    </Text>
+                    <View
+                      style={{
+                        flexDirection: "column",
+                        gap: 3,
+                        position: "relative",
+                      }}>
+                      <Text style={styles.price}>
+                        ${formatNumber(order.amount_currency_out)}
+                      </Text>
+                      {order.state==="pending"&&(
+                        <Text style={styles.send}>Enviar hash</Text>
+                      )}
                     </View>
-
                   </View>
                   <Text style={styles.timeText}>
                     {formatDateTime(order.created_at)}
@@ -109,17 +164,26 @@ const RecentTransactions = ({ navigation, orders }) => {
                     Fecha de solicitud:{" "}
                     {formatDateTime(selectedOrder.created_at)}
                   </Text>
-                  <TextInput
-                    style={styles.inputHash}
-                    placeholder="Pon tu hash"
-                  />
-                </View>
-              )}
-              <TouchableOpacity
+                  {selectedOrder.state==="pending"&&(
+
+              <View style={{justifyContent:"center",alignItems:"center"}}>
+              <TextInput
+                  style={styles.inputHash}
+                  placeholder="Pon tu hash"
+                  value={hash}
+                  onChangeText={(value) => setHash(value)}
+                />
+                <TouchableOpacity
                 style={styles.modalCloseButton}
-                onPress={() => setModalVisible(false)}>
+                onPress={() => handleUpdateHash(order)}>
                 <Text style={styles.modalButtonText}>Enviar Hash</Text>
               </TouchableOpacity>
+              </View>
+                  )}
+
+                </View>
+              )}
+
               <TouchableOpacity
                 style={styles.modalCloseButton}
                 onPress={() => setModalVisible(false)}>
@@ -128,6 +192,14 @@ const RecentTransactions = ({ navigation, orders }) => {
             </View>
           </View>
         </Modal>
+        <ModalSuccess
+          showSuccessModal={showSuccessModal}
+          succesMessage={succesMessage}
+        />
+        <ModalError
+          showErrorModal={showErrorModal}
+          errorMessage={errorMessage}
+        />
       </ScrollView>
     </>
   )
@@ -136,8 +208,7 @@ const RecentTransactions = ({ navigation, orders }) => {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    marginTop:100
-
+    marginTop: 100
   },
   cardContainer: {
     margin: 10,
@@ -153,12 +224,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white"
   },
-  send:{
-    backgroundColor:"#C3F53C",
-    paddingHorizontal:6,
-    paddingVertical:1,
-    borderRadius:5,
-    },
+  send: {
+    backgroundColor: "#C3F53C",
+    paddingHorizontal: 6,
+    paddingVertical: 1,
+    borderRadius: 5
+  },
   contentContainer: {
     flexDirection: "row",
     marginTop: 20,
@@ -179,16 +250,15 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     flexDirection: "row",
-    alignItems:"center",
-    justifyContent: "space-between",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   boldText: {
     fontWeight: "bold",
     color: "white"
   },
   timeText: {
-    color: "#888",
-
+    color: "#888"
   },
   price: {
     color: "white"
