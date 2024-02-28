@@ -18,7 +18,7 @@ const MyContextProvider = ({ children }) => {
   const $Auth = useMemo(() => new AuthService(), [])
   const [token,setToken]=useState()
   const $Exchange = useMemo(() => new P2PService(token), [])
-
+  const [updatedOrder,setUpdatedOrder]=useState()
   useEffect(() => {
     if (showErrorModal) {
       setTimeout(() => {
@@ -50,7 +50,9 @@ const MyContextProvider = ({ children }) => {
         token,
         setToken,
         informationUser,
-        setInformationUser
+        setInformationUser,
+        updatedOrder,
+        setUpdatedOrder
       }}>
       {children}
     </MyContext.Provider>

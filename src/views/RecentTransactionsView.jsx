@@ -7,7 +7,7 @@ import FooterMenu from '../components/FooterMenu'
 import { View } from 'react-native'
 
 function RecentTransactionsView({navigation}) {
-  const {$Exchange,token}=useContext(MyContext)
+  const {$Exchange,token,updatedOrder}=useContext(MyContext)
   const [orders,setOrders]=useState()
   const[changedHash,setChangedHash]=useState(false)
 
@@ -18,18 +18,15 @@ function RecentTransactionsView({navigation}) {
 
       if(status){
         setOrders(data.data)
-        // console.log(data)
-
       }else{
         console.log(data)
 
       }
     }
 
-    if($Exchange&&token){
       getOrders()
-    }
-  },[$Exchange,token,changedHash])
+
+  },[$Exchange,token,changedHash,updatedOrder])
 
   return (
 <PageWrapper>

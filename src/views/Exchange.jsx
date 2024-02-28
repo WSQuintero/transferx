@@ -11,17 +11,18 @@ import { formatNumber } from "../utils/Constants";
 
 function Exchange({ navigation }) {
   const [usdtTether, setUsdtTether] = useState("0");
-  const { $Exchange, token } = useContext(MyContext);
+  const { $Exchange, token,setUpdatedOrder } = useContext(MyContext);
   const [rate, setRate] = useState();
   const [quote, setQuote] = useState();
   const [countdown, setCountdown] = useState(30);
 
   const handleSendRequest =async () => {
-
+    setUpdatedOrder(false)
     const {status,data}=await $Exchange.p2pRequest(token,usdtTether)
 
     if(status){
-      navigation.navigate("recentTransactionsView");
+      navigation.navigate("exchange");
+      setUpdatedOrder(true)
     }
   };
 
