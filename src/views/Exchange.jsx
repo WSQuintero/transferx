@@ -1,72 +1,73 @@
-
-import React, { useContext, useEffect, useState } from "react";
-import { Image, ScrollView, Text, TextInput, View } from "react-native";
-import BackButton from "../components/BackButton";
-import PageWrapper from "../components/PageWrapper";
-import stylesExchangeView from "../styles/stylesExchangeView";
-import ButtonColor from "../components/ButtonColor";
-import FooterMenu from "../components/FooterMenu";
-import { MyContext } from "../context/context";
-import { formatNumber } from "../utils/Constants";
+import React, { useContext, useEffect, useState } from "react"
+import { Image, ScrollView, Text, TextInput, View } from "react-native"
+import BackButton from "../components/BackButton"
+import PageWrapper from "../components/PageWrapper"
+import stylesExchangeView from "../styles/stylesExchangeView"
+import ButtonColor from "../components/ButtonColor"
+import FooterMenu from "../components/FooterMenu"
+import { MyContext } from "../context/context"
+import { formatNumber } from "../utils/Constants"
 
 function Exchange({ navigation }) {
-  const [usdtTether, setUsdtTether] = useState("0");
-  const { $Exchange, token,setUpdatedOrder } = useContext(MyContext);
-  const [rate, setRate] = useState();
-  const [quote, setQuote] = useState();
-  const [countdown, setCountdown] = useState(30);
+  const [usdtTether, setUsdtTether] = useState("0")
+  const { $Exchange, token, setUpdatedOrder } = useContext(MyContext)
+  const [rate, setRate] = useState()
+  const [quote, setQuote] = useState()
+  const [countdown, setCountdown] = useState(30)
 
-  const handleSendRequest =async () => {
+  const handleSendRequest = async () => {
     setUpdatedOrder(false)
-    const {status,data}=await $Exchange.p2pRequest(token,usdtTether)
+    const { status, data } = await $Exchange.p2pRequest(token, usdtTether)
 
-    if(status){
-      navigation.navigate("exchange");
+    if (status) {
+      navigation.navigate("exchange")
       setUpdatedOrder(true)
+    } else {
+      console.log(data.data)
     }
-  };
-
-
+  }
 
   useEffect(() => {
     const fetchRate = async () => {
-      const { status, data } = await $Exchange.getP2PRate(token);
+      const { status, data } = await $Exchange.getP2PRate(token)
       if (status) {
-        setRate(data.data.rateTransferx);
+        setRate(data.data.rateTransferx)
       } else {
-        console.log(data);
+        console.log(data)
       }
-    };
+    }
 
     const fetchQuote = async () => {
-      const { status, data } = await $Exchange.getP2PQuote(token, usdtTether);
+      const { status, data } = await $Exchange.getP2PQuote(token, usdtTether)
       if (status) {
-        setQuote(data.data.quoteAmountOut);
+        setQuote(data.data.quoteAmountOut)
       } else {
-        console.log(data);
+        console.log(data)
       }
-    };
+    }
 
-    fetchRate();
-    fetchQuote();
+    fetchRate()
+    fetchQuote()
 
     // Establecer el intervalo para actualizar cada 30 segundos
-    const interval = 30 * 1000;
-    const intervalId = setInterval(fetchRate, interval);
-    const intervalQuote = setInterval(fetchQuote, interval);
+    const interval = 30 * 1000
+    const intervalId = setInterval(fetchRate, interval)
+    const intervalQuote = setInterval(fetchQuote, interval)
 
     // Establecer el intervalo para el contador regresivo
     const countdownIntervalId = setInterval(() => {
-      setCountdown((prevCountdown) => (prevCountdown > 0 ? prevCountdown - 1 : 30));
-    }, 1000);
+      setCountdown((prevCountdown) =>
+        prevCountdown > 0 ? prevCountdown - 1 : 30
+      )
+    }, 1000)
 
     // Limpiar los intervalos al desmontar el componente
     return () => {
-      clearInterval(intervalId);
-      clearInterval(intervalQuote);
-      clearInterval(countdownIntervalId);
-    };
-  }, [usdtTether, token]);
+      clearInterval(intervalId)
+      clearInterval(intervalQuote)
+      clearInterval(countdownIntervalId)
+    }
+  }, [usdtTether, token])
 
   return (
     <>
@@ -76,7 +77,8 @@ function Exchange({ navigation }) {
         <ScrollView style={stylesExchangeView.container}>
           <View style={stylesExchangeView.containerChange}>
             <Text style={stylesExchangeView.titleContainer}>
-              Available Balance: <Text style={stylesExchangeView.titleUsdt}>USDT 5667.00</Text>
+              Available Balance:{" "}
+              <Text style={stylesExchangeView.titleUsdt}>USDT 5667.00</Text>
             </Text>
             <View style={stylesExchangeView.inputContainer}>
               <View style={stylesExchangeView.textInputContainerClear}>
@@ -94,8 +96,8 @@ function Exchange({ navigation }) {
                   style={stylesExchangeView.textInput}
                   onChangeText={(text) => {
                     // Solo permitir números
-                    const numericValue = text.replace(/[^0-9]/g, "");
-                    setUsdtTether(numericValue);
+                    const numericValue = text.replace(/[^0-9]/g, "")
+                    setUsdtTether(numericValue)
                   }}
                   value={usdtTether}
                   keyboardType="numeric" // Esto permitirá solo números
@@ -108,11 +110,18 @@ function Exchange({ navigation }) {
                   source={require("../../assets/colombianFlag.png")}
                   style={stylesExchangeView.icon}
                 />
-                <Text style={stylesExchangeView.textInput}>COP - Colombian Peso</Text>
+                <Text style={stylesExchangeView.textInput}>
+                  COP - Colombian Peso
+                </Text>
               </View>
             </View>
             <View style={stylesExchangeView.inputContainer}>
-              <Text style={stylesExchangeView.inputLabel}>Valor a recibir <Text style={stylesExchangeView.inputLabelRed}>{" (cambia cada 30 segundos)"}</Text> </Text>
+              <Text style={stylesExchangeView.inputLabel}>
+                Valor a recibir{" "}
+                <Text style={stylesExchangeView.inputLabelRed}>
+                  {" (cambia cada 30 segundos)"}
+                </Text>{" "}
+              </Text>
               <View style={stylesExchangeView.textInputContainer}>
                 <Text style={stylesExchangeView.textInput}>
                   ${quote ? formatNumber(quote) : 0} COPS
@@ -152,7 +161,10 @@ function Exchange({ navigation }) {
             </View>
           </View>
           <View style={stylesExchangeView.containerButton}>
-            <ButtonColor navigation={navigation} to={"card"} handleSignUp={handleSendRequest}>
+            <ButtonColor
+              navigation={navigation}
+              to={"card"}
+              handleSignUp={handleSendRequest}>
               Confirm
             </ButtonColor>
           </View>
@@ -160,7 +172,7 @@ function Exchange({ navigation }) {
       </PageWrapper>
       {/* <FooterMenu actual="exchange" navigation={navigation} /> */}
     </>
-  );
+  )
 }
 
-export default Exchange;
+export default Exchange
