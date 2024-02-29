@@ -63,7 +63,7 @@ export default class AuthService {
       const response = await axios.post(
         "https://transferx-backend.concilbot.com/api/v1/users/resend-otp-cod",
         {
-          cellphone
+          cellphone: `57${cellphone}`
         }
       )
 
