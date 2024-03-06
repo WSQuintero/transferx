@@ -77,13 +77,14 @@ const SelectInformationBankView = ({ navigation }) => {
   const handleUpdateInformationBank = async () => {
     if (!validation()) return
 
-    const {status,data} = await $Exchange.updateWallet(token, wallet)
-    if(status){
+    const { status, data } = await $Exchange.updateWallet(token, wallet)
+    if (status) {
       const informationBankUpdateResult = await $Exchange.updateInformationBank(
         token,
         {
           id_bank_transfer_out: selectedIdBank,
-          type_account_bank_transfer: accountType ==="Ahorros"?"debit":"current",
+          type_account_bank_transfer:
+            accountType === "Ahorros" ? "debit" : "current",
           id_type_owner_account_bank_transfer: idType,
           id_number_owner_account_bank_transfer: numberId, // Corregido
           number_account_bank_transfer: accountNumber,
@@ -97,9 +98,6 @@ const SelectInformationBankView = ({ navigation }) => {
         console.log(informationBankUpdateResult.data)
       }
     }
-
-
-
   }
 
   return (

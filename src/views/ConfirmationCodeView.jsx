@@ -43,25 +43,21 @@ const ConfirmationCodeView = ({ navigation }) => {
     })
   }
 
-
-
   const handleConfirmateOtp = async () => {
     const { status, data } = await $Auth.confirmCellphone({
       cellphone,
-      code:`${one}${two}${three}${four}${five}${six}`
+      code: `${one}${two}${three}${four}${five}${six}`
     })
-
 
     if (status) {
       navigation.navigate("login")
     } else {
       setErrorMessage("Por favor intenta nuevamente, ha habido un error")
       setShowErrorModal(true)
-      console.log(data)
     }
   }
 
-  const handleResendConfirmateOtp=async()=>{
+  const handleResendConfirmateOtp = async () => {
     const { status, data } = await $Auth.resendConfirmationCode({
       cellphone
     })
@@ -82,8 +78,8 @@ const ConfirmationCodeView = ({ navigation }) => {
         <View style={stylesConfrrmationCodeView.content}>
           <Text style={stylesConfrrmationCodeView.title}>OTP Verification</Text>
           <Text style={stylesConfrrmationCodeView.subtitle}>
-            To sign up your account, enter the 6-digit code we sent to
-            +57{cellphone}
+            To sign up your account, enter the 6-digit code we sent to +57
+            {cellphone}
           </Text>
 
           <View style={stylesConfrrmationCodeView.inputContainer}>
@@ -92,7 +88,6 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setOne(text)
-
                 }}
                 value={one}
                 maxLength={1}
@@ -106,7 +101,6 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setTwo(text)
-
                 }}
                 value={two}
                 maxLength={1}
@@ -120,7 +114,6 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setThree(text)
-
                 }}
                 value={three}
                 maxLength={1}
@@ -134,7 +127,6 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setFour(text)
-
                 }}
                 value={four}
                 maxLength={1}
@@ -148,7 +140,6 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setFive(text)
-
                 }}
                 value={five}
                 maxLength={1}
@@ -162,7 +153,6 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setSix(text)
-
                 }}
                 value={six}
                 maxLength={1}
@@ -182,18 +172,14 @@ const ConfirmationCodeView = ({ navigation }) => {
               Resend OTP
             </Text>
           </Text>
-                <View
-            style={stylesConfrrmationCodeView.buttonContainer}
-
-                >
-
-          <ButtonColor
-            navigation={navigation}
-            to={"login"}
-            handleSignUp={handleConfirmateOtp}>
-            Confirm
-          </ButtonColor>
-                </View>
+          <View style={stylesConfrrmationCodeView.buttonContainer}>
+            <ButtonColor
+              navigation={navigation}
+              to={"login"}
+              handleSignUp={handleConfirmateOtp}>
+              Confirm
+            </ButtonColor>
+          </View>
         </View>
       </View>
       <ModalError errorMessage={errorMessage} showErrorModal={showErrorModal} />
