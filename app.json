@@ -34,6 +34,21 @@
         "API_URL": "@env API_URL"
       }
     },
-    "plugins": ["expo-font"]
+    "plugins": [
+      "expo-font",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 30,
+            "targetSdkVersion": 30,
+            "buildToolsVersion": "30.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "11.0"
+          }
+        }
+      ]
+    ]
   }
 }
