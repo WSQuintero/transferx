@@ -80,7 +80,7 @@ const RecentTransactions = ({
 
   return (
     <>
-      <TouchableOpacity onPress={() => navigation.navigate("dialog")}>
+      <TouchableOpacity onPress={() => navigation.navigate("newExchange")}>
         <Text
           style={[
             styles.titleText,
