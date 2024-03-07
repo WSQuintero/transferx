@@ -1,71 +1,72 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import PageWrapper from "../components/PageWrapper";
-import stylesInitView from "../styles/stylesInitView";
+import React, { useEffect, useState } from "react"
+import { View, Text, Image, TouchableOpacity } from "react-native"
+import PageWrapper from "../components/PageWrapper"
+import stylesInitView from "../styles/stylesInitView"
 
-const InitView = ({ navigation }) => {
-  const [textButton, setTextButton] = useState("Next");
-  const [selectedOption, setSelectedOption] = useState("Option 1");
+function InitView({ navigation }) {
+  const [textButton, setTextButton] = useState("Siguiente")
+  const [selectedOption, setSelectedOption] = useState("Option 1")
   const [selectedImage, setSelectedImage] = useState(
     require("../../assets/slider1.png")
-  );
-  const [title, setTitle] = useState("Welcome to Transfer X");
+  )
+  const [title, setTitle] = useState("¡Bienvenido a Transfer X!")
   const [subtitle, setSubtitle] = useState(
-    "Instantly convert your USDT to Colombian Pesos at competitive rates"
-  );
-  const options = ["Option 1", "Option 2", "Option 3"];
+    "Convierte al instante tus USDT a Pesos Colombianos a tasas competitivas"
+  )
+  const options = ["Option 1", "Option 2", "Option 3"]
 
   const imageMap = {
     "Option 1": require("../../assets/slider1.png"),
     "Option 2": require("../../assets/slider2.png"),
-    "Option 3": require("../../assets/slider3.png"),
-  };
+    "Option 3": require("../../assets/slider3.png")
+  }
 
   const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    setSelectedImage(imageMap[option]);
+    setSelectedOption(option)
+    setSelectedImage(imageMap[option])
 
     switch (option) {
       case "Option 1":
-        setTitle("Welcome to Transfer X");
+        setTitle("Bienvenido a Transfer X")
         setSubtitle(
-          "Instantly convert your USDT to Colombian Pesos at competitive rates"
-        );
-        setTextButton("Next");
-        break;
+          "Convierte instantáneamente tus USDT a Pesos Colombianos a tasas competitivas"
+        )
+        setTextButton("Siguiente")
+        break
       case "Option 2":
-        setTitle("Future Features Await");
+        setTitle("Características Futuras Esperan")
         setSubtitle(
-          "Get ready for a full-featured wallet, card services, and more - coming soon!"
-        );
-        setTextButton("Next");
-        break;
+          "¡Prepárate para una billetera completa, servicios de tarjetas y más, próximamente!"
+        )
+        setTextButton("Siguiente")
+        break
       case "Option 3":
-        setTitle("Your Crypto, Your Control");
-        setSubtitle("Manage your transactions with transparency and real-time tracking");
-        break;
-      
+        setTitle("Tu Criptomoneda, Tu Control")
+        setSubtitle(
+          "Gestiona tus transacciones con transparencia y seguimiento en tiempo real"
+        )
+        break
     }
-  };
+  }
 
   const handleNextButtonClick = () => {
-    const currentIndex = options.indexOf(selectedOption);
+    const currentIndex = options.indexOf(selectedOption)
     if (currentIndex === 1) {
-      const nextIndex = (currentIndex + 1) % options.length;
-      const nextOption = options[nextIndex];
-      handleOptionSelect(nextOption);
-      setTextButton("Get Started");
+      const nextIndex = (currentIndex + 1) % options.length
+      const nextOption = options[nextIndex]
+      handleOptionSelect(nextOption)
+      setTextButton("Comencemos")
     } else {
-      if (textButton === "Get Started") {
-        navigation.navigate("login");
+      if (textButton === "Comencemos") {
+        navigation.navigate("login")
       } else {
-        setTextButton("Next");
-        const nextIndex = (currentIndex + 1) % options.length;
-        const nextOption = options[nextIndex];
-        handleOptionSelect(nextOption);
+        setTextButton("Siguiente")
+        const nextIndex = (currentIndex + 1) % options.length
+        const nextOption = options[nextIndex]
+        handleOptionSelect(nextOption)
       }
     }
-  };
+  }
 
   return (
     <PageWrapper>
@@ -85,15 +86,14 @@ const InitView = ({ navigation }) => {
                 key={option}
                 style={[
                   stylesInitView.optionButton,
-                  selectedOption === option && stylesInitView.selectedOption,
+                  selectedOption === option && stylesInitView.selectedOption
                 ]}
-                onPress={() => handleOptionSelect(option)}
-              >
+                onPress={() => handleOptionSelect(option)}>
                 <View
                   style={[
                     stylesInitView.optionIndicator,
                     selectedOption === option &&
-                      stylesInitView.selectedIndicator,
+                      stylesInitView.selectedIndicator
                   ]}
                 />
               </TouchableOpacity>
@@ -108,10 +108,9 @@ const InitView = ({ navigation }) => {
               justifyContent: "center",
               alignItems: "center",
               marginBottom: 10,
-              color: "#05000F",
+              color: "#05000F"
             }}
-            onPress={handleNextButtonClick}
-          >
+            onPress={handleNextButtonClick}>
             <Text style={{ color: "#000000" }}>{textButton}</Text>
           </TouchableOpacity>
         </View>
@@ -121,15 +120,14 @@ const InitView = ({ navigation }) => {
               marginTop: 10,
               color: "#C3F53C",
               padding: 10,
-              borderRadius: 5,
-            }}
-          >
+              borderRadius: 5
+            }}>
             Skip
           </Text>
         </TouchableOpacity>
       </View>
     </PageWrapper>
-  );
-};
+  )
+}
 
-export default InitView;
+export default InitView

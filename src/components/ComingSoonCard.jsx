@@ -2,8 +2,8 @@ import React from "react"
 import { Image, View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import ButtonColor from "./ButtonColor"
 
-function ComingSoonCard({navigation,setOpenCard,message}) {
-  const handleSignUp=()=>{
+function ComingSoonCard({ navigation, setOpenCard, message }) {
+  const handleSignUp = () => {
     navigation.navigate("exchange")
   }
   return (
@@ -33,12 +33,17 @@ function ComingSoonCard({navigation,setOpenCard,message}) {
             style={styles.imageClock}
           />
         </View>
-        <Text style={styles.title}>Exciting Features on the Horizon!</Text>
-        <Text style={styles.text}>
-          {message}
+        <Text style={styles.title}>
+          ¡Emocionantes características en el horizonte!
         </Text>
+        <Text style={styles.text}>{message}</Text>
         <View style={styles.containerButton}>
-          <ButtonColor navigation={navigation} to={"exchange"} handleSignUp={handleSignUp}>Go to home</ButtonColor>
+          <ButtonColor
+            navigation={navigation}
+            to={"exchange"}
+            handleSignUp={handleSignUp}>
+            Ir a inicio
+          </ButtonColor>
         </View>
       </View>
     </View>
@@ -93,14 +98,14 @@ const styles = StyleSheet.create({
   imageClose: {
     width: 80,
     objectFit: "contain",
-    position: "relative",
+    position: "relative"
   },
   containerLogo: {
     width: "100%",
     paddingLeft: 15,
     paddingTop: 15,
-    flexDirection:"row",
-    justifyContent:"space-between"
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
   title: {
     fontSize: 30,

@@ -77,9 +77,12 @@ const ConfirmationCodeView = ({ navigation }) => {
       {/* <BackButton /> */}
       <View style={stylesConfrrmationCodeView.container}>
         <View style={stylesConfrrmationCodeView.content}>
-          <Text style={stylesConfrrmationCodeView.title}>OTP Verification</Text>
+          <Text style={stylesConfrrmationCodeView.title}>
+            Verificación de OTP
+          </Text>
           <Text style={stylesConfrrmationCodeView.subtitle}>
-            To sign up your account, enter the 6-digit code we sent to
+            Para registrarte en tu cuenta, ingresa el código de 6 dígitos que te
+            enviamos.
             {cellphone}
           </Text>
 
@@ -167,10 +170,10 @@ const ConfirmationCodeView = ({ navigation }) => {
           <Text
             style={stylesConfrrmationCodeView.signupText}
             onPress={handleResendConfirmateOtp}>
-            Don’t receive the OTP yet?{" "}
+            ¿Aún no has recibido el OTP?
             <Text style={stylesConfrrmationCodeView.signupTextBold}>
               {" "}
-              Resend OTP
+              Reenviar OTP
             </Text>
           </Text>
           <View style={stylesConfrrmationCodeView.buttonContainer}>
@@ -178,7 +181,7 @@ const ConfirmationCodeView = ({ navigation }) => {
               navigation={navigation}
               to={"login"}
               handleSignUp={handleConfirmateOtp}>
-              Confirm
+              Confirmar
             </ButtonColor>
           </View>
         </View>

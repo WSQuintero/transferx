@@ -99,7 +99,8 @@ const stylesLoginView = StyleSheet.create({
     color: "#F4F3F5",
     width: "100%",
     textAlign: "right",
-    fontSize: 14
+    fontSize: 14,
+    marginBottom: 5
   },
   signinText: {
     fontFamily: "Roboto",

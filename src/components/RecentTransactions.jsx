@@ -13,7 +13,14 @@ import { formatDateTime, formatNumber } from "../utils/Constants"
 import ModalSuccess from "./ModalSuccess"
 import ModalError from "./ModalError"
 
-const RecentTransactions = ({ navigation, orders, exchange, token ,setChangedHash,setOrders}) => {
+const RecentTransactions = ({
+  navigation,
+  orders,
+  exchange,
+  token,
+  setChangedHash,
+  setOrders
+}) => {
   const [selectedOrder, setSelectedOrder] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [hash, setHash] = useState()
@@ -60,10 +67,12 @@ const RecentTransactions = ({ navigation, orders, exchange, token ,setChangedHas
       setModalVisible(false)
       setSelectedOrder(null)
       setHash("")
-
     } else {
       setShowErrorModal(true)
-      if(data.data.message ===`"hash_transfer_in" length must be at least 10 characters long`){
+      if (
+        data.data.message ===
+        `"hash_transfer_in" length must be at least 10 characters long`
+      ) {
         setErrorMessage("El hash debe tener mínimo 10 carácteres")
       }
     }
@@ -117,12 +126,12 @@ const RecentTransactions = ({ navigation, orders, exchange, token ,setChangedHas
                       style={{
                         flexDirection: "column",
                         gap: 3,
-                        position: "relative",
+                        position: "relative"
                       }}>
                       <Text style={styles.price}>
                         ${formatNumber(order.amount_currency_out)}
                       </Text>
-                      {order.state==="pending"&&(
+                      {order.state === "pending" && (
                         <Text style={styles.send}>Enviar hash</Text>
                       )}
                     </View>
@@ -164,30 +173,32 @@ const RecentTransactions = ({ navigation, orders, exchange, token ,setChangedHas
                     Fecha de solicitud:{" "}
                     {formatDateTime(selectedOrder.created_at)}
                   </Text>
-                  {selectedOrder.state==="pending"&&(
-
-              <View style={{justifyContent:"center",alignItems:"center"}}>
-              <TextInput
-                  style={styles.inputHash}
-                  placeholder="Pon tu hash"
-                  value={hash}
-                  onChangeText={(value) => setHash(value)}
-                />
-                <TouchableOpacity
-                style={styles.modalCloseButton}
-                onPress={() => handleUpdateHash(order)}>
-                <Text style={styles.modalButtonText}>Enviar Hash</Text>
-              </TouchableOpacity>
-              </View>
+                  {selectedOrder.state === "pending" && (
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}>
+                      <TextInput
+                        style={styles.inputHash}
+                        placeholder="Pon tu hash"
+                        value={hash}
+                        onChangeText={(value) => setHash(value)}
+                      />
+                      <TouchableOpacity
+                        style={styles.modalCloseButton}
+                        onPress={() => handleUpdateHash(order)}>
+                        <Text style={styles.modalButtonText}>Enviar Hash</Text>
+                      </TouchableOpacity>
+                    </View>
                   )}
-
                 </View>
               )}
 
               <TouchableOpacity
                 style={styles.modalCloseButton}
                 onPress={() => setModalVisible(false)}>
-                <Text style={styles.modalButtonText}>Close</Text>
+                <Text style={styles.modalButtonText}>Cerrar</Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -5,34 +5,32 @@ import {
   FontAwesome,
   MaterialIcons
 } from "@expo/vector-icons"
-import { View, Text, StyleSheet,  TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
 
-const FooterMenu = ({ navigation,actual }) => {
+const FooterMenu = ({ navigation, actual }) => {
   const handlePress = (screenName) => {
-    switch(screenName){
-      case "wallet":{
+    switch (screenName) {
+      case "wallet": {
         navigation.navigate("wallet")
-        break;
-      };
-      case "exchange":{
+        break
+      }
+      case "exchange": {
         navigation.navigate("exchange")
-        break;
-      };
-      case "services":{
+        break
+      }
+      case "services": {
         navigation.navigate("services")
-        break;
-      };
-      case "card":{
+        break
+      }
+      case "card": {
         navigation.navigate("card")
-        break;
-      };
-      case "contact":{
+        break
+      }
+      case "contact": {
         navigation.navigate("contact")
-        break;
-      };
-
+        break
+      }
     }
-
   }
 
   return (
@@ -114,7 +112,7 @@ const FooterMenu = ({ navigation,actual }) => {
             styles.label,
             { color: actual === "contact" ? "#C3F53C" : "white" }
           ]}>
-          Contact
+          Contacto
         </Text>
       </TouchableOpacity>
     </View>

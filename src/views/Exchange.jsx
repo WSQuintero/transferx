@@ -77,7 +77,7 @@ function Exchange({ navigation }) {
         <ScrollView style={stylesExchangeView.container}>
           <View style={stylesExchangeView.containerChange}>
             <Text style={stylesExchangeView.titleContainer}>
-              Available Balance:{" "}
+              Saldo Disponible:{" "}
               <Text style={stylesExchangeView.titleUsdt}>USDT 5667.00</Text>
             </Text>
             <View style={stylesExchangeView.inputContainer}>
@@ -90,12 +90,13 @@ function Exchange({ navigation }) {
               </View>
             </View>
             <View style={stylesExchangeView.inputContainer}>
-              <Text style={stylesExchangeView.inputLabel}>Transfer amount</Text>
+              <Text style={stylesExchangeView.inputLabel}>
+                Monto de la Transferencia
+              </Text>
               <View style={stylesExchangeView.textInputContainer}>
                 <TextInput
                   style={stylesExchangeView.textInput}
                   onChangeText={(text) => {
-                    // Solo permitir números
                     const numericValue = text.replace(/[^0-9]/g, "")
                     setUsdtTether(numericValue)
                   }}
@@ -111,7 +112,7 @@ function Exchange({ navigation }) {
                   style={stylesExchangeView.icon}
                 />
                 <Text style={stylesExchangeView.textInput}>
-                  COP - Colombian Peso
+                  COP - Peso Colombiano
                 </Text>
               </View>
             </View>
@@ -139,7 +140,7 @@ function Exchange({ navigation }) {
             </View>
             <View style={stylesExchangeView.rightContainer}>
               <View style={stylesExchangeView.textContainer}>
-                <Text style={stylesExchangeView.textTitle}>Exchange Rate</Text>
+                <Text style={stylesExchangeView.textTitle}>Tipo de Cambio</Text>
                 <Text style={stylesExchangeView.text}>
                   1.00 USDT = ${rate ? formatNumber(rate) : 0} COPS
                 </Text>
@@ -155,8 +156,12 @@ function Exchange({ navigation }) {
             </View>
             <View style={stylesExchangeView.rightContainer}>
               <View style={stylesExchangeView.textContainer}>
-                <Text style={stylesExchangeView.textTitle}>Countdown</Text>
-                <Text style={stylesExchangeView.text}>{countdown} seconds</Text>
+                <Text style={stylesExchangeView.textTitle}>
+                  Cuenta Regresiva
+                </Text>
+                <Text style={stylesExchangeView.text}>
+                  {countdown} segundos
+                </Text>
               </View>
             </View>
           </View>
@@ -165,7 +170,7 @@ function Exchange({ navigation }) {
               navigation={navigation}
               to={"card"}
               handleSignUp={handleSendRequest}>
-              Confirm
+              Confirmar
             </ButtonColor>
           </View>
         </ScrollView>

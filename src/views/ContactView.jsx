@@ -11,18 +11,18 @@ function ContactView({ navigation }) {
       <PageWrapper>
         <BackButton />
         <View style={stylesContactView.generalContainer}>
-          <Text style={stylesContactView.generalTitle}>Contact</Text>
+          <Text style={stylesContactView.generalTitle}>Contacto</Text>
 
           <View style={stylesContactView.containerChange}>
             <View>
               <Text style={stylesContactView.titleContainer}>
-                Instant Help Desk
+                Servicio de Asistencia Instantánea
               </Text>
               <TouchableOpacity
                 onPress={() => {}}
                 style={stylesContactView.button}>
                 <Text style={{ color: "black", fontSize: 12 }}>
-                  Send Message
+                  Enviar Mensaje
                 </Text>
                 <Image source={require("../../assets/icons/send.png")} />
               </TouchableOpacity>
@@ -33,7 +33,9 @@ function ContactView({ navigation }) {
           </View>
         </View>
 
-        <Text style={stylesContactView.generalTitleTwo}>Contact Details</Text>
+        <Text style={stylesContactView.generalTitleTwo}>
+          Detalles de Contacto
+        </Text>
         <View style={stylesContactView.containerCard}>
           <View style={stylesContactView.mainContainer}>
             <View style={stylesContactView.leftContainer}>
@@ -44,8 +46,8 @@ function ContactView({ navigation }) {
             </View>
             <View style={stylesContactView.rightContainer}>
               <View style={stylesContactView.textContainer}>
-                <Text style={stylesContactView.textTitle}>Phone</Text>
-                <Text style={stylesContactView.text}>00 234 455 0000</Text>
+                <Text style={stylesContactView.textTitle}>Teléfono</Text>
+                <Text style={stylesContactView.text}>+57 234 455 0000</Text>
               </View>
             </View>
           </View>
@@ -60,7 +62,7 @@ function ContactView({ navigation }) {
             <View style={stylesContactView.rightContainer}>
               <View style={stylesContactView.textContainer}>
                 <Text style={stylesContactView.textTitle}>Whatsapp</Text>
-                <Text style={stylesContactView.text}>00 234 455 0000</Text>
+                <Text style={stylesContactView.text}>+57 234 455 0000</Text>
               </View>
             </View>
           </View>
