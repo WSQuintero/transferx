@@ -55,32 +55,26 @@ const RecentTransactions = ({
 
   const handleUpdateHash = async () => {
     setChangedHash(false)
-
-    // Verificar si el token está definido y no es nulo ni una cadena vacía
-    if (token && token.trim() !== "") {
-      const { status, data } = await exchange.p2pConfirmHash(
-        token,
-        order.id,
-        hash
-      )
-      if (status) {
-        setShowSuccessModal(true)
-        setSuccesMessage("Hash actualizado correctamente")
-        setChangedHash(true)
-        setModalVisible(false)
-        setSelectedOrder(null)
-        setHash("")
-      } else {
-        setShowErrorModal(true)
-        if (
-          data.data.message ===
-          `"hash_transfer_in" length must be at least 10 characters long`
-        ) {
-          setErrorMessage("El hash debe tener mínimo 10 caracteres")
-        }
-      }
+    const { status, data } = await exchange.p2pConfirmHash(
+      token,
+      order.id,
+      hash
+    )
+    if (status) {
+      setShowSuccessModal(true)
+      setSuccesMessage("Hash actualizado correctamente")
+      setChangedHash(true)
+      setModalVisible(false)
+      setSelectedOrder(null)
+      setHash("")
     } else {
-      console.log("Token no válido para la confirmación del hash.")
+      setShowErrorModal(true)
+      if (
+        data.data.message ===
+        `"hash_transfer_in" length must be at least 10 characters long`
+      ) {
+        setErrorMessage("El hash debe tener mínimo 10 carácteres")
+      }
     }
   }
 
@@ -112,43 +106,55 @@ const RecentTransactions = ({
             <Text style={styles.titleText}>Transacciones recientes</Text>
           </View>
 
-          {orders?.map((order) => (
-            <TouchableOpacity
-              key={order.id}
-              onPress={() => {
-                handleOrderPress(order)
-                setOrder(order)
-              }}>
-              <View style={styles.contentContainer}>
+          {orders?.length === 0 ? (
+            <View style={styles.noOrdersContainer}>
+              <Text style={styles.clear}>No tienes órdenes aún</Text>
+              <View style={styles.imageContainer}>
                 <Image
-                  source={require("../../assets/transfer.png")}
-                  style={styles.image}
+                  source={require("../../assets/clear.png")}
+                  style={styles.clearImage}
                 />
-
-                <View style={styles.detailsContainer}>
-                  <View style={styles.subContainer}>
-                    <Text style={styles.boldText}>{order.state}</Text>
-                    <View
-                      style={{
-                        flexDirection: "column",
-                        gap: 3,
-                        position: "relative"
-                      }}>
-                      <Text style={styles.price}>
-                        ${formatNumber(order.amount_currency_out)}
-                      </Text>
-                      {order.state === "pending" && (
-                        <Text style={styles.send}>Enviar hash</Text>
-                      )}
-                    </View>
-                  </View>
-                  <Text style={styles.timeText}>
-                    {formatDateTime(order.created_at)}
-                  </Text>
-                </View>
               </View>
-            </TouchableOpacity>
-          ))}
+            </View>
+          ) : (
+            orders?.map((order) => (
+              <TouchableOpacity
+                key={order.id}
+                onPress={() => {
+                  handleOrderPress(order)
+                  setOrder(order)
+                }}>
+                <View style={styles.contentContainer}>
+                  <Image
+                    source={require("../../assets/transfer.png")}
+                    style={styles.image}
+                  />
+
+                  <View style={styles.detailsContainer}>
+                    <View style={styles.subContainer}>
+                      <Text style={styles.boldText}>{order.state}</Text>
+                      <View
+                        style={{
+                          flexDirection: "column",
+                          gap: 3,
+                          position: "relative"
+                        }}>
+                        <Text style={styles.price}>
+                          ${formatNumber(order.amount_currency_out)}
+                        </Text>
+                        {order.state === "pending" && (
+                          <Text style={styles.send}>Enviar hash</Text>
+                        )}
+                      </View>
+                    </View>
+                    <Text style={styles.timeText}>
+                      {formatDateTime(order.created_at)}
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            ))
+          )}
         </View>
 
         <Modal
@@ -204,7 +210,7 @@ const RecentTransactions = ({
               <TouchableOpacity
                 style={styles.modalCloseButton}
                 onPress={() => setModalVisible(false)}>
-                <Text style={styles.modalButtonText}>Cerrar</Text>
+                <Text style={styles.modalButtonText}>Close</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -246,6 +252,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 1,
     borderRadius: 5
+  },
+  clear: {
+    color: "#C3F53C",
+    textAlign: "center",
+    marginTop: 120,
+    fontSize: 20,
+    fontWeight: "bold"
   },
   contentContainer: {
     flexDirection: "row",
@@ -335,6 +348,23 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     marginTop: 10
+  },
+  noOrdersContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 160
+  },
+  clear: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: "#C3F53C"
+  },
+  imageContainer: {
+    opacity: 0.5
+  },
+  clearImage: {
+    width: 200,
+    height: 200
   }
 })
 
