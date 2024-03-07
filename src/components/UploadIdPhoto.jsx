@@ -15,8 +15,6 @@ function UploadIdPhoto({ selectedImage, setSelectedImage, handleNext }) {
         quality: 1
       })
 
-      console.log("Result:", result)
-
       if (!result.cancelled) {
         console.log("Image URI:", result.assets[0].uri)
         setSelectedImage(result.assets[0].uri)

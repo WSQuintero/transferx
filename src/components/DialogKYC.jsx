@@ -8,7 +8,7 @@ import UserService from "../services/UserService"
 import { MyContext } from "../context/context"
 
 function DialogKYC() {
-  const { $User } = useContext(MyContext)
+  const { $User, informationUser } = useContext(MyContext)
   const [selectedImageId, setSelectedImageId] = useState(null)
   const [selectedImagePhoto, setSelectedImagePhoto] = useState(null)
   const [sectionPhoto, setSectionPhoto] = useState(false)
@@ -16,7 +16,6 @@ function DialogKYC() {
   const handleNext = () => {
     setSectionPhoto(true)
   }
-
   const handleBack = () => {
     setSectionPhoto(false)
   }

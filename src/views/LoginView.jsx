@@ -32,13 +32,13 @@ const LoginView = ({ navigation }) => {
         )
         setShowErrorModal(true)
         break
-      case "Contraseña incorrecta":
+      case "incorrect password":
         setErrorMessage(
           "Contraseña incorrecta. Por favor, verifica tu contraseña e intenta nuevamente."
         )
         setShowErrorModal(true)
         break
-      case "Usuario no existe":
+      case "user does not exist":
         setErrorMessage(
           "El usuario no existe. Por favor, verifica tus credenciales o regístrate si eres nuevo."
         )

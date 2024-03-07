@@ -62,7 +62,6 @@ const ConfirmationCodeView = ({ navigation }) => {
       cellphone
     })
 
-    console.log(cellphone)
     if (status) {
       console.log("Se envió el código a tu celular")
     } else {

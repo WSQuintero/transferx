@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
 import { formatDateTime, formatNumber } from "../utils/Constants"
 import ModalSuccess from "./ModalSuccess"
 import ModalError from "./ModalError"
+import { MyContext } from "../context/context"
 
 const RecentTransactions = ({
   navigation,
@@ -29,6 +30,7 @@ const RecentTransactions = ({
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [order, setOrder] = useState()
+  const { informationUser } = useContext(MyContext)
 
   const handleOrderPress = (order) => {
     setSelectedOrder(order)
@@ -80,26 +82,50 @@ const RecentTransactions = ({
 
   return (
     <>
-      <TouchableOpacity onPress={() => navigation.navigate("newExchange")}>
+      <TouchableOpacity
+        style={[
+          styles.titleText,
+          {
+            color: "#C3F53C",
+            borderRadius: 20,
+            borderColor: "#C3F53C",
+            borderWidth: 1,
+            padding: 5,
+            width: "60%",
+            textAlign: "center",
+            right: 20,
+            position: "absolute",
+            top: 50
+          }
+        ]}
+        onPress={() => {
+          // if (
+          //   informationUser.user.kyc_validated &&
+          //   informationUser.user.sarlaft_validated
+          // ) {
+          //   navigation.navigate("newExchange")
+          // } else if (
+          //   informationUser.user.kyc_validated &&
+          //   !informationUser.user.sarlaft_validated
+          // ) {
+          //   navigation.navigate("sarlaft")
+          // } else {
+          //   navigation.navigate("dialog")
+          // }
+          navigation.navigate("newExchange")
+        }}>
         <Text
           style={[
             styles.titleText,
             {
               color: "#C3F53C",
-              borderRadius: 20,
-              borderColor: "#C3F53C",
-              borderWidth: 1,
-              padding: 5,
-              width: "60%",
-              textAlign: "center",
-              right: 20,
-              position: "absolute",
-              top: 50
+              textAlign: "center"
             }
           ]}>
           Crear nueva orden
         </Text>
       </TouchableOpacity>
+
       <ScrollView style={styles.scrollView}>
         <View style={styles.cardContainer}>
           <View style={styles.titleContainer}>

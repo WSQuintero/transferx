@@ -34,21 +34,23 @@ const SelectInformationBankView = ({ navigation }) => {
     useState(true)
 
   useEffect(() => {
-    const fetchBanks = async () => {
-      try {
-        const { status, data } = await $Exchange.getBanks(token)
+    if (token && token !== "") {
+      const fetchBanks = async () => {
+        try {
+          const { status, data } = await $Exchange.getBanks(token)
 
-        if (status) {
-          setColombianBanks(data.data)
-        } else {
-          console.log("Error fetching banks")
+          if (status) {
+            setColombianBanks(data.data)
+          } else {
+            console.log("Error fetching banks")
+          }
+        } catch (error) {
+          console.error("Error fetching banks:", error)
         }
-      } catch (error) {
-        console.error("Error fetching banks:", error)
       }
-    }
 
-    fetchBanks()
+      fetchBanks()
+    }
   }, [$Exchange, token])
 
   const validation = async () => {

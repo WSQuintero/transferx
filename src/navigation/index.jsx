@@ -15,6 +15,7 @@ import ContactView from "../views/ContactView"
 import ServicesView from "../views/ServicesView"
 import WalletView from "../views/WalletView"
 import DialogKYC from "../components/DialogKYC"
+import Sarlaft from "../components/Sarlaft"
 
 const Stack = createNativeStackNavigator()
 
@@ -45,6 +46,7 @@ const Navigation = () => {
           <Stack.Screen name="card" component={Dashboard} />
           <Stack.Screen name="contact" component={ContactView} />
           <Stack.Screen name="dialog" component={DialogKYC} />
+          <Stack.Screen name="sarlaft" component={Sarlaft} />
         </Stack.Navigator>
       </MyContextProvider>
     </NavigationContainer>

@@ -94,6 +94,7 @@ function SignUpView({ navigation }) {
     setShowModalConfirmationRegister(false)
     setConfirmationRegisterMessage("")
   }
+
   const onConfirm = async () => {
     const { status, data } = await $Auth.signUp({
       firstname: name,
@@ -102,7 +103,6 @@ function SignUpView({ navigation }) {
       cellphone,
       password
     })
-
     if (data.data.message === "User already exists") {
       setErrorMessage(
         "El usuario ya está registrado. Por favor, inicia sesión o utiliza otra dirección de correo electrónico."

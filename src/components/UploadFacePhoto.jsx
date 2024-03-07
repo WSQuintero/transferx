@@ -19,9 +19,8 @@ function UploadFacePhoto({
         aspect: [4, 3],
         quality: 1
       })
-
       if (!result.cancelled) {
-        setSelectedImage(result.uri)
+        setSelectedImage(result.assets[0].uri)
       }
     } catch (error) {
       console.log("Error picking image:", error)
@@ -39,7 +38,7 @@ function UploadFacePhoto({
       })
 
       if (!result.cancelled) {
-        setSelectedImage(result.uri)
+        setSelectedImage(result.assets[0].uri)
       }
     } catch (error) {
       console.log("Error picking image from camera:", error)
@@ -69,10 +68,12 @@ function UploadFacePhoto({
             </TouchableOpacity>
           </>
         ) : (
-          <Image
-            source={require("../../assets/form/face_placeholder.jpg")}
-            style={StylesKYC.imageId}
-          />
+          <TouchableOpacity onPress={pickImageFromGallery}>
+            <Image
+              source={require("../../assets/form/face_placeholder.jpg")}
+              style={StylesKYC.imageId}
+            />
+          </TouchableOpacity>
         )}
       </TouchableOpacity>
       {!selectedImage && (
