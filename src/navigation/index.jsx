@@ -18,49 +18,33 @@ import WalletView from "../views/WalletView"
 const Stack = createNativeStackNavigator()
 
 const Navigation = () => {
-  const [user, { isAuthenticated }] = useAuth()
-  const [currentRoute, setCurrentRoute] = useState("home")
-
   return (
     <NavigationContainer>
-      {isAuthenticated() === true ? (
+      <MyContextProvider>
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
             contentStyle: { backgroundColor: "#07140f" }
-          }}
-          screenListeners={({ route }) => ({
-            state: () => {
-              setCurrentRoute(route.name)
-            }
-          })}></Stack.Navigator>
-      ) : (
-        <MyContextProvider>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-              contentStyle: { backgroundColor: "#07140f" }
-            }}>
-            <Stack.Screen name="InitView" component={InitView} />
-            <Stack.Screen name="login" component={LoginView} />
-            <Stack.Screen name="signup" component={SignUpView} />
-            <Stack.Screen
-              name="SelectInformationBankView"
-              component={SelectInformationBankView}
-            />
-            <Stack.Screen
-              name="confirmationCode"
-              component={ConfirmationCodeView}
-            />
-            <Stack.Screen name="exchange" component={RecentTransactionsView} />
-            <Stack.Screen name="wallet" component={WalletView} />
-            <Stack.Screen name="newExchange" component={Exchange} />
-            <Stack.Screen name="services" component={ServicesView} />
-            <Stack.Screen name="card" component={Dashboard} />
-            <Stack.Screen name="contact" component={ContactView} />
-          </Stack.Navigator>
-        </MyContextProvider>
-      )}
+          }}>
+          <Stack.Screen name="InitView" component={InitView} />
+          <Stack.Screen name="login" component={LoginView} />
+          <Stack.Screen name="signup" component={SignUpView} />
+          <Stack.Screen
+            name="SelectInformationBankView"
+            component={SelectInformationBankView}
+          />
+          <Stack.Screen
+            name="confirmationCode"
+            component={ConfirmationCodeView}
+          />
+          <Stack.Screen name="exchange" component={RecentTransactionsView} />
+          <Stack.Screen name="wallet" component={WalletView} />
+          <Stack.Screen name="newExchange" component={Exchange} />
+          <Stack.Screen name="services" component={ServicesView} />
+          <Stack.Screen name="card" component={Dashboard} />
+          <Stack.Screen name="contact" component={ContactView} />
+        </Stack.Navigator>
+      </MyContextProvider>
     </NavigationContainer>
   )
 }

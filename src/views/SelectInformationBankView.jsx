@@ -7,6 +7,7 @@ import ButtonColor from "../components/ButtonColor"
 import SelectInformationBankViewStyle from "../styles/SelectInformationBankViewStyle"
 import { MyContext } from "../context/context"
 import ModalError from "../components/ModalError"
+import ModalConfirmationRegister from "../components/ModalConfirmationRegister"
 
 const SelectInformationBankView = ({ navigation }) => {
   const [wallet, setWallet] = useState("")
@@ -27,6 +28,10 @@ const SelectInformationBankView = ({ navigation }) => {
   } = useContext(MyContext)
   const [colombianBanks, setColombianBanks] = useState()
   const idTypes = ["id", "Passport"]
+  const [showModalConfirmationRegister, setShowModalConfirmationRegister] =
+    useState(false)
+  const [confirmationRegisterMessage, setConfirmationRegisterMessage] =
+    useState(true)
 
   useEffect(() => {
     const fetchBanks = async () => {
@@ -75,8 +80,18 @@ const SelectInformationBankView = ({ navigation }) => {
   }
 
   const handleUpdateInformationBank = async () => {
-    if (!validation()) return
+    if (await validation()) return
+    setShowModalConfirmationRegister(true)
+    setConfirmationRegisterMessage(
+      "¿Estás seguro de enviar estos datos? una vez enviados no podrás modificarlos"
+    )
+  }
 
+  const onCancel = () => {
+    setShowModalConfirmationRegister(false)
+    setConfirmationRegisterMessage("")
+  }
+  const onConfirm = async () => {
     const { status, data } = await $Exchange.updateWallet(token, wallet)
     if (status) {
       const informationBankUpdateResult = await $Exchange.updateInformationBank(
@@ -99,7 +114,6 @@ const SelectInformationBankView = ({ navigation }) => {
       }
     }
   }
-
   return (
     <PageWrapper>
       <View style={SelectInformationBankViewStyle.container}>
@@ -231,6 +245,12 @@ const SelectInformationBankView = ({ navigation }) => {
         </View>
       </View>
       <ModalError showErrorModal={showErrorModal} errorMessage={errorMessage} />
+      <ModalConfirmationRegister
+        showModalConfirmationRegister={showModalConfirmationRegister}
+        confirmationRegisterMessage={confirmationRegisterMessage}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+      />
     </PageWrapper>
   )
 }

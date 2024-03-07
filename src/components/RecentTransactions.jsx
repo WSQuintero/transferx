@@ -55,26 +55,32 @@ const RecentTransactions = ({
 
   const handleUpdateHash = async () => {
     setChangedHash(false)
-    const { status, data } = await exchange.p2pConfirmHash(
-      token,
-      order.id,
-      hash
-    )
-    if (status) {
-      setShowSuccessModal(true)
-      setSuccesMessage("Hash actualizado correctamente")
-      setChangedHash(true)
-      setModalVisible(false)
-      setSelectedOrder(null)
-      setHash("")
-    } else {
-      setShowErrorModal(true)
-      if (
-        data.data.message ===
-        `"hash_transfer_in" length must be at least 10 characters long`
-      ) {
-        setErrorMessage("El hash debe tener mínimo 10 carácteres")
+
+    // Verificar si el token está definido y no es nulo ni una cadena vacía
+    if (token && token.trim() !== "") {
+      const { status, data } = await exchange.p2pConfirmHash(
+        token,
+        order.id,
+        hash
+      )
+      if (status) {
+        setShowSuccessModal(true)
+        setSuccesMessage("Hash actualizado correctamente")
+        setChangedHash(true)
+        setModalVisible(false)
+        setSelectedOrder(null)
+        setHash("")
+      } else {
+        setShowErrorModal(true)
+        if (
+          data.data.message ===
+          `"hash_transfer_in" length must be at least 10 characters long`
+        ) {
+          setErrorMessage("El hash debe tener mínimo 10 caracteres")
+        }
       }
+    } else {
+      console.log("Token no válido para la confirmación del hash.")
     }
   }
 

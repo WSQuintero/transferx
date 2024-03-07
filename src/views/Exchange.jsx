@@ -17,32 +17,48 @@ function Exchange({ navigation }) {
 
   const handleSendRequest = async () => {
     setUpdatedOrder(false)
-    const { status, data } = await $Exchange.p2pRequest(token, usdtTether)
 
-    if (status) {
-      navigation.navigate("exchange")
-      setUpdatedOrder(true)
+    // Validar si el token está definido y no es nulo ni una cadena vacía
+    if (token && token.trim() !== "") {
+      const { status, data } = await $Exchange.p2pRequest(token, usdtTether)
+
+      if (status) {
+        navigation.navigate("exchange")
+        setUpdatedOrder(true)
+      } else {
+        console.log("error de inicio de sesión")
+      }
     } else {
-      console.log(data.data)
+      console.log("Token no válido.")
     }
   }
 
   useEffect(() => {
     const fetchRate = async () => {
-      const { status, data } = await $Exchange.getP2PRate(token)
-      if (status) {
-        setRate(data.data.rateTransferx)
+      // Validar si el token está definido y no es nulo ni una cadena vacía
+      if (token && token.trim() !== "") {
+        const { status, data } = await $Exchange?.getP2PRate(token)
+        if (status) {
+          setRate(data.data.rateTransferx)
+        } else {
+          console.log(data)
+        }
       } else {
-        console.log(data)
+        console.log("Token no válido para la obtención de la tasa.")
       }
     }
 
     const fetchQuote = async () => {
-      const { status, data } = await $Exchange.getP2PQuote(token, usdtTether)
-      if (status) {
-        setQuote(data.data.quoteAmountOut)
+      // Validar si el token está definido y no es nulo ni una cadena vacía
+      if (token && token.trim() !== "") {
+        const { status, data } = await $Exchange?.getP2PQuote(token, usdtTether)
+        if (status) {
+          setQuote(data.data.quoteAmountOut)
+        } else {
+          console.log(data)
+        }
       } else {
-        console.log(data)
+        console.log("Token no válido para la obtención de la cotización.")
       }
     }
 

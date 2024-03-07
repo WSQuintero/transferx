@@ -38,6 +38,12 @@ const LoginView = ({ navigation }) => {
         )
         setShowErrorModal(true)
         break
+      case "Usuario no existe":
+        setErrorMessage(
+          "El usuario no existe. Por favor, verifica tus credenciales o regístrate si eres nuevo."
+        )
+        setShowErrorModal(true)
+        break
       default:
         console.error("Error en el inicio de sesión:", errorMessage)
     }
