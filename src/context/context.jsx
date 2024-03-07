@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useMemo, useState } from "react"
 import AuthService from "../services/AuthService"
 import P2PService from "../services/P2PService"
+import UserService from "../services/UserService"
 
 // Crear el contexto
 const MyContext = createContext()
@@ -14,11 +15,13 @@ const MyContextProvider = ({ children }) => {
   const [password, setPassword] = useState("")
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
-  const [informationUser,setInformationUser]=useState()
+  const [informationUser, setInformationUser] = useState()
   const $Auth = useMemo(() => new AuthService(), [])
-  const [token,setToken]=useState()
+  const [token, setToken] = useState()
   const $Exchange = useMemo(() => new P2PService(token), [])
-  const [updatedOrder,setUpdatedOrder]=useState()
+  const $User = useMemo(() => new UserService(token), [])
+
+  const [updatedOrder, setUpdatedOrder] = useState()
   useEffect(() => {
     if (showErrorModal) {
       setTimeout(() => {
@@ -52,7 +55,8 @@ const MyContextProvider = ({ children }) => {
         informationUser,
         setInformationUser,
         updatedOrder,
-        setUpdatedOrder
+        setUpdatedOrder,
+        $User
       }}>
       {children}
     </MyContext.Provider>

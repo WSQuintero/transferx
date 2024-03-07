@@ -14,6 +14,7 @@ import Exchange from "../views/Exchange"
 import ContactView from "../views/ContactView"
 import ServicesView from "../views/ServicesView"
 import WalletView from "../views/WalletView"
+import DialogKYC from "../components/DialogKYC"
 
 const Stack = createNativeStackNavigator()
 
@@ -43,6 +44,7 @@ const Navigation = () => {
           <Stack.Screen name="services" component={ServicesView} />
           <Stack.Screen name="card" component={Dashboard} />
           <Stack.Screen name="contact" component={ContactView} />
+          <Stack.Screen name="dialog" component={DialogKYC} />
         </Stack.Navigator>
       </MyContextProvider>
     </NavigationContainer>
