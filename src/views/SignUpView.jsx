@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useMemo, useState } from "react"
-import { View, Text, TextInput, Image, TouchableOpacity, Modal } from "react-native"
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Modal
+} from "react-native"
 import ButtonColor from "../components/ButtonColor"
 import PageWrapper from "../components/PageWrapper"
 import stylesSignUp from "../styles/stylesSignUp"
@@ -8,52 +15,59 @@ import AuthService from "../services/AuthService"
 import ModalError from "../components/ModalError"
 
 const SignUpView = ({ navigation }) => {
-const {  name,
-  setName,
-  lastName,
-  setLastName,
-  email,
-  setEmail,
-  cellphone,
-  setCellPhone,
-  password,
-  setPassword,
-  showErrorModal,
-  setShowErrorModal,
-  errorMessage,
-  setErrorMessage,$Auth}=useContext(MyContext)
+  const {
+    name,
+    setName,
+    lastName,
+    setLastName,
+    email,
+    setEmail,
+    cellphone,
+    setCellPhone,
+    password,
+    setPassword,
+    showErrorModal,
+    setShowErrorModal,
+    errorMessage,
+    setErrorMessage,
+    $Auth
+  } = useContext(MyContext)
 
   const validation = async () => {
     // Verificar que todos los campos estén llenos
     if (!name || !lastName || !email || !cellphone || !password) {
-      setErrorMessage("Todos los campos deben estar llenos");
-      setShowErrorModal(true);
-      return false;
+      setErrorMessage("Todos los campos deben estar llenos")
+      setShowErrorModal(true)
+      return false
     }
 
     // Validar el formato de la contraseña
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/
     if (!passwordPattern.test(password)) {
-      setErrorMessage("La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número, un carácter especial y tener una longitud mínima de 8 caracteres.");
-      setShowErrorModal(true);
-      return false;
+      setErrorMessage(
+        "La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número, un carácter especial y tener una longitud mínima de 8 caracteres."
+      )
+      setShowErrorModal(true)
+      return false
     }
 
     // Validar el formato del correo electrónico
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailPattern.test(email)) {
-      setErrorMessage("Por favor, introduce una dirección de correo electrónico válida.");
-      setShowErrorModal(true);
-      return false;
+      setErrorMessage(
+        "Por favor, introduce una dirección de correo electrónico válida."
+      )
+      setShowErrorModal(true)
+      return false
     }
 
-    return true;
+    return true
   }
-
 
   const handleSignUp = async () => {
     if (!validation()) {
-      return;
+      return
     }
 
     const { status, data } = await $Auth.signUp({
@@ -62,22 +76,22 @@ const {  name,
       email,
       cellphone,
       password
-    });
+    })
 
     if (data.data.message === "User already exists") {
-      setErrorMessage("El usuario ya está registrado. Por favor, inicia sesión o utiliza otra dirección de correo electrónico.");
-      setShowErrorModal(true);
-      return;
+      setErrorMessage(
+        "El usuario ya está registrado. Por favor, inicia sesión o utiliza otra dirección de correo electrónico."
+      )
+      setShowErrorModal(true)
+      return
     }
 
     if (status) {
-      navigation.navigate("confirmationCode");
+      navigation.navigate("confirmationCode")
     } else {
       // console.error("Error en el registro:", data);
     }
   }
-
-
 
   return (
     <PageWrapper>
@@ -85,7 +99,7 @@ const {  name,
         <View style={stylesSignUp.centerContent}>
           <Image
             source={require("../../assets/image.png")}
-            style={{ width: "80%",objectFit:"contain" }}
+            style={{ width: "80%", objectFit: "contain" }}
           />
           <Text style={stylesSignUp.title}>Sign up to Your Account</Text>
           <Text style={stylesSignUp.subtitle}>
@@ -140,7 +154,7 @@ const {  name,
             <Text style={stylesSignUp.inputLabel}>Phone</Text>
             <View style={stylesSignUp.textInputContainer}>
               <Image
-                source={require("../../assets/icons/34.png")}
+                source={require("../../assets/icons/call.png")}
                 style={stylesSignUp.icon}
               />
               <TextInput
@@ -168,7 +182,7 @@ const {  name,
             </View>
           </View>
           <View style={stylesSignUp.buttonContainer}>
-          <ButtonColor handleSignUp={handleSignUp}>Get Started</ButtonColor>
+            <ButtonColor handleSignUp={handleSignUp}>Get Started</ButtonColor>
           </View>
           <Text
             style={stylesSignUp.footerText}
@@ -178,7 +192,7 @@ const {  name,
           </Text>
         </View>
       </View>
-    <ModalError showErrorModal={showErrorModal} errorMessage={errorMessage}/>
+      <ModalError showErrorModal={showErrorModal} errorMessage={errorMessage} />
     </PageWrapper>
   )
 }
