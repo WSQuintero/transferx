@@ -13,6 +13,7 @@ import stylesSignUp from "../styles/stylesSignUp"
 import { MyContext } from "../context/context"
 import AuthService from "../services/AuthService"
 import ModalError from "../components/ModalError"
+import CellphonePicker from "../components/CellphonePicker"
 
 const SignUpView = ({ navigation }) => {
   const {
@@ -38,7 +39,7 @@ const SignUpView = ({ navigation }) => {
     if (!name || !lastName || !email || !cellphone || !password) {
       setErrorMessage("Todos los campos deben estar llenos")
       setShowErrorModal(true)
-      return false
+      return true
     }
 
     // Validar el formato de la contraseña
@@ -69,28 +70,36 @@ const SignUpView = ({ navigation }) => {
     if (!validation()) {
       return
     }
-
-    const { status, data } = await $Auth.signUp({
+    console.log({
       firstname: name,
       lastname: lastName,
       email,
       cellphone,
       password
     })
+    // navigation.navigate("confirmationCode")
 
-    if (data.data.message === "User already exists") {
-      setErrorMessage(
-        "El usuario ya está registrado. Por favor, inicia sesión o utiliza otra dirección de correo electrónico."
-      )
-      setShowErrorModal(true)
-      return
-    }
+    // const { status, data } = await $Auth.signUp({
+    //   firstname: name,
+    //   lastname: lastName,
+    //   email,
+    //   cellphone,
+    //   password
+    // })
 
-    if (status) {
-      navigation.navigate("confirmationCode")
-    } else {
-      // console.error("Error en el registro:", data);
-    }
+    // if (data.data.message === "User already exists") {
+    //   setErrorMessage(
+    //     "El usuario ya está registrado. Por favor, inicia sesión o utiliza otra dirección de correo electrónico."
+    //   )
+    //   setShowErrorModal(true)
+    //   return
+    // }
+
+    // if (status) {
+    //   navigation.navigate("confirmationCode")
+    // } else {
+    //   // console.error("Error en el registro:", data);
+    // }
   }
 
   return (
@@ -153,16 +162,7 @@ const SignUpView = ({ navigation }) => {
           <View style={stylesSignUp.inputContainer}>
             <Text style={stylesSignUp.inputLabel}>Phone</Text>
             <View style={stylesSignUp.textInputContainer}>
-              <Image
-                source={require("../../assets/icons/call.png")}
-                style={stylesSignUp.icon}
-              />
-              <TextInput
-                style={stylesSignUp.input}
-                onChangeText={(text) => setCellPhone(text)}
-                value={cellphone}
-                placeholderTextColor="#BFBFBF"
-              />
+              <CellphonePicker setCellPhone={setCellPhone} />
             </View>
           </View>
           <View style={stylesSignUp.inputContainer}>

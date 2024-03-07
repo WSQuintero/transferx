@@ -93,6 +93,19 @@ const stylesSignUp = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 10
+  },
+  containerphone: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 8
+  },
+  phoneInputContainer: {
+    flexDirection: "row", // Alinear la bandera junto al input
+    alignItems: "center", // Alinear la bandera verticalmente con el input
+    width: "90%",
+    height: 40,
+    justifyContent: "center"
   }
 })
 
