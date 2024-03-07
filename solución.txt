@@ -1,0 +1,3 @@
+After install @react-navigation/native you have to install two dependency:
+
+npm install react-native-screens react-native-safe-area-context

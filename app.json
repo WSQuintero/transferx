@@ -29,9 +29,6 @@
     "extra": {
       "eas": {
         "projectId": "71fcffe0-78d5-47b0-adfb-c5f90a253ce6"
-      },
-      "env": {
-        "API_URL": "@env API_URL"
       }
     },
     "plugins": [
@@ -40,12 +37,7 @@
         "expo-build-properties",
         {
           "android": {
-            "compileSdkVersion": 30,
-            "targetSdkVersion": 30,
-            "buildToolsVersion": "30.0.0"
-          },
-          "ios": {
-            "deploymentTarget": "11.0"
+            "targetSdkVersion": 31
           }
         }
       ]
