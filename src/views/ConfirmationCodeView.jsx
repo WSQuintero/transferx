@@ -62,6 +62,7 @@ const ConfirmationCodeView = ({ navigation }) => {
       cellphone
     })
 
+    console.log(cellphone)
     if (status) {
       console.log("Se envió el código a tu celular")
     } else {
@@ -73,12 +74,12 @@ const ConfirmationCodeView = ({ navigation }) => {
 
   return (
     <PageWrapper>
-      <BackButton />
+      {/* <BackButton /> */}
       <View style={stylesConfrrmationCodeView.container}>
         <View style={stylesConfrrmationCodeView.content}>
           <Text style={stylesConfrrmationCodeView.title}>OTP Verification</Text>
           <Text style={stylesConfrrmationCodeView.subtitle}>
-            To sign up your account, enter the 6-digit code we sent to +57
+            To sign up your account, enter the 6-digit code we sent to
             {cellphone}
           </Text>
 

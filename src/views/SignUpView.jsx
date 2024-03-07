@@ -14,8 +14,9 @@ import { MyContext } from "../context/context"
 import AuthService from "../services/AuthService"
 import ModalError from "../components/ModalError"
 import CellphonePicker from "../components/CellphonePicker"
+import ModalConfirmationRegister from "../components/ModalConfirmationRegister"
 
-const SignUpView = ({ navigation }) => {
+function SignUpView({ navigation }) {
   const {
     name,
     setName,
@@ -33,13 +34,25 @@ const SignUpView = ({ navigation }) => {
     setErrorMessage,
     $Auth
   } = useContext(MyContext)
-
+  const [showModalConfirmationRegister, setShowModalConfirmationRegister] =
+    useState(false)
+  const [confirmationRegisterMessage, setConfirmationRegisterMessage] =
+    useState(true)
   const validation = async () => {
     // Verificar que todos los campos estén llenos
     if (!name || !lastName || !email || !cellphone || !password) {
       setErrorMessage("Todos los campos deben estar llenos")
       setShowErrorModal(true)
-      return true
+      return false
+    }
+
+    // Validar que el número de teléfono tenga al menos 12 caracteres
+    if (cellphone.length < 12) {
+      setErrorMessage(
+        "El número de teléfono debe tener al menos 10 caracteres."
+      )
+      setShowErrorModal(true)
+      return false
     }
 
     // Validar el formato de la contraseña
@@ -65,43 +78,45 @@ const SignUpView = ({ navigation }) => {
 
     return true
   }
-
   const handleSignUp = async () => {
-    if (!validation()) {
+    if (!(await validation())) {
       return
     }
-    console.log({
+
+    // navigation.navigate("confirmationCode")
+    setShowModalConfirmationRegister(true)
+    setConfirmationRegisterMessage(
+      "¿Estás seguro de enviar estos datos? una vez enviados no podrás modificarlos"
+    )
+  }
+
+  const onCancel = () => {
+    setShowModalConfirmationRegister(false)
+    setConfirmationRegisterMessage("")
+  }
+  const onConfirm = async () => {
+    const { status, data } = await $Auth.signUp({
       firstname: name,
       lastname: lastName,
       email,
       cellphone,
       password
     })
-    // navigation.navigate("confirmationCode")
 
-    // const { status, data } = await $Auth.signUp({
-    //   firstname: name,
-    //   lastname: lastName,
-    //   email,
-    //   cellphone,
-    //   password
-    // })
+    if (data.data.message === "User already exists") {
+      setErrorMessage(
+        "El usuario ya está registrado. Por favor, inicia sesión o utiliza otra dirección de correo electrónico."
+      )
+      setShowErrorModal(true)
+      return
+    }
 
-    // if (data.data.message === "User already exists") {
-    //   setErrorMessage(
-    //     "El usuario ya está registrado. Por favor, inicia sesión o utiliza otra dirección de correo electrónico."
-    //   )
-    //   setShowErrorModal(true)
-    //   return
-    // }
-
-    // if (status) {
-    //   navigation.navigate("confirmationCode")
-    // } else {
-    //   // console.error("Error en el registro:", data);
-    // }
+    if (status) {
+      navigation.navigate("confirmationCode")
+    } else {
+      console.error("Error en el registro:", data)
+    }
   }
-
   return (
     <PageWrapper>
       <View style={stylesSignUp.container}>
@@ -193,6 +208,12 @@ const SignUpView = ({ navigation }) => {
         </View>
       </View>
       <ModalError showErrorModal={showErrorModal} errorMessage={errorMessage} />
+      <ModalConfirmationRegister
+        showModalConfirmationRegister={showModalConfirmationRegister}
+        confirmationRegisterMessage={confirmationRegisterMessage}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+      />
     </PageWrapper>
   )
 }
