@@ -13,33 +13,35 @@ function RecentTransactionsView({ navigation }) {
   const [orders, setOrders] = useState()
   const [changedHash, setChangedHash] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
-  const [elseEmailValidated, setElseEmailValidated] = useState(false)
-  const [elseCellphoneValidated, setElseCellphoneValidated] = useState(false)
+  const [elseEmailValidated, setElseEmailValidated] = useState(true)
+  const [elseCellphoneValidated, setElseCellphoneValidated] = useState(true)
   useEffect(() => {
-    const getOrders = async () => {
-      const { status, data } = await $Exchange.p2pGetAllRequest(token)
+    if (token) {
+      const getOrders = async () => {
+        const { status, data } = await $Exchange.p2pGetAllRequest(token)
 
-      if (status) {
-        setOrders(data.data)
-      } else {
-        console.log(data)
+        if (status) {
+          setOrders(data.data)
+        } else {
+          console.log(data)
+        }
       }
-    }
 
-    getOrders()
+      getOrders()
+    }
   }, [$Exchange, token, changedHash, updatedOrder])
 
   useEffect(() => {
-    if (informationUser.user.email_validated === 1) {
-      setElseEmailValidated(true)
+    if (informationUser?.user?.email_validated === 0) {
+      setElseEmailValidated(false)
     }
-    if (informationUser.user.cellphone_verifed === 1) {
+    if (informationUser?.user?.cellphone_verifed === 0) {
       setElseCellphoneValidated(false)
     }
-  }, [informationUser])
+  }, [informationUser?.user])
 
   useEffect(() => {
-    if (elseEmailValidated || elseCellphoneValidated) {
+    if (!elseEmailValidated || !elseCellphoneValidated) {
       setShowSuccessModal(true)
     }
   }, [elseEmailValidated, elseCellphoneValidated])

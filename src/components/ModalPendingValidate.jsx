@@ -24,7 +24,6 @@ function ModalPendingValidate({
   const { $Auth, token, ...more } = useContext(MyContext)
 
   const handleValidate = async () => {
-    console.log(cellPhone)
     const { status, data } = await $Auth.resendConfirmationCode(
       { cellPhone },
       token
@@ -38,7 +37,7 @@ function ModalPendingValidate({
 
   let message = ""
   let input = null
-
+  console.log(elseCellphoneValidated)
   if (!elseEmailValidated && !elseCellphoneValidated) {
     message = "No has validado ni tu correo ni tu teléfono."
   } else if (!elseEmailValidated) {
@@ -64,7 +63,9 @@ function ModalPendingValidate({
     <Modal visible={showSuccessModal} animationType="slide" transparent={true}>
       <View style={stylesModalPendingValidate.modalContainer}>
         <View style={stylesModalPendingValidate.modalContent}>
-          <Text style={stylesModalPendingValidate.modalTitle}>Success</Text>
+          <Text style={stylesModalPendingValidate.modalTitle}>
+            Por favor confirma
+          </Text>
           <Text style={stylesModalPendingValidate.modalMessage}>{message}</Text>
           {input && (
             <View style={stylesModalPendingValidate.inputContainer}>

@@ -139,8 +139,7 @@ const ConfirmationCodeView = ({ navigation }) => {
           </Text>
           <Text style={stylesConfrrmationCodeView.subtitle}>
             Para registrarte en tu cuenta, ingresa el código de 6 dígitos que te
-            enviamos.
-            {cellphone}
+            enviamos al {cellphone}.
           </Text>
 
           <View style={stylesConfrrmationCodeView.inputContainer}>

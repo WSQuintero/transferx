@@ -38,10 +38,8 @@ function DialogKYC({ navigation }) {
     // Llamar a la función sendKYC para enviar los datos al servidor
 
     const { status, data } = await $User.sendKYC(token, body)
-    console.log(informationUser.user)
     if (status) {
-      console.log(data)
-      if (informationUser.user.sarlaft_validated === 1) {
+      if (informationUser?.user?.sarlaft_validated === 1) {
         navigation.navigate("newExchange")
       } else {
         navigation.navigate("sarlaft")

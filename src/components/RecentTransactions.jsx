@@ -80,7 +80,6 @@ const RecentTransactions = ({
   }
 
   useEffect(() => {
-    console.log(token)
     const getSarlaft = async () => {
       if (token) {
       }

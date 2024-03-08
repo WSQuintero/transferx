@@ -316,7 +316,6 @@ const Sarlaft = ({ navigation }) => {
       return updatedDetails
     })
   }
-  console.log(informationUser.user)
   const handleSubmit = async () => {
     const data = new FormData()
 
@@ -402,7 +401,7 @@ const Sarlaft = ({ navigation }) => {
     const send = await $User.sendSarlaft(token, data)
     if (send.status) {
       navigation.navigate(
-        informationUser.user.number_account_bank_transfer
+        informationUser?.user?.number_account_bank_transfer
           ? "exchange"
           : "SelectInformationBankView"
       )
