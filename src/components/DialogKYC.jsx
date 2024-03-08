@@ -33,14 +33,15 @@ function DialogKYC({ navigation }) {
     body.append("faces", selectedImageId)
     body.append("faces", selectedImagePhoto)
     body.append("faces", selectedImagePhotoTwo)
+    navigation.navigate("newExchange")
 
-    const { status, data } = await $User.sendKYC(token, body)
+    // const { status, data } = await $User.sendKYC(token, body)
 
-    if (status) {
-      navigation.navigate("newExchange")
-    }
+    // if (status) {
+    //   navigation.navigate("newExchange")
+    // }
 
-    return status
+    // return status
   }
 
   return (
