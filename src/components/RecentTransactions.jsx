@@ -30,8 +30,7 @@ const RecentTransactions = ({
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [order, setOrder] = useState()
-  const { informationUser } = useContext(MyContext)
-
+  const { informationUser, $User } = useContext(MyContext)
   const handleOrderPress = (order) => {
     setSelectedOrder(order)
     setModalVisible(true)
@@ -79,6 +78,20 @@ const RecentTransactions = ({
       }
     }
   }
+
+  useEffect(() => {
+    console.log(token)
+    const getSarlaft = async () => {
+      if (token) {
+      }
+      const { status, data } = await $User.getLastSarlaft(token)
+
+      if (status) {
+        console.log(data)
+      }
+    }
+    getSarlaft()
+  }, [token])
   return (
     <>
       <TouchableOpacity
@@ -105,7 +118,7 @@ const RecentTransactions = ({
             navigation.navigate("newExchange")
           } else if (
             informationUser?.user.kyc_validated === 1 &&
-            !informationUser?.user.sarlaft_validated === 0
+            informationUser?.user.sarlaft_validated === 0
           ) {
             navigation.navigate("sarlaft")
           } else {

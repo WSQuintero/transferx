@@ -6,7 +6,7 @@ import { MyContext } from "../context/context"
 import FooterMenu from "../components/FooterMenu"
 import { View } from "react-native"
 
-function RecentTransactionsView({ navigation }) {
+function Pending({ navigation }) {
   const { $Exchange, token, updatedOrder } = useContext(MyContext)
   const [orders, setOrders] = useState()
   const [changedHash, setChangedHash] = useState(false)
@@ -36,12 +36,8 @@ function RecentTransactionsView({ navigation }) {
         setOrders={setOrders}
       />
       <FooterMenu actual="exchange" navigation={navigation} />
-      <ModalSuccess
-        showSuccessModal={showSuccessModal}
-        succesMessage={succesMessage}
-      />
     </PageWrapper>
   )
 }
 
-export default RecentTransactionsView
+export default Pending

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import {
   View,
   TextInput,
@@ -8,8 +8,9 @@ import {
   ScrollView,
   Switch
 } from "react-native"
+import { MyContext } from "../context/context"
 
-const Sarlaft = () => {
+const Sarlaft = ({ navigation }) => {
   const [numberOfShaldeholders, setNumberOfShaldeholders] = useState(0)
   const [formData, setFormData] = useState({
     idContract: "",
@@ -36,7 +37,7 @@ const Sarlaft = () => {
       secondYear60Days: false
     }
   })
-
+  const { $User, informationUser, token } = useContext(MyContext)
   const [initialStatePersonJuridic, setInitialStatePersonJuridic] = useState({
     occupation2PersonalNatural: "",
     companyName: "",
@@ -70,7 +71,7 @@ const Sarlaft = () => {
           previousYear121Days: false,
           secondYear60Days: false
         },
-        percentageParticipation: 50
+        percentageParticipation: ""
       }
     ]
   })
@@ -315,8 +316,8 @@ const Sarlaft = () => {
       return updatedDetails
     })
   }
-
-  const handleSubmit = () => {
+  console.log(informationUser.user)
+  const handleSubmit = async () => {
     const data = new FormData()
 
     // Adding formData fields
@@ -398,7 +399,16 @@ const Sarlaft = () => {
     // Now the FormData object is ready
     // You can send this FormData object to the server
 
-    console.log("Form Data:", data)
+    const send = await $User.sendSarlaft(token, data)
+    if (send.status) {
+      navigation.navigate(
+        informationUser.user.number_account_bank_transfer
+          ? "exchange"
+          : "SelectInformationBankView"
+      )
+    } else {
+      console.log(send.data)
+    }
   }
 
   useEffect(() => {
@@ -493,7 +503,7 @@ const Sarlaft = () => {
         <Text style={styles.label}>Número de accionistas</Text>
         <TextInput
           style={styles.input}
-          value={numberOfShaldeholders}
+          value={numberOfShaldeholders?.toString()}
           onChangeText={(value) => {
             // Verificar si el valor ingresado es un número válido
             const newValue = parseInt(value)

@@ -58,11 +58,12 @@ const LoginView = ({ navigation }) => {
 
       if (status) {
         await AsyncStorage.setItem("sessionToken", data.data.token)
-        navigation.navigate(
-          data.data.user.id_number_owner_account_bank_transfer
-            ? "exchange"
-            : "SelectInformationBankView"
-        )
+        // navigation.navigate(
+        //   data.data.user.id_number_owner_account_bank_transfer
+        //     ? "exchange"
+        //     : "SelectInformationBankView"
+        // )
+        navigation.navigate("exchange")
         setToken(data.data.token)
         setInformationUser(data.data)
       } else {

@@ -28,7 +28,7 @@ const Navigation = () => {
             headerShown: false,
             contentStyle: { backgroundColor: "#07140f" }
           }}>
-          {/* <Stack.Screen name="InitView" component={InitView} />
+          <Stack.Screen name="InitView" component={InitView} />
           <Stack.Screen name="login" component={LoginView} />
           <Stack.Screen name="signup" component={SignUpView} />
           <Stack.Screen
@@ -46,7 +46,6 @@ const Navigation = () => {
           <Stack.Screen name="card" component={Dashboard} />
           <Stack.Screen name="contact" component={ContactView} />
           <Stack.Screen name="dialog" component={DialogKYC} />
-          <Stack.Screen name="sarlaft" component={Sarlaft} /> */}
           <Stack.Screen name="sarlaft" component={Sarlaft} />
         </Stack.Navigator>
       </MyContextProvider>

@@ -30,18 +30,24 @@ function DialogKYC({ navigation }) {
   const handleVerifyPhotos = async () => {
     const body = new FormData()
 
+    // Agregar los archivos con diferentes nombres bajo la misma clave "faces"
     body.append("faces", selectedImageId)
     body.append("faces", selectedImagePhoto)
     body.append("faces", selectedImagePhotoTwo)
-    navigation.navigate("newExchange")
 
-    // const { status, data } = await $User.sendKYC(token, body)
+    // Llamar a la función sendKYC para enviar los datos al servidor
 
-    // if (status) {
-    //   navigation.navigate("newExchange")
-    // }
-
-    // return status
+    const { status, data } = await $User.sendKYC(token, body)
+    console.log(informationUser.user)
+    if (status) {
+      console.log(data)
+      if (informationUser.user.sarlaft_validated === 1) {
+        navigation.navigate("newExchange")
+      } else {
+        navigation.navigate("sarlaft")
+      }
+    }
+    return status
   }
 
   return (
