@@ -58,12 +58,17 @@ export default class AuthService {
     }
   }
 
-  async resendConfirmationCode({ cellphone }) {
+  async resendConfirmationCode({ cellphone }, token) {
     try {
       const response = await axios.post(
         "https://transferx-backend.concilbot.com/api/v1/users/resend-otp-cod",
         {
-          cellphone: `57${cellphone}`
+          cellphone: cellphone
+        },
+        {
+          headers: {
+            Authorization: token
+          }
         }
       )
 

@@ -3,10 +3,17 @@ import PageWrapper from "../components/PageWrapper"
 import BackButton from "../components/BackButton"
 import useLoadFonts from "../customHooks/useLoadFonts"
 import stylesConfrrmationCodeView from "../styles/stylesConfrrmationCodeView"
-import { View, Text, TextInput, TouchableOpacity } from "react-native"
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Clipboard
+} from "react-native"
 import ButtonColor from "../components/ButtonColor"
 import { MyContext } from "../context/context"
 import ModalError from "../components/ModalError"
+import ButtonColorTwo from "../components/ButtonColorTwo"
 
 const ConfirmationCodeView = ({ navigation }) => {
   const [one, setOne] = useState("")
@@ -30,6 +37,23 @@ const ConfirmationCodeView = ({ navigation }) => {
     showErrorModal,
     setShowErrorModal
   } = useContext(MyContext)
+
+  const [clipboardContent, setClipboardContent] = useState("")
+
+  const handlePaste = (event) => {
+    Clipboard.getString()
+      .then((content) => {
+        setOne(content.charAt(0) || "")
+        setTwo(content.charAt(1) || "")
+        setThree(content.charAt(2) || "")
+        setFour(content.charAt(3) || "")
+        setFive(content.charAt(4) || "")
+        setSix(content.charAt(5) || "")
+      })
+      .catch((error) => {
+        console.error("Error al pegar desde el portapapeles:", error)
+      })
+  }
 
   const handleBlur = (ref) => {
     ref.current.setNativeProps({
@@ -57,20 +81,54 @@ const ConfirmationCodeView = ({ navigation }) => {
     }
   }
 
-  const handleResendConfirmateOtp = async () => {
-    const { status, data } = await $Auth.resendConfirmationCode({
-      cellphone
-    })
+  // const handleResendConfirmateOtp = async () => {
+  //   const { status, data } = await $Auth.resendConfirmationCode({
+  //     cellphone
+  //   })
 
-    if (status) {
-      console.log("Se envió el código a tu celular")
-    } else {
-      setErrorMessage("Por favor intenta nuevamente, ha habido un error")
-      setShowErrorModal(true)
-      console.log(data.data)
+  //   if (status) {
+  //     console.log("Se envió el código a tu celular")
+  //   } else {
+  //     setErrorMessage("Por favor intenta nuevamente, ha habido un error")
+  //     setShowErrorModal(true)
+  //     console.log(data.data)
+  //   }
+  // }
+
+  const focusInput1 = () => {
+    if (inputOneRef.current) {
+      inputOneRef.current.focus()
     }
   }
 
+  const focusInput2 = () => {
+    if (inputTwoRef.current) {
+      inputTwoRef.current.focus()
+    }
+  }
+
+  const focusInput3 = () => {
+    if (inputThreeRef.current) {
+      inputThreeRef.current.focus()
+    }
+  }
+
+  const focusInput4 = () => {
+    if (inputFourRef.current) {
+      inputFourRef.current.focus()
+    }
+  }
+  const focusInput5 = () => {
+    if (inputFiveRef.current) {
+      inputFiveRef.current.focus()
+    }
+  }
+
+  const focusInput6 = () => {
+    if (inputSixRef.current) {
+      inputSixRef.current.focus()
+    }
+  }
   return (
     <PageWrapper>
       {/* <BackButton /> */}
@@ -91,6 +149,7 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setOne(text)
+                  focusInput2()
                 }}
                 value={one}
                 maxLength={1}
@@ -104,6 +163,7 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setTwo(text)
+                  focusInput3()
                 }}
                 value={two}
                 maxLength={1}
@@ -117,6 +177,7 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setThree(text)
+                  focusInput4()
                 }}
                 value={three}
                 maxLength={1}
@@ -130,6 +191,7 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setFour(text)
+                  focusInput5()
                 }}
                 value={four}
                 maxLength={1}
@@ -143,6 +205,7 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setFive(text)
+                  focusInput6()
                 }}
                 value={five}
                 maxLength={1}
@@ -156,6 +219,7 @@ const ConfirmationCodeView = ({ navigation }) => {
                 style={stylesConfrrmationCodeView.textInput}
                 onChangeText={(text) => {
                   setSix(text)
+                  focusInput1()
                 }}
                 value={six}
                 maxLength={1}
@@ -166,7 +230,7 @@ const ConfirmationCodeView = ({ navigation }) => {
             </View>
           </View>
 
-          <Text
+          {/* <Text
             style={stylesConfrrmationCodeView.signupText}
             onPress={handleResendConfirmateOtp}>
             ¿Aún no has recibido el OTP?
@@ -174,7 +238,13 @@ const ConfirmationCodeView = ({ navigation }) => {
               {" "}
               Reenviar OTP
             </Text>
-          </Text>
+          </Text> */}
+
+          <View style={stylesConfrrmationCodeView.buttonContainer}>
+            <ButtonColorTwo handleSignUp={handlePaste}>
+              Pegar código
+            </ButtonColorTwo>
+          </View>
           <View style={stylesConfrrmationCodeView.buttonContainer}>
             <ButtonColor
               navigation={navigation}

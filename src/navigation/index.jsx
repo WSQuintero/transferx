@@ -28,13 +28,13 @@ const Navigation = () => {
             headerShown: false,
             contentStyle: { backgroundColor: "#07140f" }
           }}>
-          <Stack.Screen name="InitView" component={InitView} />
+          {/* <Stack.Screen name="InitView" component={InitView} />
           <Stack.Screen name="login" component={LoginView} />
           <Stack.Screen name="signup" component={SignUpView} />
           <Stack.Screen
             name="SelectInformationBankView"
             component={SelectInformationBankView}
-          />
+          /> */}
           <Stack.Screen
             name="confirmationCode"
             component={ConfirmationCodeView}
