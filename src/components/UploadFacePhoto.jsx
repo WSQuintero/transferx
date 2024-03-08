@@ -16,7 +16,6 @@ function UploadFacePhoto({
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [4, 3],
         quality: 1
       })
       if (!result.cancelled) {
@@ -33,7 +32,6 @@ function UploadFacePhoto({
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [4, 3],
         quality: 1
       })
 
@@ -53,8 +51,8 @@ function UploadFacePhoto({
     <View style={StylesKYC.containerId}>
       <Text style={StylesKYC.title}>Política KYC</Text>
       <Text style={StylesKYC.paragraph}>
-        Por favor, sube una foto clara del rostro, sin gorras, gafas ni ningún
-        elemento adicional.
+        Por favor, sube o toma dos fotos claras de tu rostro, sin gorras, gafas
+        ni ningún elemento adicional.
       </Text>
       <TouchableOpacity
         onPress={selectedImage ? removeImage : pickImageFromGallery}>

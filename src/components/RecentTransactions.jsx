@@ -79,7 +79,6 @@ const RecentTransactions = ({
       }
     }
   }
-
   return (
     <>
       <TouchableOpacity
@@ -99,20 +98,19 @@ const RecentTransactions = ({
           }
         ]}
         onPress={() => {
-          // if (
-          //   informationUser.user.kyc_validated &&
-          //   informationUser.user.sarlaft_validated
-          // ) {
-          //   navigation.navigate("newExchange")
-          // } else if (
-          //   informationUser.user.kyc_validated &&
-          //   !informationUser.user.sarlaft_validated
-          // ) {
-          //   navigation.navigate("sarlaft")
-          // } else {
-          //   navigation.navigate("dialog")
-          // }
-          navigation.navigate("newExchange")
+          if (
+            informationUser?.user.kyc_validated === 1 &&
+            informationUser?.user.sarlaft_validated === 1
+          ) {
+            navigation.navigate("newExchange")
+          } else if (
+            informationUser?.user.kyc_validated === 1 &&
+            !informationUser?.user.sarlaft_validated === 0
+          ) {
+            navigation.navigate("sarlaft")
+          } else {
+            navigation.navigate("dialog")
+          }
         }}>
         <Text
           style={[

@@ -8,14 +8,15 @@ export default class UserService {
     this.token = token
   }
 
-  async sendKYC(body) {
+  async sendKYC(token, body) {
     try {
       const response = await axios.post(
-        `${this.API_URL}/users/validate`,
+        `https://transferx-backend.concilbot.com/api/v1/users/validate-kyc`, // Cambiar la URL a la URL local
         body,
         {
           headers: {
-            Authorization: this.token
+            Authorization: token,
+            "Content-Type": "multipart/form-data"
           }
         }
       )

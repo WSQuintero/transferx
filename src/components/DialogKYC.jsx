@@ -7,33 +7,40 @@ import { UploadFacePhoto } from "./UploadFacePhoto"
 import UserService from "../services/UserService"
 import { MyContext } from "../context/context"
 
-function DialogKYC() {
-  const { $User, informationUser } = useContext(MyContext)
+function DialogKYC({ navigation }) {
+  const { $User, informationUser, token } = useContext(MyContext)
   const [selectedImageId, setSelectedImageId] = useState(null)
   const [selectedImagePhoto, setSelectedImagePhoto] = useState(null)
-  const [sectionPhoto, setSectionPhoto] = useState(false)
+  const [selectedImagePhotoTwo, setSelectedImagePhotoTwo] = useState(null)
+  const [sectionPhoto, setSectionPhoto] = useState()
 
   const handleNext = () => {
-    setSectionPhoto(true)
-  }
-  const handleBack = () => {
     setSectionPhoto(false)
   }
 
+  const handleBack = () => {
+    setSectionPhoto(undefined)
+  }
+  const handleBackSecondImage = () => {
+    setSectionPhoto(false)
+  }
+  const handleNextSecondImage = () => {
+    setSectionPhoto(true)
+  }
   const handleVerifyPhotos = async () => {
     const body = new FormData()
 
     body.append("faces", selectedImageId)
     body.append("faces", selectedImagePhoto)
+    body.append("faces", selectedImagePhotoTwo)
 
-    // const { status } = await $User.sendKYC(body)
+    const { status, data } = await $User.sendKYC(token, body)
 
-    // if (status) {
-    //   console.log("KYC aprobado")
-    // }
+    if (status) {
+      navigation.navigate("newExchange")
+    }
 
-    console.log(body)
-    // return status
+    return status
   }
 
   return (
@@ -41,7 +48,7 @@ function DialogKYC() {
       <View style={StylesKYC.containerBack}>
         <BackButton />
       </View>
-      {!sectionPhoto ? (
+      {sectionPhoto === undefined ? (
         <>
           <Text style={StylesKYC.alert}>
             ¡Para crear una orden, necesitamos la siguiente información!
@@ -53,11 +60,18 @@ function DialogKYC() {
             handleNext={handleNext}
           />
         </>
-      ) : (
+      ) : sectionPhoto === false ? (
         <UploadFacePhoto
           handleBack={handleBack}
           selectedImage={selectedImagePhoto}
           setSelectedImage={setSelectedImagePhoto}
+          handleNext={handleNextSecondImage}
+        />
+      ) : (
+        <UploadFacePhoto
+          handleBack={handleBackSecondImage}
+          selectedImage={selectedImagePhotoTwo}
+          setSelectedImage={setSelectedImagePhotoTwo}
           handleNext={handleVerifyPhotos}
         />
       )}
