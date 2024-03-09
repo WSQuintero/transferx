@@ -47,7 +47,9 @@ function DialogKYC({ navigation }) {
         navigation.navigate("sarlaft")
       }
     } else {
-      setShowErrorModal(true)
+      // setShowErrorModal(true)
+      console.log(data)
+      navigation.navigate("sarlaft")
     }
     return status
   }

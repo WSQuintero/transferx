@@ -94,7 +94,7 @@ const RecentTransactions = ({
       const { status, data } = await $User.getLastSarlaft(token)
 
       if (status) {
-        if (data.data) {
+        if (data.data.length) {
           setShowSuccessModalOrder(true)
           setIsPending(true)
         }
