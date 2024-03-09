@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { UploadIdPhoto } from "../components/UploadIdPhoto"
 import { Text, View } from "react-native"
 import BackButton from "./BackButton"
@@ -6,6 +6,7 @@ import StylesKYC from "../styles/StylesKYC"
 import { UploadFacePhoto } from "./UploadFacePhoto"
 import UserService from "../services/UserService"
 import { MyContext } from "../context/context"
+import ModalError from "./ModalError"
 
 function DialogKYC({ navigation }) {
   const { $User, informationUser, token } = useContext(MyContext)
@@ -13,6 +14,7 @@ function DialogKYC({ navigation }) {
   const [selectedImagePhoto, setSelectedImagePhoto] = useState(null)
   const [selectedImagePhotoTwo, setSelectedImagePhotoTwo] = useState(null)
   const [sectionPhoto, setSectionPhoto] = useState()
+  const [showErrorModal, setShowErrorModal] = useState(false)
 
   const handleNext = () => {
     setSectionPhoto(false)
@@ -44,10 +46,18 @@ function DialogKYC({ navigation }) {
       } else {
         navigation.navigate("sarlaft")
       }
+    } else {
+      setShowErrorModal(true)
     }
     return status
   }
-
+  useEffect(() => {
+    if (showErrorModal) {
+      setTimeout(() => {
+        setShowErrorModal(false)
+      }, 2000)
+    }
+  }, [showErrorModal])
   return (
     <View style={StylesKYC.container}>
       <View style={StylesKYC.containerBack}>
@@ -80,6 +90,11 @@ function DialogKYC({ navigation }) {
           handleNext={handleVerifyPhotos}
         />
       )}
+      <ModalError
+        showErrorModal={showErrorModal}
+        errorMessage={
+          "Hubo un error al validar tus fotografías, por favor, inténtalo de nuevo"
+        }></ModalError>
     </View>
   )
 }

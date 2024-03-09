@@ -26,16 +26,17 @@ const RecentTransactions = ({
   const [modalVisible, setModalVisible] = useState(false)
   const [hash, setHash] = useState()
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showSuccessModalOrder, setShowSuccessModalOrder] = useState(false)
   const [succesMessage, setSuccesMessage] = useState()
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [order, setOrder] = useState()
+  const [isPending, setIsPending] = useState(false)
   const { informationUser, $User } = useContext(MyContext)
   const handleOrderPress = (order) => {
     setSelectedOrder(order)
     setModalVisible(true)
   }
-
   useEffect(() => {
     if (showErrorModal) {
       setTimeout(() => {
@@ -78,6 +79,13 @@ const RecentTransactions = ({
       }
     }
   }
+  useEffect(() => {
+    if (showSuccessModalOrder) {
+      setTimeout(() => {
+        setShowSuccessModalOrder(false)
+      }, 3000)
+    }
+  }, [showSuccessModalOrder])
 
   useEffect(() => {
     const getSarlaft = async () => {
@@ -86,7 +94,10 @@ const RecentTransactions = ({
       const { status, data } = await $User.getLastSarlaft(token)
 
       if (status) {
-        console.log(data)
+        if (data.data) {
+          setShowSuccessModalOrder(true)
+          setIsPending(true)
+        }
       }
     }
     getSarlaft()
@@ -111,8 +122,9 @@ const RecentTransactions = ({
         ]}
         onPress={() => {
           if (
-            informationUser?.user.kyc_validated === 1 &&
-            informationUser?.user.sarlaft_validated === 1
+            (informationUser?.user.kyc_validated === 1 &&
+              informationUser?.user.sarlaft_validated === 1) ||
+            isPending
           ) {
             navigation.navigate("newExchange")
           } else if (
@@ -260,6 +272,12 @@ const RecentTransactions = ({
           errorMessage={errorMessage}
         />
       </ScrollView>
+      <ModalSuccess
+        showSuccessModal={showSuccessModalOrder}
+        succesMessage={
+          "Tu solicitud para poder realizar órdenes está pendiente, una vez aprobada podrás disfrutar de este servicio"
+        }
+      />
     </>
   )
 }

@@ -13,7 +13,6 @@ import { MyContext } from "../context/context"
 const Sarlaft = ({ navigation }) => {
   const [numberOfShaldeholders, setNumberOfShaldeholders] = useState(0)
   const [formData, setFormData] = useState({
-    idContract: "",
     firstName: "",
     lastName: "",
     names: "",
@@ -153,7 +152,6 @@ const Sarlaft = ({ navigation }) => {
     companyType: "Tipo de Empresa"
   }
   const labels = {
-    idContract: "ID del Contrato",
     firstName: "Primer Nombre",
     lastName: "Apellido",
     names: "Nombres",
@@ -276,6 +274,7 @@ const Sarlaft = ({ navigation }) => {
     })
   }
   const handleUsStayDetailToggleChange = (ind, detailKey, value) => {
+    console.log(detailKey, value)
     setShareholders((prevState) => {
       const updatedShareholders = [...prevState.shareholdersIdentification]
       updatedShareholders[ind] = {
@@ -289,7 +288,9 @@ const Sarlaft = ({ navigation }) => {
       return { ...prevState, shareholdersIdentification: updatedShareholders }
     })
   }
-
+  useEffect(() => {
+    console.log(shareholders.shareholdersIdentification)
+  }, [shareholders])
   const handleInputChangeInformationBank = (key, value) => {
     setInitialStateInformationBank((prevState) => ({
       ...prevState,
@@ -317,123 +318,100 @@ const Sarlaft = ({ navigation }) => {
     })
   }
   const handleSubmit = async () => {
-    const data = new FormData()
+    const finalFormData = new FormData()
 
     // Adding formData fields
     Object.entries(formData).forEach(([key, value]) => {
       if (key === "usStayDetails") {
-        Object.entries(value).forEach(([detailKey, detailValue]) => {
-          data.append(`usStayDetails.${detailKey}`, detailValue)
-        })
+        finalFormData.append(`usStayDetails`, value)
+      }
+    })
+    // Itera sobre las entradas del objeto formData
+    Object.entries(formData).forEach(([key, value]) => {
+      // Agrega la propiedad y su valor al FormData
+      if (typeof value === "boolean") {
+        // Si el valor es booleano, conviértelo a una cadena "true" o "false"
+        finalFormData.append(key, value.toString())
       } else {
-        data.append(key, value)
+        finalFormData.append(key, value)
       }
     })
 
     // Adding initialStatePersonJuridic fields
     Object.entries(initialStatePersonJuridic).forEach(([key, value]) => {
-      data.append(key, value)
+      finalFormData.append(key, value)
     })
 
     // Adding shareholdersIdentification
-    shareholders.shareholdersIdentification.forEach((shareholder, index) => {
-      Object.entries(shareholder).forEach(([key, value]) => {
-        if (key === "usStayDetails") {
-          Object.entries(value).forEach(([detailKey, detailValue]) => {
-            data.append(
-              `shareholdersIdentification[${index}].usStayDetails.${detailKey}`,
-              detailValue
-            )
-          })
-        } else {
-          data.append(`shareholdersIdentification[${index}].${key}`, value)
-        }
-      })
-    })
+
+    finalFormData.append(
+      "shareholdersIdentification",
+      JSON.stringify(shareholders.shareholdersIdentification)
+    )
 
     // Adding initialStateInformationBank fields
     Object.entries(initialStateInformationBank).forEach(([key, value]) => {
-      data.append(key, value)
+      finalFormData.append(key, value)
     })
 
     // Adding bankAccounts
-    bankAccounts.forEach((account, index) => {
-      Object.entries(account).forEach(([key, value]) => {
-        data.append(`bankAccounts[${index}].${key}`, value)
-      })
-    })
+    finalFormData.append("bankAccounts", JSON.stringify(bankAccounts))
 
     // Adding other fields
-    data.append(
-      "conductsForeignCurrencyTransactionsType.imports",
-      internationalOperationsType.internationalOperationsType.imports
+    const conductsForeignCurrencyTransactionsType = {
+      imports: internationalOperationsType.internationalOperationsType.imports,
+      exports: internationalOperationsType.internationalOperationsType.exports
+    }
+    finalFormData.append(
+      "conductsForeignCurrencyTransactionsType",
+      JSON.stringify(conductsForeignCurrencyTransactionsType)
     )
-    data.append(
-      "conductsForeignCurrencyTransactionsType.exports",
-      internationalOperationsType.internationalOperationsType.exports
+
+    const internationalOperationsTypeData = {
+      transfers:
+        internationalOperationsType.internationalOperationsType.transfers,
+      other: internationalOperationsType.internationalOperationsType.other
+    }
+
+    finalFormData.append(
+      "internationalOperationsType",
+      JSON.stringify(internationalOperationsTypeData)
     )
-    data.append(
-      "internationalOperationsType.transfers",
-      internationalOperationsType.internationalOperationsType.transfers
-    )
-    data.append(
-      "internationalOperationsType.other",
-      internationalOperationsType.internationalOperationsType.other
-    )
-    data.append(
+
+    finalFormData.append(
       "internationalOperationsTypeText",
       internationalOperationsType.internationalOperationsTypeText
     )
-    data.append("fullNameDeclarations", fullNameDeclarations)
-    data.append(
+    finalFormData.append("fullNameDeclarations", fullNameDeclarations)
+    finalFormData.append(
       "identificationTypeDeclarations",
       identificationTypeDeclarations
     )
-    data.append(
+    finalFormData.append(
       "identificationNumberDeclarations",
       identificationNumberDeclarations
     )
-    data.append("ResourceSourceDetails", ResourceSourceDetails)
-
+    finalFormData.append("ResourceSourceDetails", ResourceSourceDetails)
+    finalFormData.append(
+      "internationalOperationsDetails",
+      JSON.stringify(internationalOperationsDetails)
+    )
     // Now the FormData object is ready
     // You can send this FormData object to the server
 
-    const send = await $User.sendSarlaft(token, data)
-    if (send.status) {
-      navigation.navigate(
-        informationUser?.user?.number_account_bank_transfer
-          ? "exchange"
-          : "SelectInformationBankView"
-      )
-    } else {
-      console.log(send.data)
-    }
+    const send = await $User.sendSarlaft(token, finalFormData)
+    // if (send.status) {
+    //   navigation.navigate(
+    //     informationUser?.user?.number_account_bank_transfer
+    //       ? "exchange"
+    //       : "SelectInformationBankView"
+    //   )
+    // } else {
+    //   console.log(send.data)
+    // }
+    navigation.navigate("newExchange")
   }
 
-  useEffect(() => {
-    setShareholders((prevState) => ({
-      ...prevState,
-      shareholdersIdentification: [
-        ...prevState.shareholdersIdentification,
-        ...Array.from({ length: numberOfShaldeholders }, () => ({
-          identificationText: "",
-          identificationNumber: "",
-          fullName: "",
-          nationality: false,
-          otherNationality: "",
-          permanentResidenceInOtherCountry: false,
-          permanentResidenceInOtherCountryTexto: "",
-          usStayDetails: {
-            dueToContract183Days: false,
-            consecutive31DaysCurrentYear: false,
-            previousYear121Days: false,
-            secondYear60Days: false
-          },
-          percentageParticipation: 50
-        }))
-      ]
-    }))
-  }, [numberOfShaldeholders])
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>
@@ -560,7 +538,7 @@ const Sarlaft = ({ navigation }) => {
                                     ] &&
                                     shareholders.shareholdersIdentification[
                                       ind
-                                    ][a][detailValue]
+                                    ]["usStayDetails"][detailValue]
                                   }
                                   onValueChange={(value) =>
                                     handleUsStayDetailToggleChange(

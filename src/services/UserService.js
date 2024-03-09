@@ -28,20 +28,32 @@ export default class UserService {
   }
   async sendSarlaft(token, body) {
     try {
-      const response = await axios.post(
-        `https://transferx-backend.concilbot.com/api/v1/users/linking`, // Cambiar la URL a la URL local
-        body,
-        {
-          headers: {
-            Authorization: token,
-            "Content-Type": "multipart/form-data"
-          }
-        }
+      const formData = body
+
+      const headers = new Headers()
+      headers.append("Authorization", token)
+
+      const requestOptions = {
+        method: "POST",
+        headers: headers,
+        body: formData,
+        redirect: "follow"
+      }
+
+      const response = await fetch(
+        "https://transferx-backend.concilbot.com/api/v1/users/linking", // Cambiar la URL a la URL local
+        requestOptions
       )
 
-      return { status: true, data: response.data }
+      const data = await response.json()
+
+      if (response.ok) {
+        return { status: true, data: data }
+      } else {
+        return { status: false, data: data }
+      }
     } catch (error) {
-      return { status: false, data: error.response }
+      return { status: false, data: error }
     }
   }
 
