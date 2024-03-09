@@ -97,6 +97,7 @@ const RecentTransactions = ({
         if (data.data.length) {
           setShowSuccessModalOrder(true)
           setIsPending(true)
+          console.log(data.data)
         }
       }
     }
@@ -122,9 +123,8 @@ const RecentTransactions = ({
         ]}
         onPress={() => {
           if (
-            (informationUser?.user.kyc_validated === 1 &&
-              informationUser?.user.sarlaft_validated === 1) ||
-            isPending
+            informationUser?.user.kyc_validated === 1 &&
+            informationUser?.user.sarlaft_validated === 1
           ) {
             navigation.navigate("newExchange")
           } else if (
