@@ -48,7 +48,6 @@ function DialogKYC({ navigation }) {
       }
     } else {
       // setShowErrorModal(true)
-      console.log(data)
       navigation.navigate("sarlaft")
     }
     return status

@@ -32,7 +32,7 @@ const RecentTransactions = ({
   const [errorMessage, setErrorMessage] = useState("")
   const [order, setOrder] = useState()
   const [isPending, setIsPending] = useState(false)
-  const { informationUser, $User } = useContext(MyContext)
+  const { informationUser, $User, setInformationUser } = useContext(MyContext)
   const handleOrderPress = (order) => {
     setSelectedOrder(order)
     setModalVisible(true)
@@ -97,7 +97,6 @@ const RecentTransactions = ({
         if (data.data.length) {
           setShowSuccessModalOrder(true)
           setIsPending(true)
-          console.log(data.data)
         }
       }
     }

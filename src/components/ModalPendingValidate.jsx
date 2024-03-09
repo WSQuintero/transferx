@@ -37,7 +37,6 @@ function ModalPendingValidate({
 
   let message = ""
   let input = null
-  console.log(elseCellphoneValidated)
   if (!elseEmailValidated && !elseCellphoneValidated) {
     message = "No has validado ni tu correo ni tu teléfono."
   } else if (!elseEmailValidated) {

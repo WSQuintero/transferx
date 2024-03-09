@@ -274,7 +274,6 @@ const Sarlaft = ({ navigation }) => {
     })
   }
   const handleUsStayDetailToggleChange = (ind, detailKey, value) => {
-    console.log(detailKey, value)
     setShareholders((prevState) => {
       const updatedShareholders = [...prevState.shareholdersIdentification]
       updatedShareholders[ind] = {

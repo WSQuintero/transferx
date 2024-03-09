@@ -29,17 +29,26 @@ function Exchange({ navigation }) {
         navigation.navigate("exchange")
         setUpdatedOrder(true)
       } else {
-        console.log(data.data.message)
         if (data.data.message === "First validate your KYC and Sarlaft") {
           setShowErrorModal(true)
           setErrorMessage(
             "Tu formulario está pendiente de aprobación, por favor espera la respuesta del administrador"
           )
+
           setTimeout(() => {
             setShowErrorModal(false)
             setErrorMessage("")
           }, 2000)
         }
+
+        if (data.data.message === "validate your email and phone first") {
+          setErrorMessage("Por favor valida tu email y tu teléfono")
+          setShowErrorModal(true)
+        }
+        setTimeout(() => {
+          setShowErrorModal(false)
+          setErrorMessage("")
+        }, 2000)
       }
     } else {
       console.log("Token no válido.")

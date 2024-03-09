@@ -32,6 +32,9 @@ function RecentTransactionsView({ navigation }) {
   }, [$Exchange, token, changedHash, updatedOrder])
 
   useEffect(() => {
+    setElseEmailValidated(true)
+    setElseCellphoneValidated(true)
+
     if (informationUser?.user?.email_validated === 0) {
       setElseEmailValidated(false)
     }
