@@ -7,6 +7,7 @@ import ButtonColor from "../components/ButtonColor"
 import FooterMenu from "../components/FooterMenu"
 import { MyContext } from "../context/context"
 import { formatNumber } from "../utils/Constants"
+import ModalError from "../components/ModalError"
 
 function Exchange({ navigation }) {
   const [usdtTether, setUsdtTether] = useState("0")
@@ -14,6 +15,8 @@ function Exchange({ navigation }) {
   const [rate, setRate] = useState()
   const [quote, setQuote] = useState()
   const [countdown, setCountdown] = useState(30)
+  const [showErrorModal, setShowErrorModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
 
   const handleSendRequest = async () => {
     setUpdatedOrder(false)
@@ -26,7 +29,17 @@ function Exchange({ navigation }) {
         navigation.navigate("exchange")
         setUpdatedOrder(true)
       } else {
-        console.log("error de inicio de sesión")
+        console.log(data.data.message)
+        if (data.data.message === "First validate your KYC and Sarlaft") {
+          setShowErrorModal(true)
+          setErrorMessage(
+            "Tu formulario está pendiente de aprobación, por favor espera la respuesta del administrador"
+          )
+          setTimeout(() => {
+            setShowErrorModal(false)
+            setErrorMessage("")
+          }, 2000)
+        }
       }
     } else {
       console.log("Token no válido.")
@@ -191,6 +204,9 @@ function Exchange({ navigation }) {
           </View>
         </ScrollView>
       </PageWrapper>
+      <ModalError
+        showErrorModal={showErrorModal}
+        errorMessage={errorMessage}></ModalError>
       {/* <FooterMenu actual="exchange" navigation={navigation} /> */}
     </>
   )

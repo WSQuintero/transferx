@@ -45,6 +45,7 @@ function RecentTransactionsView({ navigation }) {
       setShowSuccessModal(true)
     }
   }, [elseEmailValidated, elseCellphoneValidated])
+
   return (
     <PageWrapper>
       <RecentTransactions

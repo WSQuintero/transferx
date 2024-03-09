@@ -180,7 +180,9 @@ const RecentTransactions = ({
 
                   <View style={styles.detailsContainer}>
                     <View style={styles.subContainer}>
-                      <Text style={styles.boldText}>{order.state}</Text>
+                      <Text style={styles.boldText}>
+                        {order.state === "in_progress" && "En progreso"}
+                      </Text>
                       <View
                         style={{
                           flexDirection: "column",
