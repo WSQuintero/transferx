@@ -409,6 +409,7 @@ const Sarlaft = ({ navigation }) => {
     // } else {
     //   console.log(send.data)
     // }
+    console.log(send.data)
     navigation.navigate("newExchange")
   }
 
