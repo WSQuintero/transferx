@@ -30,7 +30,6 @@ const MyContextProvider = ({ children }) => {
       }, 3000)
     }
   }, [showErrorModal])
-
   return (
     <MyContext.Provider
       value={{

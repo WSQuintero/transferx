@@ -15,6 +15,8 @@ function RecentTransactionsView({ navigation }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [elseEmailValidated, setElseEmailValidated] = useState(true)
   const [elseCellphoneValidated, setElseCellphoneValidated] = useState(true)
+  console.log(informationUser ? informationUser : "hola")
+
   useEffect(() => {
     if (token) {
       const getOrders = async () => {

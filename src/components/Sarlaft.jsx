@@ -395,21 +395,19 @@ const Sarlaft = ({ navigation }) => {
       "internationalOperationsDetails",
       JSON.stringify(internationalOperationsDetails)
     )
-    // Now the FormData object is ready
-    // You can send this FormData object to the server
 
     const send = await $User.sendSarlaft(token, finalFormData)
-    // if (send.status) {
-    //   navigation.navigate(
-    //     informationUser?.user?.number_account_bank_transfer
-    //       ? "exchange"
-    //       : "SelectInformationBankView"
-    //   )
-    // } else {
-    //   console.log(send.data)
-    // }
+    if (send.status) {
+      navigation.navigate(
+        informationUser?.user?.number_account_bank_transfer
+          ? "exchange"
+          : "SelectInformationBankView"
+      )
+    } else {
+      console.log(send.data)
+    }
 
-    navigation.navigate("newExchange")
+    // navigation.navigate("newExchange")
   }
 
   return (

@@ -21,7 +21,6 @@ function Exchange({ navigation }) {
   const handleSendRequest = async () => {
     setUpdatedOrder(false)
 
-    // Validar si el token está definido y no es nulo ni una cadena vacía
     if (token && token.trim() !== "") {
       const { status, data } = await $Exchange.p2pRequest(token, usdtTether)
 
@@ -54,7 +53,6 @@ function Exchange({ navigation }) {
       console.log("Token no válido.")
     }
   }
-
   useEffect(() => {
     const fetchRate = async () => {
       // Validar si el token está definido y no es nulo ni una cadena vacía

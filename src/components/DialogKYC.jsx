@@ -29,29 +29,84 @@ function DialogKYC({ navigation }) {
   const handleNextSecondImage = () => {
     setSectionPhoto(true)
   }
+  const convertToBlob = async (imageUri) => {
+    try {
+      const response = await fetch(imageUri)
+      if (!response.ok) {
+        throw new Error("Failed to fetch image")
+      }
+      const blob = await response.blob()
+      return blob
+    } catch (error) {
+      console.error("Error al convertir la imagen en Blob:", error)
+      throw error
+    }
+  }
+
+  const getFileExtension = (filename) => {
+    return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2)
+  }
+
+  const getMimeType = (extension) => {
+    switch (extension.toLowerCase()) {
+      case "jpg":
+      case "jpeg":
+        return "image/jpeg"
+      case "png":
+        return "image/png"
+      case "gif":
+        return "image/gif"
+      // Agrega más extensiones de archivo y tipos MIME según sea necesario
+      default:
+        return "application/octet-stream" // Tipo MIME predeterminado para archivos desconocidos
+    }
+  }
+
   const handleVerifyPhotos = async () => {
     const body = new FormData()
 
-    // Agregar los archivos con diferentes nombres bajo la misma clave "faces"
-    body.append("faces", selectedImageId)
-    body.append("faces", selectedImagePhoto)
-    body.append("faces", selectedImagePhotoTwo)
+    try {
+      // Convertir las imágenes seleccionadas en objetos Blob
+      const blobImageId = await convertToBlob(selectedImageId)
+      const blobImagePhoto = await convertToBlob(selectedImagePhoto)
+      const blobImagePhotoTwo = await convertToBlob(selectedImagePhotoTwo)
 
-    // Llamar a la función sendKYC para enviar los datos al servidor
+      // Agregar los objetos Blob al FormData con nombres de clave "faces"
+      body.append("faces", {
+        uri: selectedImageId,
+        name: "imageId." + getFileExtension(selectedImageId),
+        type: getMimeType(getFileExtension(selectedImageId))
+      })
+      body.append("faces", {
+        uri: selectedImagePhoto,
+        name: "imagePhoto." + getFileExtension(selectedImagePhoto),
+        type: getMimeType(getFileExtension(selectedImagePhoto))
+      })
+      body.append("faces", {
+        uri: selectedImagePhotoTwo,
+        name: "imagePhotoTwo." + getFileExtension(selectedImagePhotoTwo),
+        type: getMimeType(getFileExtension(selectedImagePhotoTwo))
+      })
 
-    const { status, data } = await $User.sendKYC(token, body)
-    if (status) {
-      if (informationUser?.user?.sarlaft_validated === 1) {
-        navigation.navigate("newExchange")
+      // Llamar a la función sendKYC para enviar los datos al servidor
+      const { status, data } = await $User.sendKYC(token, body)
+      if (status) {
+        if (informationUser?.user?.sarlaft_validated === 1) {
+          navigation.navigate("newExchange")
+        } else {
+          navigation.navigate("sarlaft")
+        }
       } else {
-        navigation.navigate("sarlaft")
+        setShowErrorModal(true)
+        console.log(data)
       }
-    } else {
-      // setShowErrorModal(true)
-      navigation.navigate("sarlaft")
+      return status
+    } catch (error) {
+      console.error("Error al enviar los datos al servidor:", error)
+      throw error
     }
-    return status
   }
+
   useEffect(() => {
     if (showErrorModal) {
       setTimeout(() => {
