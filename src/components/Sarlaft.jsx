@@ -287,9 +287,7 @@ const Sarlaft = ({ navigation }) => {
       return { ...prevState, shareholdersIdentification: updatedShareholders }
     })
   }
-  useEffect(() => {
-    console.log(shareholders.shareholdersIdentification)
-  }, [shareholders])
+
   const handleInputChangeInformationBank = (key, value) => {
     setInitialStateInformationBank((prevState) => ({
       ...prevState,
@@ -397,17 +395,17 @@ const Sarlaft = ({ navigation }) => {
     )
 
     const send = await $User.sendSarlaft(token, finalFormData)
-    if (send.status) {
-      navigation.navigate(
-        informationUser?.user?.number_account_bank_transfer
-          ? "exchange"
-          : "SelectInformationBankView"
-      )
-    } else {
-      console.log(send.data)
-    }
+    // if (send.status) {
+    //   navigation.navigate(
+    //     informationUser?.user?.number_account_bank_transfer
+    //       ? "exchange"
+    //       : "SelectInformationBankView"
+    //   )
+    // } else {
+    //   console.log(send.data)
+    // }
 
-    // navigation.navigate("newExchange")
+    navigation.navigate("newExchange")
   }
 
   return (
