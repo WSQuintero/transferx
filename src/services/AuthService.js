@@ -10,7 +10,7 @@ export default class AuthService {
   async signUp({ firstname, lastname, email, cellphone, password }) {
     try {
       const response = await axios.post(
-        "https://ac6e-38-156-229-205.ngrok-free.app/api/v1/users/signup",
+        "https://transferx-backend.concilbot.com/api/v1/users/signup",
         {
           firstname,
           lastname,
@@ -29,7 +29,7 @@ export default class AuthService {
   async signIn({ email, password }) {
     try {
       const response = await axios.post(
-        "https://ac6e-38-156-229-205.ngrok-free.app/api/v1/users/signin",
+        "https://transferx-backend.concilbot.com/api/v1/users/signin",
         {
           email,
           password
@@ -45,7 +45,7 @@ export default class AuthService {
   async confirmCellphone({ cellphone, code }) {
     try {
       const response = await axios.post(
-        "https://ac6e-38-156-229-205.ngrok-free.app/api/v1/users/validate-cellphone",
+        "https://transferx-backend.concilbot.com/api/v1/users/validate-cellphone",
         {
           cellphone,
           code
@@ -61,7 +61,7 @@ export default class AuthService {
   async resendConfirmationCode({ cellphone }, token) {
     try {
       const response = await axios.post(
-        "https://ac6e-38-156-229-205.ngrok-free.app/api/v1/users/resend-otp-code",
+        "https://transferx-backend.concilbot.com/api/v1/users/resend-otp-code",
         {
           cellphone: cellphone.replace("+","")
         },
@@ -81,7 +81,7 @@ export default class AuthService {
   async resendConfirmationEmail({ email }, token) {
     try {
       const response = await axios.post(
-        "https://ac6e-38-156-229-205.ngrok-free.app/api/v1/users/resend-email-validation",
+        "https://transferx-backend.concilbot.com/api/v1/users/resend-email-validation",
         {
           email
         },
@@ -101,7 +101,7 @@ export default class AuthService {
   async recoveryAccount({ email }) {
     try {
       const response = await axios.put(
-        "https://ac6e-38-156-229-205.ngrok-free.app/api/v1/users/recovery-password",
+        "https://transferx-backend.concilbot.com/api/v1/users/recovery-password",
         {
           email
         }
@@ -116,7 +116,7 @@ export default class AuthService {
   async changePassword({ email, password, code }) {
     try {
       const response = await axios.put(
-        "https://ac6e-38-156-229-205.ngrok-free.app/api/v1/users/change-password",
+        "https://transferx-backend.concilbot.com/api/v1/users/change-password",
         {
           email,
           password,
