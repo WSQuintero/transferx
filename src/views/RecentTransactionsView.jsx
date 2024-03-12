@@ -15,7 +15,6 @@ function RecentTransactionsView({ navigation }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [elseEmailValidated, setElseEmailValidated] = useState(true)
   const [elseCellphoneValidated, setElseCellphoneValidated] = useState(true)
-  console.log(informationUser ? informationUser : "hola")
 
   useEffect(() => {
     if (token) {
@@ -61,7 +60,9 @@ function RecentTransactionsView({ navigation }) {
       <FooterMenu actual="exchange" navigation={navigation} />
       <ModalPendingValidate
         showSuccessModal={showSuccessModal}
-        succesMessage={"No has verificado tu correo o teléfono. Si requieres cambiarlo, haz clic en el botón de abajo."}
+        succesMessage={
+          "No has verificado tu correo o teléfono. Si requieres cambiarlo, haz clic en el botón de abajo."
+        }
         setShowSuccessModal={setShowSuccessModal}
         elseEmailValidated={elseEmailValidated}
         elseCellphoneValidated={elseCellphoneValidated}

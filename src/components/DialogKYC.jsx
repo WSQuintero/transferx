@@ -98,7 +98,6 @@ function DialogKYC({ navigation }) {
         }
       } else {
         setShowErrorModal(true)
-        console.log(data)
       }
       return status
     } catch (error) {

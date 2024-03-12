@@ -94,7 +94,7 @@ const RecentTransactions = ({
       const { status, data } = await $User.getLastSarlaft(token)
 
       if (status) {
-        if (data.data.length) {
+        if (data.data.length && informationUser?.sarlaft_validated === 0) {
           setShowSuccessModalOrder(true)
           setIsPending(true)
         }
@@ -181,6 +181,9 @@ const RecentTransactions = ({
                     <View style={styles.subContainer}>
                       <Text style={styles.boldText}>
                         {order.state === "in_progress" && "En progreso"}
+                        {order.state === "pending" && "Pendiente"}
+                        {order.state === "complete" && "Completada"}
+                        {order.state === "rejected" && "Rechazada"}
                       </Text>
                       <View
                         style={{
