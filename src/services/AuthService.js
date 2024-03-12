@@ -35,7 +35,7 @@ export default class AuthService {
           password
         }
       )
-
+      
       return { status: true, data: response.data }
     } catch (error) {
       return { status: false, data: error.response }
@@ -61,9 +61,29 @@ export default class AuthService {
   async resendConfirmationCode({ cellphone }, token) {
     try {
       const response = await axios.post(
-        "https://transferx-backend.concilbot.com/api/v1/users/resend-otp-cod",
+        "https://transferx-backend.concilbot.com/api/v1/users/resend-otp-code",
         {
-          cellphone: cellphone
+          cellphone: cellphone.replace("+","")
+        },
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      )
+
+      return { status: true, data: response.data }
+    } catch (error) {
+      return { status: false, data: error.response }
+    }
+  }
+
+  async resendConfirmationEmail({ email }, token) {
+    try {
+      const response = await axios.post(
+        "https://transferx-backend.concilbot.com/api/v1/users/resend-email-validation",
+        {
+          email
         },
         {
           headers: {

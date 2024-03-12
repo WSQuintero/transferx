@@ -3,6 +3,7 @@ import {
   Modal,
   StyleSheet,
   Text,
+  Alert,
   View,
   TouchableOpacity,
   TextInput,
@@ -22,23 +23,40 @@ function ModalPendingValidate({
 }) {
   const [sending, setSending] = useState(false);
   const [cellPhone, setCellPhone] = useState()
-  const [newEmail, setNewEmail] = useState("")
   const { $Auth, token, ...more } = useContext(MyContext)
+  const [newEmail, setNewEmail] = useState('')
 
   const handleValidate = async () => {
     setSending(true);
-    const { status, data } = await $Auth.resendConfirmationCode(
-      { cellphone: cellPhone },
-      token
-    )
 
-    if (status) {
-      setShowSuccessModal(false);
-      setSending(false);
-      more.setCellPhone(cellPhone)
-      navigation.navigate("confirmationCode")
+    if(message == "No has validado tu correo."){
+      const { status, data } = await $Auth.resendConfirmationEmail(
+        { email: newEmail },
+        token
+      )
+  
+      if (status) {
+        setShowSuccessModal(false);
+        setSending(false);
+        more.setEmail(newEmail);
+        Alert.alert(`Correo de validación enviado a ${newEmail}, por favor verifica.`);
+      }else{
+        setSending(false);
+      }
     }else{
-      setSending(false);
+      const { status, data } = await $Auth.resendConfirmationCode(
+        { cellphone: cellPhone },
+        token
+      )
+  
+      if (status) {
+        setShowSuccessModal(false);
+        setSending(false);
+        more.setCellPhone(cellPhone)
+        navigation.navigate("confirmationCode")
+      }else{
+        setSending(false);
+      }
     }
   }
 
@@ -52,7 +70,7 @@ function ModalPendingValidate({
         style={stylesModalPendingValidate.input}
         value={newEmail}
         onChangeText={setNewEmail}
-        placeholder="Nuevo correo"
+        placeholder="Confirma tu correo electrónico"
       />
     )
   } else if (!elseCellphoneValidated) {
