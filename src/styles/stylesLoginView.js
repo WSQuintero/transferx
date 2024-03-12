@@ -90,7 +90,7 @@ const stylesLoginView = StyleSheet.create({
     flexDirection: "row"
   },
   rememberCheck: {
-    marginTop: 20,
+    padding: 20,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import useAuth from "../hooks/useAuth"
 import { MyContextProvider, MyProvider } from "../context/context" // Importa MyProvider desde el contexto
 import LoginView from "../views/LoginView"
+import RecoveryAccountView from "../views/RecoveryAccountView"
 import SignUpView from "../views/SignUpView"
 import InitView from "../views/InitView"
 import { NavigationContainer } from "@react-navigation/native"
@@ -30,6 +31,7 @@ const Navigation = () => {
           }}>
           <Stack.Screen name="InitView" component={InitView} />
           <Stack.Screen name="login" component={LoginView} />
+          <Stack.Screen name="recoveryAccount" component={RecoveryAccountView} />
           <Stack.Screen name="signup" component={SignUpView} />
           <Stack.Screen
             name="SelectInformationBankView"

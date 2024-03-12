@@ -131,9 +131,9 @@ const LoginView = ({ navigation }) => {
                 secureTextEntry={true}
               />
             </View>
-            <View style={stylesLoginView.rememberCheck}>
+            <View style={stylesLoginView.rememberCheck} onPress={() => navigation.navigate("recoveryAccount")}>
               {/* <RememberMeCheckBox/> */}
-              <Text style={stylesLoginView.forgot}>Olvidé mi contraseña</Text>
+              <Text style={stylesLoginView.forgot} onPress={() => navigation.navigate("recoveryAccount")}>Olvidé mi contraseña</Text>
             </View>
           </View>
 
