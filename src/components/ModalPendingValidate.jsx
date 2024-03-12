@@ -5,7 +5,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  ActivityIndicator
 } from "react-native"
 import CellphonePicker from "./CellphonePicker"
 import stylesSignUp from "../styles/stylesSignUp"
@@ -19,27 +20,32 @@ function ModalPendingValidate({
   elseCellphoneValidated,
   navigation
 }) {
+  const [sending, setSending] = useState(false);
   const [cellPhone, setCellPhone] = useState()
   const [newEmail, setNewEmail] = useState("")
   const { $Auth, token, ...more } = useContext(MyContext)
 
   const handleValidate = async () => {
+    setSending(true);
     const { status, data } = await $Auth.resendConfirmationCode(
-      { cellPhone },
+      { cellphone: cellPhone },
       token
     )
 
     if (status) {
+      setShowSuccessModal(false);
+      setSending(false);
       more.setCellPhone(cellPhone)
       navigation.navigate("confirmationCode")
+    }else{
+      setSending(false);
     }
   }
 
   let message = ""
   let input = null
-  if (!elseEmailValidated && !elseCellphoneValidated) {
-    message = "No has validado ni tu correo ni tu teléfono."
-  } else if (!elseEmailValidated) {
+
+  if (!elseEmailValidated) {
     message = "No has validado tu correo."
     input = (
       <TextInput
@@ -61,38 +67,45 @@ function ModalPendingValidate({
   return (
     <Modal visible={showSuccessModal} animationType="slide" transparent={true}>
       <View style={stylesModalPendingValidate.modalContainer}>
-        <View style={stylesModalPendingValidate.modalContent}>
-          <Text style={stylesModalPendingValidate.modalTitle}>
-            Por favor confirma
-          </Text>
-          <Text style={stylesModalPendingValidate.modalMessage}>{message}</Text>
-          {input && (
-            <View style={stylesModalPendingValidate.inputContainer}>
-              <Text style={stylesModalPendingValidate.label}>
-                {message === "No has validado tu correo."
-                  ? "Modificar correo"
-                  : "Modificar celular"}
+        {
+          !sending ? 
+            (<View style={stylesModalPendingValidate.modalContent}>
+              <Text style={stylesModalPendingValidate.modalTitle}>
+                Por favor confirma
               </Text>
-              {input}
-            </View>
-          )}
-          <View style={stylesModalPendingValidate.buttonContainer}>
-            <TouchableOpacity
-              style={stylesModalPendingValidate.modalButton}
-              onPress={handleValidate}>
-              <Text style={stylesModalPendingValidate.modalButtonText}>
-                Enviar
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={stylesModalPendingValidate.modalButton}
-              onPress={() => setShowSuccessModal(false)}>
-              <Text style={stylesModalPendingValidate.modalButtonText}>
-                Cerrar
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+              <Text style={stylesModalPendingValidate.modalMessage}>{message}</Text>
+              {input && (
+                <View style={stylesModalPendingValidate.inputContainer}>
+                  <Text style={stylesModalPendingValidate.label}>
+                    {message === "No has validado tu correo."
+                      ? "Modificar correo"
+                      : "Modificar celular"}
+                  </Text>
+                  {input}
+                </View>
+              )}
+              <View style={stylesModalPendingValidate.buttonContainer}>
+                <TouchableOpacity
+                  style={stylesModalPendingValidate.modalButton}
+                  onPress={handleValidate}>
+                  <Text style={stylesModalPendingValidate.modalButtonText}>
+                    Enviar
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={stylesModalPendingValidate.modalButton}
+                  onPress={() => setShowSuccessModal(false)}>
+                  <Text style={stylesModalPendingValidate.modalButtonText}>
+                    Cerrar
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>)
+          :
+            (<View style={stylesModalPendingValidate.modalContent}>
+              <ActivityIndicator size="small" color="#FFFFFF" />
+            </View>)
+          }
       </View>
     </Modal>
   )

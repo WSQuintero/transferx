@@ -8,11 +8,13 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Clipboard
+  Clipboard,
+  ActivityIndicator
 } from "react-native"
 import ButtonColor from "../components/ButtonColor"
 import { MyContext } from "../context/context"
 import ModalError from "../components/ModalError"
+import ModalSuccess from "../components/ModalSuccess"
 import ButtonColorTwo from "../components/ButtonColorTwo"
 
 const ConfirmationCodeView = ({ navigation }) => {
@@ -34,11 +36,14 @@ const ConfirmationCodeView = ({ navigation }) => {
     $Auth,
     errorMessage,
     setErrorMessage,
-    showErrorModal,
-    setShowErrorModal
+    showErrorModal
   } = useContext(MyContext)
 
   const [clipboardContent, setClipboardContent] = useState("")
+  const [succesMessage, setSuccesMessage] = useState("")
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [sending, setSending] = useState(false);
+
 
   const handlePaste = (event) => {
     Clipboard.getString()
@@ -68,13 +73,18 @@ const ConfirmationCodeView = ({ navigation }) => {
   }
 
   const handleConfirmateOtp = async () => {
+    setSending(true);
+
     const { status, data } = await $Auth.confirmCellphone({
       cellphone,
       code: `${one}${two}${three}${four}${five}${six}`
     })
 
+    setSending(false);
+
     if (status) {
-      navigation.navigate("login")
+      setSuccesMessage("Tu número de teléfono ha sido validado correctamente");
+      setShowSuccessModal(true);
     } else {
       setErrorMessage("Por favor intenta nuevamente, ha habido un error")
       setShowErrorModal(true)
@@ -133,128 +143,136 @@ const ConfirmationCodeView = ({ navigation }) => {
     <PageWrapper>
       {/* <BackButton /> */}
       <View style={stylesConfrrmationCodeView.container}>
-        <View style={stylesConfrrmationCodeView.content}>
-          <Text style={stylesConfrrmationCodeView.title}>
-            Verificación de OTP
-          </Text>
-          <Text style={stylesConfrrmationCodeView.subtitle}>
-            Para registrarte en tu cuenta, ingresa el código de 6 dígitos que te
-            enviamos al {cellphone}.
-          </Text>
-
-          <View style={stylesConfrrmationCodeView.inputContainer}>
-            <View style={stylesConfrrmationCodeView.textInputContainer}>
-              <TextInput
-                style={stylesConfrrmationCodeView.textInput}
-                onChangeText={(text) => {
-                  setOne(text)
-                  focusInput2()
-                }}
-                value={one}
-                maxLength={1}
-                onFocus={() => handleFocus(inputOneRef)}
-                onBlur={() => handleBlur(inputOneRef)}
-                ref={inputOneRef}
-              />
-            </View>
-            <View style={stylesConfrrmationCodeView.textInputContainer}>
-              <TextInput
-                style={stylesConfrrmationCodeView.textInput}
-                onChangeText={(text) => {
-                  setTwo(text)
-                  focusInput3()
-                }}
-                value={two}
-                maxLength={1}
-                onFocus={() => handleFocus(inputTwoRef)}
-                onBlur={() => handleBlur(inputTwoRef)}
-                ref={inputTwoRef}
-              />
-            </View>
-            <View style={stylesConfrrmationCodeView.textInputContainer}>
-              <TextInput
-                style={stylesConfrrmationCodeView.textInput}
-                onChangeText={(text) => {
-                  setThree(text)
-                  focusInput4()
-                }}
-                value={three}
-                maxLength={1}
-                onFocus={() => handleFocus(inputThreeRef)}
-                onBlur={() => handleBlur(inputThreeRef)}
-                ref={inputThreeRef}
-              />
-            </View>
-            <View style={stylesConfrrmationCodeView.textInputContainer}>
-              <TextInput
-                style={stylesConfrrmationCodeView.textInput}
-                onChangeText={(text) => {
-                  setFour(text)
-                  focusInput5()
-                }}
-                value={four}
-                maxLength={1}
-                onFocus={() => handleFocus(inputFourRef)}
-                onBlur={() => handleBlur(inputFourRef)}
-                ref={inputFourRef}
-              />
-            </View>
-            <View style={stylesConfrrmationCodeView.textInputContainer}>
-              <TextInput
-                style={stylesConfrrmationCodeView.textInput}
-                onChangeText={(text) => {
-                  setFive(text)
-                  focusInput6()
-                }}
-                value={five}
-                maxLength={1}
-                onFocus={() => handleFocus(inputFiveRef)}
-                onBlur={() => handleBlur(inputFiveRef)}
-                ref={inputFiveRef}
-              />
-            </View>
-            <View style={stylesConfrrmationCodeView.textInputContainer}>
-              <TextInput
-                style={stylesConfrrmationCodeView.textInput}
-                onChangeText={(text) => {
-                  setSix(text)
-                  focusInput1()
-                }}
-                value={six}
-                maxLength={1}
-                onFocus={() => handleFocus(inputSixRef)}
-                onBlur={() => handleBlur(inputSixRef)}
-                ref={inputSixRef}
-              />
-            </View>
-          </View>
-
-          {/* <Text
-            style={stylesConfrrmationCodeView.signupText}
-            onPress={handleResendConfirmateOtp}>
-            ¿Aún no has recibido el OTP?
-            <Text style={stylesConfrrmationCodeView.signupTextBold}>
-              {" "}
-              Reenviar OTP
+        {
+          !sending ?
+          (<View style={stylesConfrrmationCodeView.content}>
+            <Text style={stylesConfrrmationCodeView.title}>
+              Verificación de OTP
             </Text>
-          </Text> */}
+            <Text style={stylesConfrrmationCodeView.subtitle}>
+              Para registrarte en tu cuenta, ingresa el código de 6 dígitos que te
+              enviamos al {cellphone}.
+            </Text>
 
-          <View style={stylesConfrrmationCodeView.buttonContainer}>
-            <ButtonColorTwo handleSignUp={handlePaste}>
-              Pegar código
-            </ButtonColorTwo>
-          </View>
-          <View style={stylesConfrrmationCodeView.buttonContainer}>
-            <ButtonColor
-              navigation={navigation}
-              to={"login"}
-              handleSignUp={handleConfirmateOtp}>
-              Confirmar
-            </ButtonColor>
-          </View>
-        </View>
+            <View style={stylesConfrrmationCodeView.inputContainer}>
+              <View style={stylesConfrrmationCodeView.textInputContainer}>
+                <TextInput
+                  style={stylesConfrrmationCodeView.textInput}
+                  onChangeText={(text) => {
+                    setOne(text)
+                    focusInput2()
+                  }}
+                  value={one}
+                  maxLength={1}
+                  onFocus={() => handleFocus(inputOneRef)}
+                  onBlur={() => handleBlur(inputOneRef)}
+                  ref={inputOneRef}
+                />
+              </View>
+              <View style={stylesConfrrmationCodeView.textInputContainer}>
+                <TextInput
+                  style={stylesConfrrmationCodeView.textInput}
+                  onChangeText={(text) => {
+                    setTwo(text)
+                    focusInput3()
+                  }}
+                  value={two}
+                  maxLength={1}
+                  onFocus={() => handleFocus(inputTwoRef)}
+                  onBlur={() => handleBlur(inputTwoRef)}
+                  ref={inputTwoRef}
+                />
+              </View>
+              <View style={stylesConfrrmationCodeView.textInputContainer}>
+                <TextInput
+                  style={stylesConfrrmationCodeView.textInput}
+                  onChangeText={(text) => {
+                    setThree(text)
+                    focusInput4()
+                  }}
+                  value={three}
+                  maxLength={1}
+                  onFocus={() => handleFocus(inputThreeRef)}
+                  onBlur={() => handleBlur(inputThreeRef)}
+                  ref={inputThreeRef}
+                />
+              </View>
+              <View style={stylesConfrrmationCodeView.textInputContainer}>
+                <TextInput
+                  style={stylesConfrrmationCodeView.textInput}
+                  onChangeText={(text) => {
+                    setFour(text)
+                    focusInput5()
+                  }}
+                  value={four}
+                  maxLength={1}
+                  onFocus={() => handleFocus(inputFourRef)}
+                  onBlur={() => handleBlur(inputFourRef)}
+                  ref={inputFourRef}
+                />
+              </View>
+              <View style={stylesConfrrmationCodeView.textInputContainer}>
+                <TextInput
+                  style={stylesConfrrmationCodeView.textInput}
+                  onChangeText={(text) => {
+                    setFive(text)
+                    focusInput6()
+                  }}
+                  value={five}
+                  maxLength={1}
+                  onFocus={() => handleFocus(inputFiveRef)}
+                  onBlur={() => handleBlur(inputFiveRef)}
+                  ref={inputFiveRef}
+                />
+              </View>
+              <View style={stylesConfrrmationCodeView.textInputContainer}>
+                <TextInput
+                  style={stylesConfrrmationCodeView.textInput}
+                  onChangeText={(text) => {
+                    setSix(text)
+                    focusInput1()
+                  }}
+                  value={six}
+                  maxLength={1}
+                  onFocus={() => handleFocus(inputSixRef)}
+                  onBlur={() => handleBlur(inputSixRef)}
+                  ref={inputSixRef}
+                />
+              </View>
+            </View>
+
+            {/* <Text
+              style={stylesConfrrmationCodeView.signupText}
+              onPress={handleResendConfirmateOtp}>
+              ¿Aún no has recibido el OTP?
+              <Text style={stylesConfrrmationCodeView.signupTextBold}>
+                {" "}
+                Reenviar OTP
+              </Text>
+            </Text> */}
+
+            <View style={stylesConfrrmationCodeView.buttonContainer}>
+              <ButtonColorTwo handleSignUp={handlePaste}>
+                Pegar código
+              </ButtonColorTwo>
+            </View>
+            <View style={stylesConfrrmationCodeView.buttonContainer}>
+              <ButtonColor
+                navigation={navigation}
+                to={"login"}
+                handleSignUp={handleConfirmateOtp}>
+                Confirmar
+              </ButtonColor>
+            </View>
+          </View>)
+          :
+          (<View style={stylesConfrrmationCodeView.content}>
+            <ActivityIndicator size="small" color="#FFFFFF" />
+          </View>)
+        }
       </View>
       <ModalError errorMessage={errorMessage} showErrorModal={showErrorModal} />
+      <ModalSuccess succesMessage={succesMessage} showSuccessModal={showSuccessModal} onClose={()=>navigation.navigate("login")} />
     </PageWrapper>
   )
 }

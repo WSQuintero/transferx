@@ -1,13 +1,22 @@
 import React from "react"
-import { Modal, StyleSheet, Text, View } from "react-native"
+import { Modal, StyleSheet, Text, View, TouchableOpacity } from "react-native"
 
-function ModalSuccess({ showSuccessModal, succesMessage }) {
+function ModalSuccess({ showSuccessModal, succesMessage, onClose }) {
   return (
     <Modal visible={showSuccessModal} animationType="slide" transparent={true}>
       <View style={stylesModalSuccess.modalContainer}>
         <View style={stylesModalSuccess.modalContent}>
           <Text style={stylesModalSuccess.modalTitle}>Success</Text>
           <Text style={stylesModalSuccess.modalMessage}>{succesMessage}</Text>
+        {onClose&&(<View style={stylesModalSuccess.buttonContainer}>
+          <TouchableOpacity
+            style={stylesModalSuccess.modalButton}
+            onPress={onClose}>
+            <Text style={stylesModalSuccess.modalButtonText}>
+              Ok
+            </Text>
+          </TouchableOpacity>
+        </View>)}
         </View>
       </View>
     </Modal>
@@ -23,6 +32,12 @@ const stylesModalSuccess = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo oscuro transparente
     paddingHorizontal: 20
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 20,
+    gap: 5
   },
   modalContent: {
     backgroundColor: "#10231D",
@@ -57,5 +72,17 @@ const stylesModalSuccess = StyleSheet.create({
     color: "#ffffff",
     textAlign: "center",
     fontSize: 14
-  }
+  },
+  modalButton: {
+    backgroundColor: "#C3F53C",
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginTop: 10
+  },
+  modalButtonText: {
+    color: "#10231D",
+    textAlign: "center",
+    fontSize: 14
+  },
 })

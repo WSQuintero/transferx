@@ -34,13 +34,10 @@ function RecentTransactionsView({ navigation }) {
   }, [$Exchange, token, changedHash, updatedOrder])
 
   useEffect(() => {
-    setElseEmailValidated(true)
-    setElseCellphoneValidated(true)
-
-    if (informationUser?.user?.email_validated === 0) {
+    if (Number(informationUser?.user?.email_validated) === 0) {
       setElseEmailValidated(false)
     }
-    if (informationUser?.user?.cellphone_verifed === 0) {
+    if (Number(informationUser?.user?.cellphone_verifed) === 0) {
       setElseCellphoneValidated(false)
     }
   }, [informationUser?.user])
@@ -64,9 +61,7 @@ function RecentTransactionsView({ navigation }) {
       <FooterMenu actual="exchange" navigation={navigation} />
       <ModalPendingValidate
         showSuccessModal={showSuccessModal}
-        succesMessage={
-          "No has verificado tu correo o teléfono. Si requieres cambiarlo, haz clic en el botón de abajo."
-        }
+        succesMessage={"No has verificado tu correo o teléfono. Si requieres cambiarlo, haz clic en el botón de abajo."}
         setShowSuccessModal={setShowSuccessModal}
         elseEmailValidated={elseEmailValidated}
         elseCellphoneValidated={elseCellphoneValidated}
