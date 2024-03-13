@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native"
 const stylesExchangeView = StyleSheet.create({
   title: {
     color: "white",
-    fontSize: 35,
     marginTop: 15,
     fontWeight: "bold",
     marginLeft: 30
@@ -17,7 +16,6 @@ const stylesExchangeView = StyleSheet.create({
   },
   containerChange: {
     width: "98%",
-    minHeight: 300, // Cambiado a un valor fijo para evitar problemas de desbordamiento
     marginTop: 20,
     marginBottom: 20, // Agregamos un margen inferior
     backgroundColor: "#10231D",

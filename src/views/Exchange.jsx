@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Image, ScrollView, Text, TextInput, View } from "react-native"
+import { Image, Keyboard, ScrollView, Platform, Text, TextInput, View } from "react-native"
 import BackButton from "../components/BackButton"
 import PageWrapper from "../components/PageWrapper"
 import stylesExchangeView from "../styles/stylesExchangeView"
@@ -12,11 +12,26 @@ import ModalError from "../components/ModalError"
 function Exchange({ navigation }) {
   const [usdtTether, setUsdtTether] = useState("0")
   const { $Exchange, token, setUpdatedOrder } = useContext(MyContext)
+  const [openKeyBoard, setOpenKeyBoard] = useState(false)
   const [rate, setRate] = useState()
   const [quote, setQuote] = useState()
   const [countdown, setCountdown] = useState(30)
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
+
+  Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setOpenKeyBoard(true);
+      }
+  );
+
+  Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setOpenKeyBoard(false);
+      }
+  );
 
   const handleSendRequest = async () => {
     setUpdatedOrder(false)
@@ -114,14 +129,14 @@ function Exchange({ navigation }) {
     <>
       <PageWrapper>
         <BackButton />
-        <Text style={stylesExchangeView.title}>Exchange</Text>
+        <Text style={[stylesExchangeView.title,{fontSize: ((!openKeyBoard||Platform.OS !== 'ios') ? 35 : 20)}]}>Exchange</Text>
         <ScrollView style={stylesExchangeView.container}>
-          <View style={stylesExchangeView.containerChange}>
-            <Text style={stylesExchangeView.titleContainer}>
+          <View style={[stylesExchangeView.containerChange,{minHeight: ((!openKeyBoard||Platform.OS !== 'ios') ? 300 : 200)}]}>
+            {(!openKeyBoard||Platform.OS !== 'ios')&&(<Text style={stylesExchangeView.titleContainer}>
               Saldo Disponible:{" "}
               <Text style={stylesExchangeView.titleUsdt}>USDT 5667.00</Text>
-            </Text>
-            <View style={stylesExchangeView.inputContainer}>
+            </Text>)}
+            {(!openKeyBoard||Platform.OS !== 'ios')&&(<View style={stylesExchangeView.inputContainer}>
               <View style={stylesExchangeView.textInputContainerClear}>
                 <Image
                   source={require("../../assets/t.png")}
@@ -129,7 +144,7 @@ function Exchange({ navigation }) {
                 />
                 <Text style={stylesExchangeView.textInput}>USDT - Tether</Text>
               </View>
-            </View>
+            </View>)}
             <View style={stylesExchangeView.inputContainer}>
               <Text style={stylesExchangeView.inputLabel}>
                 Monto de la Transferencia
@@ -146,7 +161,7 @@ function Exchange({ navigation }) {
                 />
               </View>
             </View>
-            <View style={stylesExchangeView.inputContainer}>
+            {(!openKeyBoard||Platform.OS !== 'ios')&&(<View style={stylesExchangeView.inputContainer}>
               <View style={stylesExchangeView.textInputContainerClear}>
                 <Image
                   source={require("../../assets/colombianFlag.png")}
@@ -156,7 +171,7 @@ function Exchange({ navigation }) {
                   COP - Peso Colombiano
                 </Text>
               </View>
-            </View>
+            </View>)}
             <View style={stylesExchangeView.inputContainer}>
               <Text style={stylesExchangeView.inputLabel}>
                 Valor a recibir{" "}
@@ -166,7 +181,7 @@ function Exchange({ navigation }) {
               </Text>
               <View style={stylesExchangeView.textInputContainer}>
                 <Text style={stylesExchangeView.textInput}>
-                  ${quote ? formatNumber(quote) : 0} COPS
+                  ${quote ? formatNumber(quote) : 0} COP
                 </Text>
               </View>
             </View>
@@ -183,12 +198,12 @@ function Exchange({ navigation }) {
               <View style={stylesExchangeView.textContainer}>
                 <Text style={stylesExchangeView.textTitle}>Tipo de Cambio</Text>
                 <Text style={stylesExchangeView.text}>
-                  1.00 USDT = ${rate ? formatNumber(rate) : 0} COPS
+                  1.00 USDT = ${rate ? formatNumber(rate) : 0} COP
                 </Text>
               </View>
             </View>
           </View>
-          <View style={stylesExchangeView.mainContainer}>
+          {(!openKeyBoard||Platform.OS !== 'ios')&&(<View style={stylesExchangeView.mainContainer}>
             <View style={stylesExchangeView.leftContainer}>
               <Image
                 source={require("../../assets/vector.png")}
@@ -205,7 +220,7 @@ function Exchange({ navigation }) {
                 </Text>
               </View>
             </View>
-          </View>
+          </View>)}
           <View style={stylesExchangeView.containerButton}>
             <ButtonColor
               navigation={navigation}
