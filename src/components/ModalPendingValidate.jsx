@@ -110,13 +110,13 @@ function ModalPendingValidate({
                     Enviar
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/*<TouchableOpacity
                   style={stylesModalPendingValidate.modalButton}
                   onPress={() => setShowSuccessModal(false)}>
                   <Text style={stylesModalPendingValidate.modalButtonText}>
                     Cerrar
                   </Text>
-                </TouchableOpacity>
+                </TouchableOpacity>*/}
               </View>
             </View>)
           :
