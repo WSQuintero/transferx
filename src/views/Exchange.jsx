@@ -44,6 +44,11 @@ function Exchange({ navigation }) {
           setErrorMessage("Por favor valida tu email y tu teléfono")
           setShowErrorModal(true)
         }
+        
+        if (data.data.message === "First sign contract for 2,000 USDT transactions") {
+          setErrorMessage("Para ejecutar la transacción que intentas realizar debes firmar un acuerdo. Por favor revisa tu correo electrónico, y firma el documento.")
+          setShowErrorModal(true)
+        }
         setTimeout(() => {
           setShowErrorModal(false)
           setErrorMessage("")
