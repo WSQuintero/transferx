@@ -1,0 +1,1130 @@
+{
+  "info": {
+    "_postman_id": "265bd85c-33a9-4fbd-ac5b-e2a78590960b",
+    "name": "TransferX",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "_exporter_id": "28960322"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "signup",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstname\": \"Jhon\",\n    \"lastname\": \"Doe\",\n    \"email\": \"programador16@tramitarapp.com\",\n    \"cellphone\": \"573017166689\",\n    \"password\": \"Jd123456!.\",\n    \"referal_code_parent\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://transferx-backend.concilbot.com/api/v1/users/signup"
+          },
+          "response": []
+        },
+        {
+          "name": "list-users-referals",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcwOTkzMTA3MiwiZXhwIjoxNzEwMDE3NDcyfQ.28mpj6vl9Ryfk-ssuhVoFGuRECngPyUBomwbxIUxPpc",
+                "type": "text"
+              }
+            ],
+            "url": "localhost:3000/api/v1/users/referals"
+          },
+          "response": []
+        },
+        {
+          "name": "validate-user-email",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstname\": \"Jhon\",\n    \"lastname\": \"Doe\",\n    \"email\": \"jhondoe@mail.com\",\n    \"cellphone\": \"1234567890\",\n    \"password\": \"Jd123456!.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://transferx-backend.concilbot.com/api/v1/users/validate-email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJpYXQiOjE3MDg3MDg0MTAsImV4cCI6MTcwODc5NDgxMH0.9fa1-rcQXYzMZzXoaV2Dn1rl6CqZkKlCy3vkUTOFzRE"
+          },
+          "response": []
+        },
+        {
+          "name": "user-link",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJyb2xlIjoyLCJpYXQiOjE3MTAyNzcyNTgsImV4cCI6MTcxMDM2MzY1OH0.Ym30g0XLaqjXW9jkukYS3fkvLl2Kl8tnifWWPrVuFlY",
+                "type": "text"
+              }
+            ],
+            "url": "https://transferx-backend.concilbot.com/api/v1/users/link"
+          },
+          "response": []
+        },
+        {
+          "name": "validate-user-phone",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cellphone\": \"573017166689\",\n    \"code\": \"241101\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://ac6e-38-156-229-205.ngrok-free.app/api/v1/users/validate-cellphone"
+          },
+          "response": []
+        },
+        {
+          "name": "resend-otp-user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cellphone\": \"573017166689\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://transferx-backend.concilbot.com/api/v1/users/resend-otp-code"
+          },
+          "response": []
+        },
+        {
+          "name": "resend-email-validation",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cellphone\": \"573017166689\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://transferx-backend.concilbot.com/api/v1/users/resend-otp-code"
+          },
+          "response": []
+        },
+        {
+          "name": "banks",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicHJnMTZAeW9wbWFpbC5jb20iLCJyb2xlIjowLCJpYXQiOjE3MDkwMDczOTIsImV4cCI6MTcwOTA5Mzc5Mn0.KUgu5aDR1u3r52b2trbgOA7Xc1Qw05DT5aNuwrH06V0",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://transferx-backend.concilbot.com/api/v1/users/banks"
+          },
+          "response": []
+        },
+        {
+          "name": "signin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"programador16@tramitarapp.com\",\n    \"password\": \"Jd123456!.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://transferx-backend.concilbot.com/api/v1/users/signin"
+          },
+          "response": []
+        },
+        {
+          "name": "recovery-password",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"programador16@tramitarapp.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://ac6e-38-156-229-205.ngrok-free.app/api/v1/users/recovery-password"
+          },
+          "response": []
+        },
+        {
+          "name": "change-password",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"programador16@tramitarapp.com\",\n    \"password\": \"Jd123456!.\",\n    \"code\": \"G8S9UP\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "localhost:3000/api/v1/users/change-password"
+          },
+          "response": []
+        },
+        {
+          "name": "update-wallet-address",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicHJnMTZAeW9wbWFpbC5jb20iLCJyb2xlIjowLCJpYXQiOjE3MDkwMDczOTIsImV4cCI6MTcwOTA5Mzc5Mn0.KUgu5aDR1u3r52b2trbgOA7Xc1Qw05DT5aNuwrH06V0",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"address_wallet_transfer_in\":\"TEsHX2VBFphiV259Fnhk2s3qrjcwZq67R8\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://transferx-backend.concilbot.com/api/v1/users/update-wallet-address"
+          },
+          "response": []
+        },
+        {
+          "name": "update-account-bank",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicHJnMTZAeW9wbWFpbC5jb20iLCJyb2xlIjowLCJpYXQiOjE3MDkwMDczOTIsImV4cCI6MTcwOTA5Mzc5Mn0.KUgu5aDR1u3r52b2trbgOA7Xc1Qw05DT5aNuwrH06V0",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id_bank_transfer_out\": 1,\n    \"type_account_bank_transfer\": \"debit\",\n    \"id_type_owner_account_bank_transfer\": \"passport\",\n    \"id_number_owner_account_bank_transfer\": \"as\",\n    \"number_account_bank_transfer\": \"as\",\n    \"owner_account_bank_transfer\": \"asas\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://transferx-backend.concilbot.com/api/v1/users/update-bank"
+          },
+          "response": []
+        },
+        {
+          "name": "validate-kyc",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcxMDE5MjQ0NywiZXhwIjoxNzEwMjc4ODQ3fQ.zzSgOvVuPFCkEOg1sOk1WsJv9ypGIY0RJeCwK0pRcAM",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "faces",
+                  "type": "file",
+                  "src": "/home/user/Descargas/passport.png"
+                },
+                {
+                  "key": "faces",
+                  "type": "file",
+                  "src": "/home/user/Descargas/photo-passport.png"
+                },
+                {
+                  "key": "faces",
+                  "type": "file",
+                  "src": "/home/user/Descargas/photo-passport.png"
+                }
+              ]
+            },
+            "url": "https://a558-38-156-229-205.ngrok-free.app/api/v1/users/validate-kyc"
+          },
+          "response": []
+        },
+        {
+          "name": "user-link-sarlaft",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcwOTkzNzUxMywiZXhwIjoxNzEwMDIzOTEzfQ.XDLZHYXjVujmYSbOHSQZ_puZgbp3OmD3EdoD2DgHlMY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "files",
+                  "type": "file",
+                  "src": "/home/user/Descargas/photo-passport.png"
+                },
+                {
+                  "key": "firstName",
+                  "value": "Juan",
+                  "type": "text"
+                },
+                {
+                  "key": "lastName",
+                  "value": "Perez",
+                  "type": "text"
+                },
+                {
+                  "key": "names",
+                  "value": "Juan Jose",
+                  "type": "text"
+                },
+                {
+                  "key": "identificationNumber",
+                  "value": "1234567890",
+                  "type": "text"
+                },
+                {
+                  "key": "issuePlaceAndDate",
+                  "value": "Bogotá, 2023-05-15",
+                  "type": "text"
+                },
+                {
+                  "key": "birthDate",
+                  "value": "1990-01-01",
+                  "type": "text"
+                },
+                {
+                  "key": "birthCountryAndCity",
+                  "value": "Colombia, Bogotá",
+                  "type": "text"
+                },
+                {
+                  "key": "nationality",
+                  "value": "Colombiana",
+                  "type": "text"
+                },
+                {
+                  "key": "maritalStatus",
+                  "value": "Soltero",
+                  "type": "text"
+                },
+                {
+                  "key": "occupation",
+                  "value": "Ingeniero",
+                  "type": "text"
+                },
+                {
+                  "key": "residenceAddressAndCity",
+                  "value": "Calle 123, Bogotá",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "juan@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "cellPhone",
+                  "value": "1234567890",
+                  "type": "text"
+                },
+                {
+                  "key": "hasPermanentResidencyInAnotherCountry",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "key": "hasPermanentResidencyInAnotherCountryTexto",
+                  "value": "",
+                  "type": "text"
+                },
+                {
+                  "key": "hasTaxObligationsInAnotherCountry",
+                  "value": "false",
+                  "type": "text"
+                },
+                {
+                  "key": "hasTaxObligationsInAnotherCountryTexto",
+                  "value": "",
+                  "type": "text"
+                },
+                {
+                  "key": "usStayDetails",
+                  "value": "{\n    \"dueToContract183Days\": true,\n    \"consecutive31DaysCurrentYear\": false,\n    \"previousYear121Days\": false,\n    \"secondYear60Days\": false\n  }",
+                  "type": "text"
+                },
+                {
+                  "key": "occupation2PersonalNatural",
+                  "value": "Ingeniero",
+                  "type": "text"
+                },
+                {
+                  "key": "companyName",
+                  "value": "Empresa XYZ",
+                  "type": "text"
+                },
+                {
+                  "key": "jobTitle",
+                  "value": "Ingeniero Senior",
+                  "type": "text"
+                },
+                {
+                  "key": "address",
+                  "value": "Calle 456, Bogotá",
+                  "type": "text"
+                },
+                {
+                  "key": "ciiuCode",
+                  "value": "12345",
+                  "type": "text"
+                },
+                {
+                  "key": "economicActivityDescription",
+                  "value": "Desarrollo de software",
+                  "type": "text"
+                },
+                {
+                  "key": "nit",
+                  "value": "1234567890",
+                  "type": "text"
+                },
+                {
+                  "key": "businessName",
+                  "value": "Empresa XYZ S.A.S.",
+                  "type": "text"
+                },
+                {
+                  "key": "mainOfficeAddress",
+                  "value": "Calle 789, Bogotá",
+                  "type": "text"
+                },
+                {
+                  "key": "branchOfficeAddress",
+                  "value": "Calle 101112, Medellín",
+                  "type": "text"
+                },
+                {
+                  "key": "citymainOfficeAddress",
+                  "value": "Bogotá",
+                  "type": "text"
+                },
+                {
+                  "key": "phonemainOfficeAddress",
+                  "value": "1234567890",
+                  "type": "text"
+                },
+                {
+                  "key": "citybranchOfficeAddress",
+                  "value": "Medellín",
+                  "type": "text"
+                },
+                {
+                  "key": "phonebranchOfficeAddress",
+                  "value": "0987654321",
+                  "type": "text"
+                },
+                {
+                  "key": "companyType",
+                  "value": "Privada",
+                  "type": "text"
+                },
+                {
+                  "key": "companyTypeTexto",
+                  "value": "Privada",
+                  "type": "text"
+                },
+                {
+                  "key": "shareholdersIdentification",
+                  "value": "[\n    {\n      \"identificationText\": \"C.C.\",\n      \"identificationNumber\": \"1234567890\",\n      \"fullName\": \"Juan Perez\",\n      \"nationality\": true,\n      \"otherNationality\": \"\",\n      \"permanentResidenceInOtherCountry\": false,\n      \"permanentResidenceInOtherCountryTexto\": \"\",\n      \"usStayDetails\": {\n        \"dueToContract183Days\": true,\n        \"consecutive31DaysCurrentYear\": false,\n        \"previousYear121Days\": false,\n        \"secondYear60Days\": false\n      },\n      \"percentageParticipation\": 50\n    },\n    {\n      \"identificationText\": \"C.C.\",\n      \"identificationNumber\": \"0987654321\",\n      \"fullName\": \"Maria Gomez\",\n      \"nationality\": true,\n      \"otherNationality\": \"\",\n      \"permanentResidenceInOtherCountry\": false,\n      \"permanentResidenceInOtherCountryTexto\": \"\",\n      \"usStayDetails\": {\n        \"dueToContract183Days\": false,\n        \"consecutive31DaysCurrentYear\": true,\n        \"previousYear121Days\": false,\n        \"secondYear60Days\": false\n      },\n      \"percentageParticipation\": 50\n    }\n  ]",
+                  "type": "text"
+                },
+                {
+                  "key": "politicallyExposedPerson",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "InternationalOrgLegalRep",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "AdministratorPEPStatus",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "AffirmativeResponseDetails",
+                  "value": "Some details",
+                  "type": "text"
+                },
+                {
+                  "key": "assets",
+                  "value": "1000000",
+                  "type": "text"
+                },
+                {
+                  "key": "liabilities",
+                  "value": "500000",
+                  "type": "text"
+                },
+                {
+                  "key": "monthlyIncome",
+                  "value": "5000000",
+                  "type": "text"
+                },
+                {
+                  "key": "monthlyExpenses",
+                  "value": "3000000",
+                  "type": "text"
+                },
+                {
+                  "key": "equity",
+                  "value": "2000000",
+                  "type": "text"
+                },
+                {
+                  "key": "otherIncome",
+                  "value": "100000",
+                  "type": "text"
+                },
+                {
+                  "key": "otherIncomeDetails",
+                  "value": "Freelancing",
+                  "type": "text"
+                },
+                {
+                  "key": "bankAccounts",
+                  "value": "[\n    {\n      \"accountNumber\": \"1234567890\",\n      \"bankName\": \"Banco XYZ\",\n      \"branchOffice\": \"Sucursal Principal\",\n      \"accountType\": \"Ahorros\"\n    },\n    {\n      \"accountNumber\": \"0987654321\",\n      \"bankName\": \"Banco ABC\",\n      \"branchOffice\": \"Sucursal Secundaria\",\n      \"accountType\": \"Corriente\"\n    }\n  ]",
+                  "type": "text"
+                },
+                {
+                  "key": "conductsForeignCurrencyTransactions",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "usesFinancialProductsAbroad",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "conductsForeignCurrencyTransactionsType",
+                  "value": "{\n    \"imports\": true,\n    \"exports\": true\n  }",
+                  "type": "text"
+                },
+                {
+                  "key": "internationalOperationsType",
+                  "value": "{\n    \"transfers\": true,\n    \"other\": \"Other type\"\n  }",
+                  "type": "text"
+                },
+                {
+                  "key": "internationalOperationsTypeText",
+                  "value": "Some operations",
+                  "type": "text"
+                },
+                {
+                  "key": "internationalOperationsDetails",
+                  "value": "[\n    {\n      \"identificationType\": \"C.C.\",\n      \"entity\": \"Entity XYZ\",\n      \"countryCity\": \"USA, New York\",\n      \"amountCurrency\": \"100000 USD\"\n    },\n    {\n      \"identificationType\": \"C.C.\",\n      \"entity\": \"Entity ABC\",\n      \"countryCity\": \"UK, London\",\n      \"amountCurrency\": \"50000 GBP\"\n    }\n  ]",
+                  "type": "text"
+                },
+                {
+                  "key": "fullNameDeclarations",
+                  "value": "Juan Perez",
+                  "type": "text"
+                },
+                {
+                  "key": "identificationTypeDeclarations",
+                  "value": "C.C.",
+                  "type": "text"
+                },
+                {
+                  "key": "identificationNumberDeclarations",
+                  "value": "1234567890",
+                  "type": "text"
+                },
+                {
+                  "key": "ResourceSourceDetails",
+                  "value": "Salary",
+                  "type": "text"
+                },
+                {
+                  "key": "files",
+                  "type": "file",
+                  "src": "/home/user/Descargas/passport.png"
+                }
+              ]
+            },
+            "url": "https://c3c1-38-156-229-205.ngrok-free.app/api/v1/users/linking"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Users",
+          "item": [
+            {
+              "name": "list-users",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicHJnMTZAeW9wbWFpbC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3MDkwMDc1NTcsImV4cCI6MTcwOTA5Mzk1N30.vQlu0DtOqvbThCJo3a0mWCSIQQJa2s2bFBQKSoZ5S5E",
+                    "type": "text"
+                  }
+                ],
+                "url": "https://transferx-backend.concilbot.com/api/v1/users"
+              },
+              "response": []
+            },
+            {
+              "name": "change-status",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3MDkwMDM2NjUsImV4cCI6MTcwOTA5MDA2NX0.wGUUVX7vASzOZ-hLDtiR1kB1kxrKvgkpJHe9mM-ZdR8",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"programador16@tramitarapp.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "https://transferx-backend.concilbot.com/api/v1/users/change-status"
+              },
+              "response": []
+            },
+            {
+              "name": "change-status-user-sarlaft",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3MTAyODE2NzAsImV4cCI6MTcxMDM2ODA3MH0.N4lAZuTKKR83lxgGDHTzJePbSCpsVn3Kbp7AQ7-q87Y",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"sarlaft\": \"4\",\n    \"status\": \"rejected\",\n    \"comment_reject\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "https://transferx-backend.concilbot.com/api/v1/users/linking"
+              },
+              "response": []
+            },
+            {
+              "name": "change-role",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcwOTkwODY5NywiZXhwIjoxNzA5OTk1MDk3fQ.fTr7dmeOMxQirH8JIsSC1MfGIkBcyNEE6SgR5y0H7EQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"programador16@tramitarapp.com\",\n    \"role\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "localhost:3000/api/v1/users/change-role"
+              },
+              "response": []
+            },
+            {
+              "name": "change-rate",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcwOTkwODY5NywiZXhwIjoxNzA5OTk1MDk3fQ.fTr7dmeOMxQirH8JIsSC1MfGIkBcyNEE6SgR5y0H7EQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"programador16@tramitarapp.com\",\n    \"rate\":null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "localhost:3000/api/v1/users/change-rate"
+              },
+              "response": []
+            },
+            {
+              "name": "change-bank",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcwOTkwODY5NywiZXhwIjoxNzA5OTk1MDk3fQ.fTr7dmeOMxQirH8JIsSC1MfGIkBcyNEE6SgR5y0H7EQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"programador16@tramitarapp.com\",\n    \"id_bank_transfer_out\": 1,\n    \"type_account_bank_transfer\": \"debit\",\n    \"id_type_owner_account_bank_transfer\": \"passport\",\n    \"id_number_owner_account_bank_transfer\": \"as\",\n    \"number_account_bank_transfer\": \"as\",\n    \"owner_account_bank_transfer\": \"asas\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "localhost:3000/api/v1/users/change-bank"
+              },
+              "response": []
+            },
+            {
+              "name": "change-wallet-address",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcwOTkwODY5NywiZXhwIjoxNzA5OTk1MDk3fQ.fTr7dmeOMxQirH8JIsSC1MfGIkBcyNEE6SgR5y0H7EQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"programador16@tramitarapp.com\",\n    \"address_wallet_transfer_in\":\"TEsHX2VBFphiV259Fnhk2s3qrjcwZq67R8\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "localhost:3000/api/v1/users/change-wallet-address"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "P2P",
+          "item": [
+            {
+              "name": "list-p2p-orders",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzYsImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3MDkyNTAxMjAsImV4cCI6MTcwOTMzNjUyMH0._fmpTIgo1rbGFlIszUMW2UmY_vjKz5b3eAiyuk662-Q",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"created_at_ini\": \"2020-01-01\",\n    \"created_at_end\": \"2024-03-01\",\n    \"created_by\": \"22\",\n    \"state\": \"complete\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "localhost:3000/api/v1/userP2P"
+              },
+              "response": []
+            },
+            {
+              "name": "Approve-user-P2P",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3MTAyODE2NzAsImV4cCI6MTcxMDM2ODA3MH0.N4lAZuTKKR83lxgGDHTzJePbSCpsVn3Kbp7AQ7-q87Y",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "oderP2P",
+                      "value": "2\n",
+                      "type": "text"
+                    },
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "src": "/home/user/Descargas/passport.png"
+                    }
+                  ]
+                },
+                "url": "https://f630-38-156-229-205.ngrok-free.app/api/v1/userP2P/approve-user-p2p"
+              },
+              "response": []
+            },
+            {
+              "name": "Reject-user-P2P",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJpYXQiOjE3MDg5NjIzNTYsImV4cCI6MTcwOTA0ODc1Nn0.ViO0jN760xevLXshZNIn-pzqHIvKnOAFLlqexHV4kGo",
+                    "type": "text"
+                  },
+                  {
+                    "warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+                    "key": "Content-Type",
+                    "value": "multipart/form-data",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"oderP2P\": \"1\",\n    \"description\": \"Test\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "https://transferx-backend.concilbot.com/api/v1/userP2P/reject-user-p2p"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Tickets",
+          "item": [
+            {
+              "name": "response-ticket",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcwOTkxODUzOSwiZXhwIjoxNzEwMDA0OTM5fQ.32t1Ln_DLir1VHIu1vSJBtBa4OQWn_3wa3-BFTFZw1Q",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"ticket\":\"1\",\n    \"comment\":\"Test\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "localhost:3000/api/v1/tickets/response"
+              },
+              "response": []
+            },
+            {
+              "name": "change-status-ticket",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcwOTkxODUzOSwiZXhwIjoxNzEwMDA0OTM5fQ.32t1Ln_DLir1VHIu1vSJBtBa4OQWn_3wa3-BFTFZw1Q",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"ticket\":\"1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "localhost:3000/api/v1/tickets/change-status"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "P2P",
+      "item": [
+        {
+          "name": "create-P2P-order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcxMDE3OTc5OCwiZXhwIjoxNzEwMjY2MTk4fQ.ijB-8gDDFxRXCloMI5L-BnkarnAlCz0JcBs6xuoyBXU",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount_currency_in\": \"2000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "localhost:3000/api/v1/userP2P"
+          },
+          "response": []
+        },
+        {
+          "name": "expire-P2P-orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": "localhost:3000/api/v1/userP2P/expire"
+          },
+          "response": []
+        },
+        {
+          "name": "confirm-hash-P2P-order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzYsImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJyb2xlIjowLCJpYXQiOjE3MDkwNzQ2NzksImV4cCI6MTcwOTE2MTA3OX0.xez9-5rI5Vu_Pf9sjLnzJT8r2m9sObNom14iaWn0euE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"order\": \"2\",\n    \"hash_transfer_in\": \"asasasasasas\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "https://transferx-backend.concilbot.com/api/v1/userP2P/confirm-hash-order"
+          },
+          "response": []
+        },
+        {
+          "name": "P2P-rate",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjQsImVtYWlsIjoicHJnMTZAeW9wbWFpbC5jb20iLCJyb2xlIjowLCJpYXQiOjE3MDkwMDczOTIsImV4cCI6MTcwOTA5Mzc5Mn0.KUgu5aDR1u3r52b2trbgOA7Xc1Qw05DT5aNuwrH06V0",
+                "type": "text"
+              }
+            ],
+            "url": "https://transferx-backend.concilbot.com/api/v1/userP2P/rate"
+          },
+          "response": []
+        },
+        {
+          "name": "P2P-orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjAsImlhdCI6MTcwOTg1MjM3NiwiZXhwIjoxNzA5OTM4Nzc2fQ.9QgrOyG2s-m90hwXjiK3Hux3jcWcNQ9RW93VgXfbhBs",
+                "type": "text"
+              }
+            ],
+            "url": "localhost:3000/api/v1/userP2P/"
+          },
+          "response": []
+        },
+        {
+          "name": "P2P-quote",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjAsImlhdCI6MTcwOTg1MjM3NiwiZXhwIjoxNzA5OTM4Nzc2fQ.9QgrOyG2s-m90hwXjiK3Hux3jcWcNQ9RW93VgXfbhBs",
+                "type": "text"
+              }
+            ],
+            "url": "localhost:3000/api/v1/userP2P/quote/5000"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tickets",
+      "item": [
+        {
+          "name": "create-ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJyb2xlIjowLCJpYXQiOjE3MDk4NTMyNjEsImV4cCI6MTcwOTkzOTY2MX0.RovMhT761m7KpXgZXTW2xdVqfJ6TcBeX6PRhG437ap0",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"change_wallet\",\n    \"title\": \"title\",\n    \"description\": \"description\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "localhost:3000/api/v1/tickets"
+          },
+          "response": []
+        },
+        {
+          "name": "read-tickets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJyb2xlIjoyLCJpYXQiOjE3MTAyNzcyNTgsImV4cCI6MTcxMDM2MzY1OH0.Ym30g0XLaqjXW9jkukYS3fkvLl2Kl8tnifWWPrVuFlY",
+                "type": "text"
+              }
+            ],
+            "url": "https://transferx-backend.concilbot.com/api/v1/tickets"
+          },
+          "response": []
+        },
+        {
+          "name": "read-ticket",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImVtYWlsIjoicHJvZ3JhbWFkb3IxNkB0cmFtaXRhcmFwcC5jb20iLCJyb2xlIjowLCJpYXQiOjE3MDk4NTMyNjEsImV4cCI6MTcwOTkzOTY2MX0.RovMhT761m7KpXgZXTW2xdVqfJ6TcBeX6PRhG437ap0",
+                "type": "text"
+              }
+            ],
+            "url": "localhost:3000/api/v1/tickets/1"
+          },
+          "response": []
+        },
+        {
+          "name": "response-ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwcm9ncmFtYWRvcjE2QHRyYW1pdGFyYXBwLmNvbSIsInJvbGUiOjEsImlhdCI6MTcwOTkxODUzOSwiZXhwIjoxNzEwMDA0OTM5fQ.32t1Ln_DLir1VHIu1vSJBtBa4OQWn_3wa3-BFTFZw1Q",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"ticket\":\"1\",\n    \"comment\":\"Test\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "localhost:3000/api/v1/tickets/response"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

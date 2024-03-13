@@ -16,13 +16,15 @@ function ContactView({ navigation }) {
           <View style={stylesContactView.containerChange}>
             <View>
               <Text style={stylesContactView.titleContainer}>
-                Servicio de Asistencia Instantánea
+                Servicio de Asistencia
               </Text>
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={() => {
+                  navigation.navigate("tickets")
+                }}
                 style={stylesContactView.button}>
                 <Text style={{ color: "black", fontSize: 12 }}>
-                  Enviar Mensaje
+                  Crear ticket
                 </Text>
                 <Image source={require("../../assets/icons/send.png")} />
               </TouchableOpacity>

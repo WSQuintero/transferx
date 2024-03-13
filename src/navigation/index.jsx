@@ -17,6 +17,7 @@ import ServicesView from "../views/ServicesView"
 import WalletView from "../views/WalletView"
 import DialogKYC from "../components/DialogKYC"
 import Sarlaft from "../components/Sarlaft"
+import Tickets from "../views/Tickets"
 
 const Stack = createNativeStackNavigator()
 
@@ -31,7 +32,10 @@ const Navigation = () => {
           }}>
           <Stack.Screen name="InitView" component={InitView} />
           <Stack.Screen name="login" component={LoginView} />
-          <Stack.Screen name="recoveryAccount" component={RecoveryAccountView} />
+          <Stack.Screen
+            name="recoveryAccount"
+            component={RecoveryAccountView}
+          />
           <Stack.Screen name="signup" component={SignUpView} />
           <Stack.Screen
             name="SelectInformationBankView"
@@ -49,6 +53,7 @@ const Navigation = () => {
           <Stack.Screen name="contact" component={ContactView} />
           <Stack.Screen name="dialog" component={DialogKYC} />
           <Stack.Screen name="sarlaft" component={Sarlaft} />
+          <Stack.Screen name="tickets" component={Tickets} />
         </Stack.Navigator>
       </MyContextProvider>
     </NavigationContainer>
