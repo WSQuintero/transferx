@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
+import { ActivityIndicator } from "react-native"
 import PageWrapper from "../components/PageWrapper"
 import RecentTransactions from "../components/RecentTransactions"
 import BackButton from "../components/BackButton"
@@ -10,6 +11,7 @@ import ModalPendingValidate from "../components/ModalPendingValidate"
 function RecentTransactionsView({ navigation }) {
   const { $Exchange, token, updatedOrder, informationUser } =
     useContext(MyContext)
+  const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState()
   const [changedHash, setChangedHash] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
@@ -19,6 +21,7 @@ function RecentTransactionsView({ navigation }) {
   useEffect(() => {
     if (token) {
       const getOrders = async () => {
+        setLoading(true);
         const { status, data } = await $Exchange.p2pGetAllRequest(token)
 
         if (status) {
@@ -26,6 +29,7 @@ function RecentTransactionsView({ navigation }) {
         } else {
           console.log(data)
         }
+        setLoading(false);
       }
 
       getOrders()
@@ -49,14 +53,22 @@ function RecentTransactionsView({ navigation }) {
 
   return (
     <PageWrapper>
-      <RecentTransactions
-        navigation={navigation}
-        orders={orders}
-        exchange={$Exchange}
-        token={token}
-        setChangedHash={setChangedHash}
-        setOrders={setOrders}
-      />
+      {
+        !loading
+        ?
+        (<RecentTransactions
+          navigation={navigation}
+          orders={orders}
+          exchange={$Exchange}
+          token={token}
+          setChangedHash={setChangedHash}
+          setOrders={setOrders}
+        />)
+        :
+        (<View style={{flex: 1, marginTop: 100}}>
+          <ActivityIndicator size="small" color="#FFFFFF" />
+        </View>)
+      }
       <FooterMenu actual="exchange" navigation={navigation} />
       <ModalPendingValidate
         showSuccessModal={showSuccessModal}
