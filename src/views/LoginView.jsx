@@ -3,16 +3,18 @@ import PageWrapper from "../components/PageWrapper"
 import BackButton from "../components/BackButton"
 import useLoadFonts from "../customHooks/useLoadFonts"
 import stylesLoginView from "../styles/stylesLoginView"
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native"
+import { View, Text, TextInput, TouchableOpacity, Image, Keyboard, ScrollView, Platform } from "react-native"
 import RememberMeCheckBox from "../components/RememberMeCheckBox"
 import ButtonColor from "../components/ButtonColor"
 import { MyContext } from "../context/context"
+
 import ModalError from "../components/ModalError"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const LoginView = ({ navigation }) => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("programador16@tramitarapp.com")
+  const [password, setPassword] = useState("Jd123456!.")
+  const [openKeyBoard, setOpenKeyBoard] = useState(false)
   const fontsLoaded = useLoadFonts()
   const {
     $Auth,
@@ -74,6 +76,20 @@ const LoginView = ({ navigation }) => {
     }
   }
 
+  Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setOpenKeyBoard(true);
+      }
+  );
+
+  Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setOpenKeyBoard(false);
+      }
+  );
+
   useEffect(() => {
     const checkSessionToken = async () => {
       try {
@@ -92,15 +108,15 @@ const LoginView = ({ navigation }) => {
 
   return (
     <PageWrapper>
-      <View style={stylesLoginView.container}>
+      <ScrollView style={[stylesLoginView.container, {paddingTop: (Platform.OS === 'ios' && openKeyBoard ? 20 : 80)}]}>
         <View style={stylesLoginView.content}>
           <Image
             source={require("../../assets/image.png")}
             style={{ width: "80%", objectFit: "contain" }}></Image>
-          <Text style={stylesLoginView.title}>Accede a tu cuenta</Text>
+          {Platform.OS === 'ios' && !openKeyBoard&&(<><Text style={stylesLoginView.title}>Accede a tu cuenta</Text>
           <Text style={stylesLoginView.subtitle}>
             ¡Bienvenido de nuevo! Por favor, ingresa tus credenciales
-          </Text>
+          </Text></>)}
 
           <View style={stylesLoginView.inputContainer}>
             <Text style={stylesLoginView.inputLabel}>Email</Text>
@@ -151,7 +167,7 @@ const LoginView = ({ navigation }) => {
             <Text style={stylesLoginView.signupTextBold}>Regístrate</Text>
           </Text>
         </View>
-      </View>
+      </ScrollView>
       <ModalError showErrorModal={showErrorModal} errorMessage={errorMessage} />
     </PageWrapper>
   )

@@ -3,8 +3,7 @@ import { StyleSheet } from "react-native"
 const stylesLoginView = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 20
+    paddingHorizontal: 20
   },
   containerArrow: {
     marginTop: 40
