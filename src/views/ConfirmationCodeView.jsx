@@ -160,9 +160,12 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setOne(text)
-                    focusInput2()
+                    if(text){
+                      focusInput2();
+                    }
                   }}
                   value={one}
+                  keyboardType={"numeric"}
                   maxLength={1}
                   onFocus={() => handleFocus(inputOneRef)}
                   onBlur={() => handleBlur(inputOneRef)}
@@ -174,9 +177,19 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setTwo(text)
-                    focusInput3()
+                    if(text){
+                      focusInput3()
+                    }else{
+                      focusInput1()
+                    }
+                  }}
+                  onKeyPress={(event) => {
+                    if (event.nativeEvent.key === 'Backspace'&&!two) {
+                      focusInput1()
+                    }
                   }}
                   value={two}
+                  keyboardType={"numeric"}
                   maxLength={1}
                   onFocus={() => handleFocus(inputTwoRef)}
                   onBlur={() => handleBlur(inputTwoRef)}
@@ -188,9 +201,19 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setThree(text)
-                    focusInput4()
+                    if(text){
+                      focusInput4()
+                    }else{
+                      focusInput2()
+                    }
+                  }}
+                  onKeyPress={(event) => {
+                    if (event.nativeEvent.key === 'Backspace'&&!three) {
+                      focusInput2()
+                    }
                   }}
                   value={three}
+                  keyboardType={"numeric"}
                   maxLength={1}
                   onFocus={() => handleFocus(inputThreeRef)}
                   onBlur={() => handleBlur(inputThreeRef)}
@@ -202,9 +225,19 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setFour(text)
-                    focusInput5()
+                    if(text){
+                      focusInput5()
+                    }else{
+                      focusInput3()
+                    }
+                  }}
+                  onKeyPress={(event) => {
+                    if (event.nativeEvent.key === 'Backspace'&&!four) {
+                      focusInput3()
+                    }
                   }}
                   value={four}
+                  keyboardType={"numeric"}
                   maxLength={1}
                   onFocus={() => handleFocus(inputFourRef)}
                   onBlur={() => handleBlur(inputFourRef)}
@@ -216,9 +249,19 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setFive(text)
-                    focusInput6()
+                    if(text){
+                      focusInput6()
+                    }else{
+                      focusInput4()
+                    }
+                  }}
+                  onKeyPress={(event) => {
+                    if (event.nativeEvent.key === 'Backspace'&&!five) {
+                      focusInput4()
+                    }
                   }}
                   value={five}
+                  keyboardType={"numeric"}
                   maxLength={1}
                   onFocus={() => handleFocus(inputFiveRef)}
                   onBlur={() => handleBlur(inputFiveRef)}
@@ -230,9 +273,17 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setSix(text)
-                    focusInput1()
+                    if(!text){
+                      focusInput5()
+                    }
+                  }}
+                  onKeyPress={(event) => {
+                    if (event.nativeEvent.key === 'Backspace'&&!six) {
+                      focusInput5()
+                    }
                   }}
                   value={six}
+                  keyboardType={"numeric"}
                   maxLength={1}
                   onFocus={() => handleFocus(inputSixRef)}
                   onBlur={() => handleBlur(inputSixRef)}
