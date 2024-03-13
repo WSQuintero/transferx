@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useMemo, useState } from "react"
 import AuthService from "../services/AuthService"
 import P2PService from "../services/P2PService"
 import UserService from "../services/UserService"
+import TicketService from "../services/TicketService"
 
 // Crear el contexto
 const MyContext = createContext()
@@ -19,6 +20,7 @@ const MyContextProvider = ({ children }) => {
   const $Auth = useMemo(() => new AuthService(), [])
   const [token, setToken] = useState()
   const $Exchange = useMemo(() => new P2PService(token), [])
+  const $Tickets = useMemo(() => new TicketService(token), [])
   const $User = useMemo(() => new UserService(token), [])
 
   const [updatedOrder, setUpdatedOrder] = useState()
@@ -55,7 +57,8 @@ const MyContextProvider = ({ children }) => {
         setInformationUser,
         updatedOrder,
         setUpdatedOrder,
-        $User
+        $User,
+        $Tickets
       }}>
       {children}
     </MyContext.Provider>
