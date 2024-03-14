@@ -1,12 +1,12 @@
 import React from "react"
 import { Modal, StyleSheet, Text, View, TouchableOpacity } from "react-native"
 
-function ModalSuccess({ showSuccessModal, succesMessage, onClose }) {
+function ModalSuccess({ title="Success", showSuccessModal, succesMessage, onClose }) {
   return (
     <Modal visible={showSuccessModal} animationType="slide" transparent={true}>
       <View style={stylesModalSuccess.modalContainer}>
         <View style={stylesModalSuccess.modalContent}>
-          <Text style={stylesModalSuccess.modalTitle}>Success</Text>
+          <Text style={stylesModalSuccess.modalTitle}>{title}</Text>
           <Text style={stylesModalSuccess.modalMessage}>{succesMessage}</Text>
         {onClose&&(<View style={stylesModalSuccess.buttonContainer}>
           <TouchableOpacity

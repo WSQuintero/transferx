@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Image, Keyboard, ScrollView, Platform, Text, TextInput, View } from "react-native"
+import { Image, Keyboard, ScrollView, Platform, Text, TextInput, View, ActivityIndicator, Linking } from "react-native"
 import BackButton from "../components/BackButton"
 import PageWrapper from "../components/PageWrapper"
 import stylesExchangeView from "../styles/stylesExchangeView"
@@ -8,15 +8,19 @@ import FooterMenu from "../components/FooterMenu"
 import { MyContext } from "../context/context"
 import { formatNumber } from "../utils/Constants"
 import ModalError from "../components/ModalError"
+import ModalSuccess from "../components/ModalSuccess"
 
 function Exchange({ navigation }) {
   const [usdtTether, setUsdtTether] = useState("0")
   const { $Exchange, token, setUpdatedOrder } = useContext(MyContext)
   const [openKeyBoard, setOpenKeyBoard] = useState(false)
   const [rate, setRate] = useState()
+  const [sending, setSending] = useState()
   const [quote, setQuote] = useState()
   const [countdown, setCountdown] = useState(30)
   const [showErrorModal, setShowErrorModal] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [successMessage, setSuccessMessage] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
 
   Keyboard.addListener(
@@ -37,7 +41,9 @@ function Exchange({ navigation }) {
     setUpdatedOrder(false)
 
     if (token && token.trim() !== "") {
+      setSending(true);
       const { status, data } = await $Exchange.p2pRequest(token, usdtTether)
+      setSending(false);
 
       if (status) {
         navigation.navigate("exchange")
@@ -60,9 +66,10 @@ function Exchange({ navigation }) {
           setShowErrorModal(true)
         }
         
-        if (data.data.message === "First sign contract for 2,000 USDT transactions") {
-          setErrorMessage("Para ejecutar la transacción que intentas realizar debes firmar un acuerdo. Por favor revisa tu correo electrónico, y firma el documento.")
-          setShowErrorModal(true)
+        if (data.data.message.indexOf("First sign contract for 2,000 USDT transactions")>=0) {
+          let link = data.data.message.split(" - ");
+          setSuccessMessage("Para ejecutar la transacción que intentas realizar debes firmar un acuerdo. Por favor revisa tu correo electrónico, y firma el documento: "+link[1])
+          setShowSuccessModal(true)
         }
         setTimeout(() => {
           setShowErrorModal(false)
@@ -127,113 +134,135 @@ function Exchange({ navigation }) {
 
   return (
     <>
+      
       <PageWrapper>
-        <BackButton />
-        <Text style={[stylesExchangeView.title,{fontSize: ((!openKeyBoard||Platform.OS !== 'ios') ? 35 : 20)}]}>Exchange</Text>
-        <ScrollView style={stylesExchangeView.container}>
-          <View style={[stylesExchangeView.containerChange,{minHeight: ((!openKeyBoard||Platform.OS !== 'ios') ? 300 : 200)}]}>
-            {(!openKeyBoard||Platform.OS !== 'ios')&&(<Text style={stylesExchangeView.titleContainer}>
-              Saldo Disponible:{" "}
-              <Text style={stylesExchangeView.titleUsdt}>USDT 5667.00</Text>
-            </Text>)}
-            {(!openKeyBoard||Platform.OS !== 'ios')&&(<View style={stylesExchangeView.inputContainer}>
-              <View style={stylesExchangeView.textInputContainerClear}>
-                <Image
-                  source={require("../../assets/t.png")}
-                  style={stylesExchangeView.icon}
-                />
-                <Text style={stylesExchangeView.textInput}>USDT - Tether</Text>
+        {!sending?
+        (<>
+          <BackButton />
+          <Text style={[stylesExchangeView.title,{fontSize: ((!openKeyBoard||Platform.OS !== 'ios') ? 35 : 20)}]}>Exchange</Text>
+          <ScrollView style={stylesExchangeView.container}>
+            <View style={[stylesExchangeView.containerChange,{minHeight: ((!openKeyBoard||Platform.OS !== 'ios') ? 300 : 200)}]}>
+              {(!openKeyBoard||Platform.OS !== 'ios')&&(<Text style={stylesExchangeView.titleContainer}>
+                Saldo Disponible:{" "}
+                <Text style={stylesExchangeView.titleUsdt}>USDT 5667.00</Text>
+              </Text>)}
+              {(!openKeyBoard||Platform.OS !== 'ios')&&(<View style={stylesExchangeView.inputContainer}>
+                <View style={stylesExchangeView.textInputContainerClear}>
+                  <Image
+                    source={require("../../assets/t.png")}
+                    style={stylesExchangeView.icon}
+                  />
+                  <Text style={stylesExchangeView.textInput}>USDT - Tether</Text>
+                </View>
+              </View>)}
+              <View style={stylesExchangeView.inputContainer}>
+                <Text style={stylesExchangeView.inputLabel}>
+                  Monto de la Transferencia
+                </Text>
+                <View style={stylesExchangeView.textInputContainer}>
+                  <TextInput
+                    style={stylesExchangeView.textInput}
+                    onChangeText={(text) => {
+                      const numericValue = text.replace(/[^0-9]/g, "")
+                      setUsdtTether(numericValue)
+                    }}
+                    value={usdtTether}
+                    keyboardType="numeric" // Esto permitirá solo números
+                  />
+                </View>
               </View>
-            </View>)}
-            <View style={stylesExchangeView.inputContainer}>
-              <Text style={stylesExchangeView.inputLabel}>
-                Monto de la Transferencia
-              </Text>
-              <View style={stylesExchangeView.textInputContainer}>
-                <TextInput
-                  style={stylesExchangeView.textInput}
-                  onChangeText={(text) => {
-                    const numericValue = text.replace(/[^0-9]/g, "")
-                    setUsdtTether(numericValue)
-                  }}
-                  value={usdtTether}
-                  keyboardType="numeric" // Esto permitirá solo números
-                />
+              {(!openKeyBoard||Platform.OS !== 'ios')&&(<View style={stylesExchangeView.inputContainer}>
+                <View style={stylesExchangeView.textInputContainerClear}>
+                  <Image
+                    source={require("../../assets/colombianFlag.png")}
+                    style={stylesExchangeView.icon}
+                  />
+                  <Text style={stylesExchangeView.textInput}>
+                    COP - Peso Colombiano
+                  </Text>
+                </View>
+              </View>)}
+              <View style={stylesExchangeView.inputContainer}>
+                <Text style={stylesExchangeView.inputLabel}>
+                  Valor a recibir{" "}
+                  <Text style={stylesExchangeView.inputLabelRed}>
+                    {" (cambia cada 30 segundos)"}
+                  </Text>{" "}
+                </Text>
+                <View style={stylesExchangeView.textInputContainer}>
+                  <Text style={stylesExchangeView.textInput}>
+                    ${quote ? formatNumber(quote) : 0} COP
+                  </Text>
+                </View>
               </View>
             </View>
-            {(!openKeyBoard||Platform.OS !== 'ios')&&(<View style={stylesExchangeView.inputContainer}>
-              <View style={stylesExchangeView.textInputContainerClear}>
-                <Image
-                  source={require("../../assets/colombianFlag.png")}
-                  style={stylesExchangeView.icon}
-                />
-                <Text style={stylesExchangeView.textInput}>
-                  COP - Peso Colombiano
-                </Text>
-              </View>
-            </View>)}
-            <View style={stylesExchangeView.inputContainer}>
-              <Text style={stylesExchangeView.inputLabel}>
-                Valor a recibir{" "}
-                <Text style={stylesExchangeView.inputLabelRed}>
-                  {" (cambia cada 30 segundos)"}
-                </Text>{" "}
-              </Text>
-              <View style={stylesExchangeView.textInputContainer}>
-                <Text style={stylesExchangeView.textInput}>
-                  ${quote ? formatNumber(quote) : 0} COP
-                </Text>
-              </View>
-            </View>
-          </View>
 
-          <View style={stylesExchangeView.mainContainer}>
-            <View style={stylesExchangeView.leftContainer}>
-              <Image
-                source={require("../../assets/arrow-transfer.png")}
-                style={stylesExchangeView.icon}
-              />
-            </View>
-            <View style={stylesExchangeView.rightContainer}>
-              <View style={stylesExchangeView.textContainer}>
-                <Text style={stylesExchangeView.textTitle}>Tipo de Cambio</Text>
-                <Text style={stylesExchangeView.text}>
-                  1.00 USDT = ${rate ? formatNumber(rate) : 0} COP
-                </Text>
+            <View style={stylesExchangeView.mainContainer}>
+              <View style={stylesExchangeView.leftContainer}>
+                <Image
+                  source={require("../../assets/arrow-transfer.png")}
+                  style={stylesExchangeView.icon}
+                />
+              </View>
+              <View style={stylesExchangeView.rightContainer}>
+                <View style={stylesExchangeView.textContainer}>
+                  <Text style={stylesExchangeView.textTitle}>Tipo de Cambio</Text>
+                  <Text style={stylesExchangeView.text}>
+                    1.00 USDT = ${rate ? formatNumber(rate) : 0} COP
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
-          {(!openKeyBoard||Platform.OS !== 'ios')&&(<View style={stylesExchangeView.mainContainer}>
-            <View style={stylesExchangeView.leftContainer}>
-              <Image
-                source={require("../../assets/vector.png")}
-                style={stylesExchangeView.icon}
-              />
-            </View>
-            <View style={stylesExchangeView.rightContainer}>
-              <View style={stylesExchangeView.textContainer}>
-                <Text style={stylesExchangeView.textTitle}>
-                  Cuenta Regresiva
-                </Text>
-                <Text style={stylesExchangeView.text}>
-                  {countdown} segundos
-                </Text>
+            {(!openKeyBoard||Platform.OS !== 'ios')&&(<View style={stylesExchangeView.mainContainer}>
+              <View style={stylesExchangeView.leftContainer}>
+                <Image
+                  source={require("../../assets/vector.png")}
+                  style={stylesExchangeView.icon}
+                />
               </View>
+              <View style={stylesExchangeView.rightContainer}>
+                <View style={stylesExchangeView.textContainer}>
+                  <Text style={stylesExchangeView.textTitle}>
+                    Cuenta Regresiva
+                  </Text>
+                  <Text style={stylesExchangeView.text}>
+                    {countdown} segundos
+                  </Text>
+                </View>
+              </View>
+            </View>)}
+            <View style={stylesExchangeView.containerButton}>
+              <ButtonColor
+                navigation={navigation}
+                to={"card"}
+                handleSignUp={handleSendRequest}>
+                Confirmar
+              </ButtonColor>
             </View>
-          </View>)}
-          <View style={stylesExchangeView.containerButton}>
-            <ButtonColor
-              navigation={navigation}
-              to={"card"}
-              handleSignUp={handleSendRequest}>
-              Confirmar
-            </ButtonColor>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </>)
+        :
+        (<>
+          <BackButton />
+
+          <ActivityIndicator size="small" color="#FFFFFF" />
+        </>)}
       </PageWrapper>
       <ModalError
         showErrorModal={showErrorModal}
         errorMessage={errorMessage}></ModalError>
+      
+      <ModalSuccess
+        title={"Verificación"}
+        showSuccessModal={showSuccessModal}
+        succesMessage={successMessage} 
+        onClose={async ()=>{
+          setShowSuccessModal(false);
+          setSuccessMessage("");
+          
+          await Linking.openURL(successMessage.split(": ")[1]);
+        }}
+      />
       {/* <FooterMenu actual="exchange" navigation={navigation} /> */}
     </>
   )
