@@ -92,7 +92,7 @@ const RecentTransactions = ({
       if (token) {
       }
       const { status, data } = await $User.getLastSarlaft(token)
-
+      console.log(informationUser)
       if (status) {
         if (data.data.length && informationUser?.sarlaft_validated === 0) {
           setShowSuccessModalOrder(true)

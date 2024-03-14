@@ -127,10 +127,10 @@ const SelectInformationBankView = ({ navigation }) => {
           />
 
           <Text style={SelectInformationBankViewStyle.title}>
-            Information Bank
+            Información bancaria
           </Text>
           <Text style={SelectInformationBankViewStyle.subtitle}>
-            Please enter your bank information
+            Por favor ingresa la información de tu banco
           </Text>
           <ScrollView>
             <View style={SelectInformationBankViewStyle.inputContainer}>
@@ -147,7 +147,7 @@ const SelectInformationBankView = ({ navigation }) => {
             </View>
             <View style={SelectInformationBankViewStyle.inputContainer}>
               <Text style={SelectInformationBankViewStyle.inputLabel}>
-                Add Your name
+                Nombre de titular
               </Text>
               <TextInput
                 style={SelectInformationBankViewStyle.input}
@@ -159,7 +159,7 @@ const SelectInformationBankView = ({ navigation }) => {
             </View>
             <View style={SelectInformationBankViewStyle.inputContainer}>
               <Text style={SelectInformationBankViewStyle.inputLabel}>
-                Select Your type id
+                Tipo de identificación
               </Text>
               <Picker
                 selectedValue={idType}
@@ -186,7 +186,7 @@ const SelectInformationBankView = ({ navigation }) => {
             </View>
             <View style={SelectInformationBankViewStyle.inputContainer}>
               <Text style={SelectInformationBankViewStyle.inputLabel}>
-                Select Your Bank
+                Selecciona tu banco
               </Text>
               <Picker
                 selectedValue={selectedBank}
@@ -211,7 +211,7 @@ const SelectInformationBankView = ({ navigation }) => {
 
             <View style={SelectInformationBankViewStyle.inputContainer}>
               <Text style={SelectInformationBankViewStyle.inputLabel}>
-                Select Account Type
+                Selecciona tu tipo de cuenta
               </Text>
               <Picker
                 selectedValue={accountType}
@@ -225,7 +225,7 @@ const SelectInformationBankView = ({ navigation }) => {
 
             <View style={SelectInformationBankViewStyle.inputContainer}>
               <Text style={SelectInformationBankViewStyle.inputLabel}>
-                Account Number
+                Número de cuenta
               </Text>
               <TextInput
                 style={SelectInformationBankViewStyle.input}

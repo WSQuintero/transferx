@@ -395,17 +395,15 @@ const Sarlaft = ({ navigation }) => {
     )
 
     const send = await $User.sendSarlaft(token, finalFormData)
-    // if (send.status) {
-    //   navigation.navigate(
-    //     informationUser?.user?.number_account_bank_transfer
-    //       ? "exchange"
-    //       : "SelectInformationBankView"
-    //   )
-    // } else {
-    //   console.log(send.data)
-    // }
-
-    navigation.navigate("newExchange")
+    if (send.status) {
+      navigation.navigate(
+        informationUser?.user?.number_account_bank_transfer
+          ? "exchange"
+          : "SelectInformationBankView"
+      )
+    } else {
+      console.log(send.data)
+    }
   }
 
   return (
