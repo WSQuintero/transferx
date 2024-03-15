@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
-  Linking
+  Linking,
+  Keyboard
 } from "react-native"
 import { Feather } from '@expo/vector-icons';
 import { formatDateTime, formatNumber } from "../utils/Constants"
@@ -201,9 +202,19 @@ const RecentTransactions = ({
                         )}
                       </View>
                     </View>
+                    <View
+                        style={{
+                          flexDirection: "column",
+                          gap: 3,
+                          position: "relative"
+                        }}>
                     <Text style={styles.timeText}>
                       {formatDateTime(order.created_at)}
                     </Text>
+                    <Text style={styles.timeText}>
+                      X-REF: {order.id}
+                    </Text>
+                    </View>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -256,10 +267,16 @@ const RecentTransactions = ({
                         style={styles.inputHash}
                         placeholder="Pon tu hash"
                         value={hash}
+                        multiline={true}
+                        onKeyPress={(event) => {
+                          if (event.nativeEvent.key === 'Enter') {
+                            Keyboard.dismiss()
+                          }
+                        }}
                         onChangeText={(value) => setHash(value)}
                       />
                       <TouchableOpacity
-                        style={styles.modalCloseButton}
+                        style={[styles.modalCloseButton,{width: 250}]}
                         onPress={() => handleUpdateHash(order)}>
                         <Text style={styles.modalButtonText}>Enviar Hash</Text>
                       </TouchableOpacity>
@@ -413,11 +430,11 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   inputHash: {
-    height: 40,
+    height: 65,
     width: 250,
     backgroundColor: "white",
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 12,
     marginTop: 10
   },
   noOrdersContainer: {
