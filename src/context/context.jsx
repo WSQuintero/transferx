@@ -14,6 +14,7 @@ const MyContextProvider = ({ children }) => {
   const [email, setEmail] = useState("")
   const [cellphone, setCellPhone] = useState("")
   const [password, setPassword] = useState("")
+  const [referalCode, setReferalCode] = useState("")
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState("")
   const [informationUser, setInformationUser] = useState()
@@ -45,6 +46,8 @@ const MyContextProvider = ({ children }) => {
         setCellPhone,
         password,
         setPassword,
+        referalCode,
+        setReferalCode,
         showErrorModal,
         setShowErrorModal,
         errorMessage,

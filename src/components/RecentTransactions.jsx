@@ -9,8 +9,10 @@ import {
   Modal,
   TextInput,
   Linking,
-  Keyboard
+  Keyboard,
+  Clipboard
 } from "react-native"
+
 import { Feather } from '@expo/vector-icons';
 import { formatDateTime, formatNumber } from "../utils/Constants"
 import ModalSuccess from "./ModalSuccess"
@@ -151,6 +153,9 @@ const RecentTransactions = ({
       </TouchableOpacity>
 
       <ScrollView style={styles.scrollView}>
+        <TouchableOpacity onPress={()=>Clipboard.setString(informationUser?.user?.referal_code)}>
+          <Text style={[styles.titleText,{fontSize: 14, marginLeft: 10}]}>Código referido: {informationUser?.user?.referal_code}</Text>
+        </TouchableOpacity>
         <View style={styles.cardContainer}>
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>Transacciones recientes</Text>

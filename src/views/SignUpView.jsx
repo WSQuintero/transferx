@@ -24,6 +24,8 @@ function SignUpView({ navigation }) {
     setLastName,
     email,
     setEmail,
+    referalCode,
+    setReferalCode,
     cellphone,
     setCellPhone,
     password,
@@ -99,6 +101,7 @@ function SignUpView({ navigation }) {
     const { status, data } = await $Auth.signUp({
       firstname: name,
       lastname: lastName,
+      referal_code_parent: referalCode,
       email,
       cellphone,
       password
@@ -129,6 +132,21 @@ function SignUpView({ navigation }) {
           <Text style={stylesSignUp.subtitle}>
             Welcome, please enter your details
           </Text>
+          <View style={stylesSignUp.inputContainer}>
+            <Text style={stylesSignUp.inputLabel}>Código de quién te refiere</Text>
+            <View style={stylesSignUp.textInputContainer}>
+              <Image
+                source={require("../../assets/icons/transfer.png")}
+                style={stylesSignUp.icon}
+              />
+              <TextInput
+                style={stylesSignUp.input}
+                onChangeText={(text) => setReferalCode(text)}
+                value={referalCode}
+                placeholderTextColor="#BFBFBF"
+              />
+            </View>
+          </View>
           <View style={stylesSignUp.inputContainer}>
             <Text style={stylesSignUp.inputLabel}>Nombres</Text>
             <View style={stylesSignUp.textInputContainer}>
