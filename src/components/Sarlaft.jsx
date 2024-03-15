@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
+import BackButton from "./BackButton";
+
 import {
   View,
   TextInput,
@@ -407,7 +409,11 @@ const Sarlaft = ({ navigation }) => {
   }
 
   return (
+
     <ScrollView style={styles.container}>
+      <View style={styles.containerBack}>
+        <BackButton />
+      </View>
       <Text style={styles.title}>
         Para continuar, por favor ayúdanos a llenar los siguientes datos
       </Text>
@@ -747,11 +753,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20
   },
+  containerBack: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 1000,
+    width: 60,
+    maxHeight: 60,
+    position: "absolute",
+    top: 50,
+    paddingBottom: 40,
+    paddingRight: 10
+  },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#fff",
     marginBottom: 20,
+    marginLeft: 70,
     marginTop: 50
   },
   subtitle: {

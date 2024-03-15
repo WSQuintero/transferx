@@ -1,6 +1,11 @@
 import { StyleSheet } from "react-native"
 
 const stylesExchangeView = StyleSheet.create({
+  containerLoader: {
+    flex: 1, 
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   title: {
     color: "white",
     marginTop: 15,
