@@ -105,12 +105,12 @@ const FooterMenu = ({ navigation, actual }) => {
         <FontAwesome
           name="whatsapp"
           size={24}
-          color={actual === "contact" ? "#C3F53C" : "white"}
+          color={actual === "contact" || actual === "tickets" ? "#C3F53C" : "white"}
         />
         <Text
           style={[
             styles.label,
-            { color: actual === "contact" ? "#C3F53C" : "white" }
+            { color: actual === "contact" || actual === "tickets" ? "#C3F53C" : "white" }
           ]}>
           Contacto
         </Text>

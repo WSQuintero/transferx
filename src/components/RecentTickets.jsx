@@ -15,7 +15,7 @@ import ModalError from "./ModalError"
 import { MyContext } from "../context/context"
 import ModalNewTicket from "./ModalNewTicket"
 
-const RecentTickets = ({ navigation, token, tickets, setTickets }) => {
+const RecentTickets = ({ navigation, token, tickets, setTickets, onSubmit }) => {
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [openModalTicket, setOpenModalTicket] = useState(false)
   useContext(MyContext)
@@ -175,6 +175,7 @@ const RecentTickets = ({ navigation, token, tickets, setTickets }) => {
           errorMessage={errorMessage}
         /> */}
       </ScrollView>
+      
       {/* <ModalSuccess
         showSuccessModal={showSuccessModalOrder}
         succesMessage={
@@ -182,7 +183,7 @@ const RecentTickets = ({ navigation, token, tickets, setTickets }) => {
         }
       /> */}
       {openModalTicket && (
-        <ModalNewTicket setOpenModalTicket={setOpenModalTicket} />
+        <ModalNewTicket setOpenModalTicket={setOpenModalTicket} onSubmit={onSubmit} />
       )}
     </>
   )

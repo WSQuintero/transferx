@@ -4,13 +4,14 @@ import RecentTransactions from "../components/RecentTransactions"
 import BackButton from "../components/BackButton"
 import { MyContext } from "../context/context"
 import FooterMenu from "../components/FooterMenu"
-import { View } from "react-native"
+import { View, ActivityIndicator } from "react-native"
 import ModalPendingValidate from "../components/ModalPendingValidate"
 import RecentTickets from "../components/RecentTickets"
 
 function Tickets({ navigation }) {
-  const { token, updatedOrder, informationUser, $Tickets } =
-    useContext(MyContext)
+  const { token, updatedOrder, informationUser, $Tickets } = useContext(MyContext);
+  const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(true);
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [elseEmailValidated, setElseEmailValidated] = useState(true)
   const [elseCellphoneValidated, setElseCellphoneValidated] = useState(true)
@@ -18,9 +19,10 @@ function Tickets({ navigation }) {
 
   useEffect(() => {
     const getTickets = async () => {
-      if (token) {
-      }
+      setLoading(true);
       const { status, data } = await $Tickets.getTickets(token)
+      setLoading(false);
+      setReload(false);
 
       if (status) {
         setTickets(data.data)
@@ -28,17 +30,24 @@ function Tickets({ navigation }) {
         console.log(data)
       }
     }
-    getTickets()
-  }, [$Tickets, token])
+    if(reload===true) getTickets()
+  }, [$Tickets, token, reload])
 
   return (
     <PageWrapper>
-      <RecentTickets
-        navigation={navigation}
-        token={token}
-        tickets={tickets}
-        setTickets={setTickets}
-      />
+      {!loading?
+        (<RecentTickets
+          navigation={navigation}
+          token={token}
+          onSubmit={()=>setReload(true)}
+          tickets={tickets}
+          setTickets={setTickets}
+        />)
+        :
+        (<View style={{flex: 1, marginTop: 100}}>
+          <ActivityIndicator size="small" color="#FFFFFF" />
+        </View>)
+      }
       <FooterMenu actual="exchange" navigation={navigation} />
       <ModalPendingValidate
         showSuccessModal={showSuccessModal}
