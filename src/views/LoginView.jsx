@@ -3,7 +3,7 @@ import PageWrapper from "../components/PageWrapper"
 import BackButton from "../components/BackButton"
 import useLoadFonts from "../customHooks/useLoadFonts"
 import stylesLoginView from "../styles/stylesLoginView"
-import { View, Text, TextInput, TouchableOpacity, Image, Keyboard, ScrollView, Platform } from "react-native"
+import { View, Text, TextInput, TouchableOpacity, Image, Keyboard, ScrollView, ActivityIndicator, Platform } from "react-native"
 import RememberMeCheckBox from "../components/RememberMeCheckBox"
 import ButtonColor from "../components/ButtonColor"
 import { MyContext } from "../context/context"
@@ -12,7 +12,8 @@ import ModalError from "../components/ModalError"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const LoginView = ({ navigation }) => {
-  const [email, setEmail] = useState("programador16@tramitarapp.com")
+  const [sending, setSending] = useState(false);
+  const [email, setEmail] = useState("programador16@yopmail.com")
   const [password, setPassword] = useState("Jd123456!.")
   const [openKeyBoard, setOpenKeyBoard] = useState(false)
   const fontsLoaded = useLoadFonts()
@@ -53,11 +54,12 @@ const LoginView = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
+      setSending(true);
       const { status, data } = await $Auth.signIn({
         email,
         password
       })
-
+      setSending(false);
       if (status) {
         await AsyncStorage.setItem("sessionToken", data.data.token)
         // navigation.navigate(
@@ -126,10 +128,11 @@ const LoginView = ({ navigation }) => {
                 style={stylesLoginView.icon}></Image>
               <TextInput
                 style={stylesLoginView.textInput}
+                disabled={sending}
                 onChangeText={(text) => setEmail(text)}
                 value={email}
                 // placeholder="Your Email Address"
-              />
+                />
             </View>
           </View>
 
@@ -141,6 +144,7 @@ const LoginView = ({ navigation }) => {
                 style={stylesLoginView.icon}></Image>
               <TextInput
                 style={stylesLoginView.textInput}
+                disabled={sending}
                 onChangeText={(text) => setPassword(text)}
                 value={password}
                 // placeholder="Enter Your Password"
@@ -157,7 +161,7 @@ const LoginView = ({ navigation }) => {
             navigation={navigation}
             to={"exchange"}
             handleSignUp={handleLogin}>
-            Login
+            {sending ? (<ActivityIndicator size="small" color="#000" />) : ('Login')}
           </ButtonColor>
 
           <Text

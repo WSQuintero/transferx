@@ -1,7 +1,7 @@
 import React from "react"
-import { Modal, StyleSheet, Text, View, TouchableOpacity } from "react-native"
+import { Modal, StyleSheet, Text, View, TouchableOpacity, TextInput, Keyboard } from "react-native"
 
-function ModalSuccess({ title="Success", showSuccessModal, succesMessage, onClose, children }) {
+function ModalSuccess({ title="Success", showSuccessModal, succesMessage, onClose, children, inputTextDisabled }) {
   return (
     <Modal visible={showSuccessModal} animationType="slide" transparent={true}>
       {children?
@@ -11,6 +11,17 @@ function ModalSuccess({ title="Success", showSuccessModal, succesMessage, onClos
           <View style={stylesModalSuccess.modalContent}>
           <Text style={stylesModalSuccess.modalTitle}>{title}</Text>
           <Text style={stylesModalSuccess.modalMessage}>{succesMessage}</Text>
+          {inputTextDisabled&&(<TextInput
+              style={stylesModalSuccess.inputHash}
+              value={inputTextDisabled}
+              multiline={true}
+              disabled={true}
+              onKeyPress={(event) => {
+                if (event.nativeEvent.key === 'Enter') {
+                  Keyboard.dismiss()
+                }
+              }}
+            />)}
           {onClose&&(<View style={stylesModalSuccess.buttonContainer}>
             <TouchableOpacity
               style={stylesModalSuccess.modalButton}
@@ -36,6 +47,14 @@ const stylesModalSuccess = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo oscuro transparente
     paddingHorizontal: 20
+  },
+  inputHash: {
+    height: 45,
+    width: 250,
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 12,
+    marginTop: 10
   },
   buttonContainer: {
     flexDirection: "row",
