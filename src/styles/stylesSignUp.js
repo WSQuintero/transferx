@@ -58,7 +58,7 @@ const stylesSignUp = StyleSheet.create({
     marginTop: 5, // Reducido el espacio superior
     marginBottom: 10, // Agregado espacio inferior
     height: 40, // Aumentado el alto del input
-    width: "100%", // Ajustado el ancho del input
+    width: "90%", // Ajustado el ancho del input
     paddingHorizontal: 10, // Añadido padding horizontal
     color: "#F4F3F5" // Cambiado a blanco
   },

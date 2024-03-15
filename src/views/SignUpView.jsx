@@ -4,8 +4,10 @@ import {
   Text,
   TextInput,
   Image,
+  ScrollView,
   TouchableOpacity,
-  Modal
+  Modal, 
+  ActivityIndicator
 } from "react-native"
 import ButtonColor from "../components/ButtonColor"
 import PageWrapper from "../components/PageWrapper"
@@ -15,6 +17,7 @@ import AuthService from "../services/AuthService"
 import ModalError from "../components/ModalError"
 import CellphonePicker from "../components/CellphonePicker"
 import ModalConfirmationRegister from "../components/ModalConfirmationRegister"
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 function SignUpView({ navigation }) {
   const {
@@ -40,6 +43,7 @@ function SignUpView({ navigation }) {
     useState(false)
   const [confirmationRegisterMessage, setConfirmationRegisterMessage] =
     useState(true)
+  const [sending, setSending] = useState(false);
   const validation = async () => {
     // Verificar que todos los campos estén llenos
     if (!name || !lastName || !email || !cellphone || !password) {
@@ -93,11 +97,22 @@ function SignUpView({ navigation }) {
   }
 
   const onCancel = () => {
+    setName("");
+    setLastName("");
+    setReferalCode("");
+    setEmail("");
+    setCellPhone("");
+    setPassword("");
     setShowModalConfirmationRegister(false)
     setConfirmationRegisterMessage("")
   }
 
   const onConfirm = async () => {
+    setSending(true);
+
+    setShowModalConfirmationRegister(false)
+    setConfirmationRegisterMessage("")
+    
     const { status, data } = await $Auth.signUp({
       firstname: name,
       lastname: lastName,
@@ -106,6 +121,7 @@ function SignUpView({ navigation }) {
       cellphone,
       password
     })
+    setSending(false);
     if (data.data.message === "User already exists") {
       setErrorMessage(
         "El usuario ya está registrado. Por favor, inicia sesión o utiliza otra dirección de correo electrónico."
@@ -115,6 +131,7 @@ function SignUpView({ navigation }) {
     }
 
     if (status) {
+      onCancel();
       navigation.navigate("confirmationCode")
     } else {
       console.error("Error en el registro:", data)
@@ -123,107 +140,116 @@ function SignUpView({ navigation }) {
   return (
     <PageWrapper>
       <View style={stylesSignUp.container}>
-        <View style={stylesSignUp.centerContent}>
+        {
+        !sending?
+        (<View style={stylesSignUp.centerContent}>
           <Image
             source={require("../../assets/image.png")}
             style={{ width: "80%", objectFit: "contain" }}
           />
-          <Text style={stylesSignUp.title}>Sign up to Your Account</Text>
+          <Text style={stylesSignUp.title}>Registrate para crear tu cuenta</Text>
           <Text style={stylesSignUp.subtitle}>
-            Welcome, please enter your details
+            Bienvenido, por favor ingrese la información
           </Text>
-          <View style={stylesSignUp.inputContainer}>
-            <Text style={stylesSignUp.inputLabel}>Código de quién te refiere</Text>
-            <View style={stylesSignUp.textInputContainer}>
-              <Image
-                source={require("../../assets/icons/transfer.png")}
-                style={stylesSignUp.icon}
-              />
-              <TextInput
-                style={stylesSignUp.input}
-                onChangeText={(text) => setReferalCode(text)}
-                value={referalCode}
-                placeholderTextColor="#BFBFBF"
-              />
-            </View>
-          </View>
-          <View style={stylesSignUp.inputContainer}>
-            <Text style={stylesSignUp.inputLabel}>Nombres</Text>
-            <View style={stylesSignUp.textInputContainer}>
-              <Image
-                source={require("../../assets/icons/16.png")}
-                style={stylesSignUp.icon}
-              />
-              <TextInput
-                style={stylesSignUp.input}
-                onChangeText={(text) => setName(text)}
-                value={name}
-                placeholderTextColor="#BFBFBF"
-              />
-            </View>
-          </View>
-          <View style={stylesSignUp.inputContainer}>
-            <Text style={stylesSignUp.inputLabel}>Apellidos</Text>
-            <View style={stylesSignUp.textInputContainer}>
-              <Image
-                source={require("../../assets/icons/16.png")}
-                style={stylesSignUp.icon}
-              />
-              <TextInput
-                style={stylesSignUp.input}
-                onChangeText={(text) => setLastName(text)}
-                value={lastName}
-                placeholderTextColor="#BFBFBF"
-              />
-            </View>
-          </View>
-          <View style={stylesSignUp.inputContainer}>
-            <Text style={stylesSignUp.inputLabel}>Email</Text>
-            <View style={stylesSignUp.textInputContainer}>
-              <Image
-                source={require("../../assets/icons/6.png")}
-                style={stylesSignUp.icon}
-              />
-              <TextInput
-                style={stylesSignUp.input}
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-                placeholderTextColor="#BFBFBF"
-              />
-            </View>
-          </View>
-          <View style={stylesSignUp.inputContainer}>
-            <Text style={stylesSignUp.inputLabel}>Phone</Text>
-            <View style={stylesSignUp.textInputContainer}>
-              <CellphonePicker setCellPhone={setCellPhone} />
-            </View>
-          </View>
-          <View style={stylesSignUp.inputContainer}>
-            <Text style={stylesSignUp.inputLabel}>Password</Text>
-            <View style={stylesSignUp.textInputContainer}>
-              <Image
-                source={require("../../assets/icons/34.png")}
-                style={stylesSignUp.icon}
-              />
-              <TextInput
-                style={stylesSignUp.input}
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-                secureTextEntry={true}
-                placeholderTextColor="#BFBFBF"
-              />
-            </View>
-          </View>
-          <View style={stylesSignUp.buttonContainer}>
-            <ButtonColor handleSignUp={handleSignUp}>Get Started</ButtonColor>
-          </View>
-          <Text
-            style={stylesSignUp.footerText}
-            onPress={() => navigation.navigate("login")}>
-            Already have an account?{" "}
-            <Text style={stylesSignUp.signupTextBold}>Sign In</Text>
-          </Text>
-        </View>
+          <KeyboardAwareScrollView>
+              <View style={stylesSignUp.inputContainer}>
+                <Text style={stylesSignUp.inputLabel}>Código de quién te refiere</Text>
+                <View style={stylesSignUp.textInputContainer}>
+                  <Image
+                    source={require("../../assets/icons/transfer.png")}
+                    style={stylesSignUp.icon}
+                  />
+                  <TextInput
+                    style={stylesSignUp.input}
+                    onChangeText={(text) => setReferalCode(text)}
+                    value={referalCode}
+                    placeholderTextColor="#BFBFBF"
+                  />
+                </View>
+              </View>
+              <View style={stylesSignUp.inputContainer}>
+                <Text style={stylesSignUp.inputLabel}>Nombres</Text>
+                <View style={stylesSignUp.textInputContainer}>
+                  <Image
+                    source={require("../../assets/icons/16.png")}
+                    style={stylesSignUp.icon}
+                  />
+                  <TextInput
+                    style={stylesSignUp.input}
+                    onChangeText={(text) => setName(text)}
+                    value={name}
+                    placeholderTextColor="#BFBFBF"
+                  />
+                </View>
+              </View>
+              <View style={stylesSignUp.inputContainer}>
+                <Text style={stylesSignUp.inputLabel}>Apellidos</Text>
+                <View style={stylesSignUp.textInputContainer}>
+                  <Image
+                    source={require("../../assets/icons/16.png")}
+                    style={stylesSignUp.icon}
+                  />
+                  <TextInput
+                    style={stylesSignUp.input}
+                    onChangeText={(text) => setLastName(text)}
+                    value={lastName}
+                    placeholderTextColor="#BFBFBF"
+                  />
+                </View>
+              </View>
+              <View style={stylesSignUp.inputContainer}>
+                <Text style={stylesSignUp.inputLabel}>Email</Text>
+                <View style={stylesSignUp.textInputContainer}>
+                  <Image
+                    source={require("../../assets/icons/6.png")}
+                    style={stylesSignUp.icon}
+                  />
+                  <TextInput
+                    style={stylesSignUp.input}
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
+                    placeholderTextColor="#BFBFBF"
+                  />
+                </View>
+              </View>
+              <View style={stylesSignUp.inputContainer}>
+                <Text style={stylesSignUp.inputLabel}>Phone</Text>
+                <View style={stylesSignUp.textInputContainer}>
+                  <CellphonePicker setCellPhone={setCellPhone} />
+                </View>
+              </View>
+              <View style={stylesSignUp.inputContainer}>
+                <Text style={stylesSignUp.inputLabel}>Password</Text>
+                <View style={stylesSignUp.textInputContainer}>
+                  <Image
+                    source={require("../../assets/icons/34.png")}
+                    style={stylesSignUp.icon}
+                  />
+                  <TextInput
+                    style={stylesSignUp.input}
+                    onChangeText={(text) => setPassword(text)}
+                    value={password}
+                    secureTextEntry={true}
+                    placeholderTextColor="#BFBFBF"
+                  />
+                </View>
+              </View>
+              <View style={stylesSignUp.buttonContainer}>
+                <ButtonColor width={370} handleSignUp={handleSignUp}>Iniciar</ButtonColor>
+              </View>
+              <Text
+                style={stylesSignUp.footerText}
+                onPress={() => navigation.navigate("login")}>
+                Ya tienes una cuenta?{" "}
+                <Text style={stylesSignUp.signupTextBold}>Ingresar</Text>
+              </Text>
+          </KeyboardAwareScrollView>
+        </View>)
+        :
+        (<View style={stylesSignUp.centerContent}>
+          <ActivityIndicator size="small" color="#FFFFFF" />
+        </View>)
+        }
       </View>
       <ModalError showErrorModal={showErrorModal} errorMessage={errorMessage} />
       <ModalConfirmationRegister
