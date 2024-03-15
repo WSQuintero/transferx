@@ -7,8 +7,10 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  TextInput
+  TextInput,
+  Linking
 } from "react-native"
+import { Feather } from '@expo/vector-icons';
 import { formatDateTime, formatNumber } from "../utils/Constants"
 import ModalSuccess from "./ModalSuccess"
 import ModalError from "./ModalError"
@@ -216,7 +218,10 @@ const RecentTransactions = ({
           onRequestClose={() => setModalVisible(false)}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalTitle}>Detalle de la orden</Text>
+              <TouchableOpacity style={[styles.button, {position: 'absolute', right: '5%', top: '5%'}]} onPress={()=>setModalVisible(false)}>
+                <Feather name="x" size={24} color="white" />
+              </TouchableOpacity>
+              <Text style={styles.modalTitle}>Detalle orden</Text>
               {selectedOrder && (
                 <View style={styles.modalContent}>
                   <Text style={styles.modalText}>
@@ -231,11 +236,15 @@ const RecentTransactions = ({
                   </Text>
                   <Text style={styles.modalText}>
                     Monto solicitado: $
-                    {formatNumber(selectedOrder.amount_currency_out)} COPS
+                    {formatNumber(selectedOrder.amount_currency_out)} COP
                   </Text>
                   <Text style={styles.modalText}>
                     Fecha de solicitud:{" "}
                     {formatDateTime(selectedOrder.created_at)}
+                  </Text>
+                  <Text style={styles.modalText}>
+                    X-REF:{" "}
+                    {selectedOrder.id}
                   </Text>
                   {selectedOrder.state === "pending" && (
                     <View
@@ -259,11 +268,15 @@ const RecentTransactions = ({
                 </View>
               )}
 
-              <TouchableOpacity
+              {selectedOrder?.url_voucher_transfer_out&&(<TouchableOpacity
                 style={styles.modalCloseButton}
-                onPress={() => setModalVisible(false)}>
-                <Text style={styles.modalButtonText}>Close</Text>
-              </TouchableOpacity>
+                onPress={async () =>{ 
+                  setModalVisible(false)
+          
+                  await Linking.openURL(selectedOrder.url_voucher_transfer_out)
+                }}>
+                <Text style={styles.modalButtonText}>Ver comprobante de pago</Text>
+              </TouchableOpacity>)}
             </View>
           </View>
         </Modal>
