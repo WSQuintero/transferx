@@ -65,10 +65,23 @@ function Exchange({ navigation }) {
           setErrorMessage("Por favor valida tu email y tu teléfono")
           setShowErrorModal(true)
         }
+
+        if (data.data.message === "First configure a valid Tron Wallet Address in on your profile") {
+          setErrorMessage("Por favor configure primero su dirección de wallet en TRON válida")
+          setShowErrorModal(true)
+        }
+
+        if (data.data.message === "First configure your account bank in on your profile") {
+          setErrorMessage("Por favor configure primero su cuenta de banco")
+          setShowErrorModal(true)
+        }
         
         if (data.data.message.indexOf("First sign contract for 2,000 USDT transactions")>=0) {
           let link = data.data.message.split(" - ");
           setSuccessMessage("Para ejecutar la transacción que intentas realizar debes firmar un acuerdo. Por favor revisa tu correo electrónico, y firma el documento: "+link[1])
+          setShowSuccessModal(true)
+        }else if (data.data.message=="The contract has already been received, it's in the validation process.") {
+          setSuccessMessage("Ya se ha recibido el contrato, está en proceso de validación.")
           setShowSuccessModal(true)
         }
         setTimeout(() => {
@@ -134,7 +147,6 @@ function Exchange({ navigation }) {
 
   return (
     <>
-      
       <PageWrapper>
         {!sending?
         (<>
@@ -258,11 +270,16 @@ function Exchange({ navigation }) {
         title={"Verificación"}
         showSuccessModal={showSuccessModal}
         succesMessage={successMessage} 
+        inputTextDisabled={successMessage?.split(": ")[1]}
         onClose={async ()=>{
           setShowSuccessModal(false);
           setSuccessMessage("");
           
-          await Linking.openURL(successMessage.split(": ")[1]);
+          let link = successMessage.split(": ")[1];
+
+          if(link){
+            await Linking.openURL(link);
+          }
         }}
       />
       {/* <FooterMenu actual="exchange" navigation={navigation} /> */}
