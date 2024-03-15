@@ -15,7 +15,7 @@ function Exchange({ navigation }) {
   const { $Exchange, token, setUpdatedOrder } = useContext(MyContext)
   const [openKeyBoard, setOpenKeyBoard] = useState(false)
   const [rate, setRate] = useState()
-  const [sending, setSending] = useState()
+  const [sending, setSending] = useState(false)
   const [quote, setQuote] = useState()
   const [countdown, setCountdown] = useState(30)
   const [showErrorModal, setShowErrorModal] = useState(false)
@@ -139,7 +139,7 @@ function Exchange({ navigation }) {
         {!sending?
         (<>
           <BackButton />
-          <Text style={[stylesExchangeView.title,{fontSize: ((!openKeyBoard||Platform.OS !== 'ios') ? 35 : 20)}]}>Exchange</Text>
+          <Text style={[stylesExchangeView.title,{fontSize: ((!openKeyBoard||Platform.OS !== 'ios') ? 35 : 20)}]}>X-TC</Text>
           <ScrollView style={stylesExchangeView.container}>
             <View style={[stylesExchangeView.containerChange,{minHeight: ((!openKeyBoard||Platform.OS !== 'ios') ? 300 : 200)}]}>
               {(!openKeyBoard||Platform.OS !== 'ios')&&(<Text style={stylesExchangeView.titleContainer}>
@@ -235,6 +235,7 @@ function Exchange({ navigation }) {
               <ButtonColor
                 navigation={navigation}
                 to={"card"}
+                width={365}
                 handleSignUp={handleSendRequest}>
                 Confirmar
               </ButtonColor>
@@ -242,11 +243,12 @@ function Exchange({ navigation }) {
           </ScrollView>
         </>)
         :
-        (<>
-          <BackButton />
-
+        (<View style={stylesExchangeView.containerLoader}>
+          {Number(usdtTether)>=2000&&(<Text style={[stylesExchangeView.title, {fontSize: 15, textAlign: 'center', marginBottom: 30, marginLeft: 0}]}>
+            {'Estámos validando el estado de tu contrato para ordenes superiores o iguales a 2,000 USDT'}
+          </Text>)}
           <ActivityIndicator size="small" color="#FFFFFF" />
-        </>)}
+        </View>)}
       </PageWrapper>
       <ModalError
         showErrorModal={showErrorModal}
