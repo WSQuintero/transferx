@@ -39,6 +39,7 @@ const RecentTransactions = ({
   const [order, setOrder] = useState()
   const [isPending, setIsPending] = useState(false)
   const { informationUser, $User, setInformationUser } = useContext(MyContext)
+  const [rejectedMessage, setRejectedMessage] = useState()
   const handleOrderPress = (order) => {
     setSelectedOrder(order)
     setModalVisible(true)
@@ -94,15 +95,19 @@ const RecentTransactions = ({
   }, [showSuccessModalOrder])
 
   useEffect(() => {
+    setRejectedMessage("")
     const getSarlaft = async () => {
       if (token) {
       }
       const { status, data } = await $User.getLastSarlaft(token)
-      console.log(informationUser)
       if (status) {
-        if (data.data.length && informationUser?.sarlaft_validated === 0) {
+        if (
+          data?.data.every((contract) => contract.status === "rejected") &&
+          informationUser?.sarlaft_validated === 0
+        ) {
           setShowSuccessModalOrder(true)
           setIsPending(true)
+          setRejectedMessage(data?.data[data?.data.length - 1].rejected_comment)
         }
       }
     }
@@ -334,9 +339,7 @@ const RecentTransactions = ({
       </ScrollView>
       <ModalSuccess
         showSuccessModal={showSuccessModalOrder}
-        succesMessage={
-          "Tu solicitud para poder realizar órdenes está pendiente, una vez aprobada podrás disfrutar de este servicio"
-        }
+        succesMessage={`Tu solicitud para poder realizar órdenes ha sido rechazada con el siguiente comentario: "${rejectedMessage}". Por favor vuelve a enviar tu formulario `}
       />
     </>
   )
