@@ -13,11 +13,12 @@ import {
   Clipboard
 } from "react-native"
 
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons"
 import { formatDateTime, formatNumber } from "../utils/Constants"
 import ModalSuccess from "./ModalSuccess"
 import ModalError from "./ModalError"
 import { MyContext } from "../context/context"
+import Profile from "./Profile"
 
 const RecentTransactions = ({
   navigation,
@@ -109,52 +110,64 @@ const RecentTransactions = ({
   }, [token])
   return (
     <>
-      <TouchableOpacity
-        style={[
-          styles.titleText,
-          {
-            color: "#C3F53C",
-            borderRadius: 20,
-            borderColor: "#C3F53C",
-            borderWidth: 1,
-            padding: 5,
-            width: "60%",
-            textAlign: "center",
-            right: 20,
-            position: "absolute",
-            top: 50
-          }
-        ]}
-        onPress={() => {
-          if (
-            informationUser?.user.kyc_validated === 1 &&
-            informationUser?.user.sarlaft_validated === 1
-          ) {
-            navigation.navigate("newExchange")
-          } else if (
-            informationUser?.user.kyc_validated === 1 &&
-            informationUser?.user.sarlaft_validated === 0
-          ) {
-            navigation.navigate("sarlaft")
-          } else {
-            navigation.navigate("dialog")
-          }
-        }}>
-        <Text
+      <Profile />
+      <View style={{ position: "relative" }}>
+        <TouchableOpacity
           style={[
             styles.titleText,
             {
               color: "#C3F53C",
-              textAlign: "center"
+              borderRadius: 20,
+              borderColor: "#C3F53C",
+              borderWidth: 1,
+              padding: 5,
+              width: 200,
+              textAlign: "center",
+              marginTop: 50,
+              position: "absolute",
+              right: 20
             }
-          ]}>
-          Crear nueva orden
-        </Text>
-      </TouchableOpacity>
+          ]}
+          onPress={() => {
+            if (
+              informationUser?.user.kyc_validated === 1 &&
+              informationUser?.user.sarlaft_validated === 1
+            ) {
+              navigation.navigate("newExchange")
+            } else if (
+              informationUser?.user.kyc_validated === 1 &&
+              informationUser?.user.sarlaft_validated === 0
+            ) {
+              navigation.navigate("sarlaft")
+            } else {
+              navigation.navigate("dialog")
+            }
+          }}>
+          <Text
+            style={[
+              styles.titleText,
+              {
+                color: "#C3F53C",
+                textAlign: "center"
+              }
+            ]}>
+            Crear nueva orden
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       <ScrollView style={styles.scrollView}>
-        <TouchableOpacity onPress={()=>Clipboard.setString(informationUser?.user?.referal_code)}>
-          <Text style={[styles.titleText,{fontSize: 14, marginLeft: 10}]}>Código referido: {informationUser?.user?.referal_code}</Text>
+        <TouchableOpacity
+          onPress={() =>
+            Clipboard.setString(informationUser?.user?.referal_code)
+          }>
+          <Text
+            style={[
+              styles.titleText,
+              { fontSize: 14, marginLeft: 40, color: "#C3F53C" }
+            ]}>
+            Código referido: {informationUser?.user?.referal_code}
+          </Text>
         </TouchableOpacity>
         <View style={styles.cardContainer}>
           <View style={styles.titleContainer}>
@@ -208,17 +221,15 @@ const RecentTransactions = ({
                       </View>
                     </View>
                     <View
-                        style={{
-                          flexDirection: "column",
-                          gap: 3,
-                          position: "relative"
-                        }}>
-                    <Text style={styles.timeText}>
-                      {formatDateTime(order.created_at)}
-                    </Text>
-                    <Text style={styles.timeText}>
-                      X-REF: {order.id}
-                    </Text>
+                      style={{
+                        flexDirection: "column",
+                        gap: 3,
+                        position: "relative"
+                      }}>
+                      <Text style={styles.timeText}>
+                        {formatDateTime(order.created_at)}
+                      </Text>
+                      <Text style={styles.timeText}>X-REF: {order.id}</Text>
                     </View>
                   </View>
                 </View>
@@ -234,7 +245,12 @@ const RecentTransactions = ({
           onRequestClose={() => setModalVisible(false)}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <TouchableOpacity style={[styles.button, {position: 'absolute', right: '5%', top: '5%'}]} onPress={()=>setModalVisible(false)}>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  { position: "absolute", right: "5%", top: "5%" }
+                ]}
+                onPress={() => setModalVisible(false)}>
                 <Feather name="x" size={24} color="white" />
               </TouchableOpacity>
               <Text style={styles.modalTitle}>Detalle orden</Text>
@@ -259,8 +275,7 @@ const RecentTransactions = ({
                     {formatDateTime(selectedOrder.created_at)}
                   </Text>
                   <Text style={styles.modalText}>
-                    X-REF:{" "}
-                    {selectedOrder.id}
+                    X-REF: {selectedOrder.id}
                   </Text>
                   {selectedOrder.state === "pending" && (
                     <View
@@ -274,14 +289,14 @@ const RecentTransactions = ({
                         value={hash}
                         multiline={true}
                         onKeyPress={(event) => {
-                          if (event.nativeEvent.key === 'Enter') {
+                          if (event.nativeEvent.key === "Enter") {
                             Keyboard.dismiss()
                           }
                         }}
                         onChangeText={(value) => setHash(value)}
                       />
                       <TouchableOpacity
-                        style={[styles.modalCloseButton,{width: 250}]}
+                        style={[styles.modalCloseButton, { width: 250 }]}
                         onPress={() => handleUpdateHash(order)}>
                         <Text style={styles.modalButtonText}>Enviar Hash</Text>
                       </TouchableOpacity>
@@ -290,15 +305,21 @@ const RecentTransactions = ({
                 </View>
               )}
 
-              {selectedOrder?.url_voucher_transfer_out&&(<TouchableOpacity
-                style={styles.modalCloseButton}
-                onPress={async () =>{ 
-                  setModalVisible(false)
-          
-                  await Linking.openURL(selectedOrder.url_voucher_transfer_out)
-                }}>
-                <Text style={styles.modalButtonText}>Ver comprobante de pago</Text>
-              </TouchableOpacity>)}
+              {selectedOrder?.url_voucher_transfer_out && (
+                <TouchableOpacity
+                  style={styles.modalCloseButton}
+                  onPress={async () => {
+                    setModalVisible(false)
+
+                    await Linking.openURL(
+                      selectedOrder.url_voucher_transfer_out
+                    )
+                  }}>
+                  <Text style={styles.modalButtonText}>
+                    Ver comprobante de pago
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </Modal>
@@ -336,7 +357,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around"
   },
   titleText: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold",
     color: "white"
   },
