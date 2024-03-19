@@ -7,7 +7,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  TextInput
+  TextInput,
+  Button
 } from "react-native"
 import { formatDateTime, formatNumber } from "../utils/Constants"
 import ModalSuccess from "./ModalSuccess"
@@ -15,19 +16,23 @@ import ModalError from "./ModalError"
 import { MyContext } from "../context/context"
 import ModalNewTicket from "./ModalNewTicket"
 import { Feather } from "@expo/vector-icons"
+import { MaterialIcons } from "@expo/vector-icons"
 
 const RecentTickets = ({
   navigation,
   token,
+  newMessage,
   tickets,
   setTickets,
-  onSubmit
+  onSubmit,
+  informationUser
 }) => {
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [openModalTicket, setOpenModalTicket] = useState(false)
   const [actualTicket, setActualTicket] = useState(undefined)
-  useContext(MyContext)
-
+  const [inputText, setInputText] = useState("")
+  const { $Tickets, setMessageSended } = useContext(MyContext)
+  const [messages, setMessages] = useState(undefined)
   useEffect(() => {
     if (showErrorModal) {
       setTimeout(() => {
@@ -36,11 +41,24 @@ const RecentTickets = ({
       }, 3000)
     }
   }, [showErrorModal])
+  useEffect(() => {
+    setInputText("")
+  }, [])
   const handleOpenModalTicket = (ticket) => {
     setActualTicket(ticket)
   }
 
-  console.log(actualTicket)
+  const handleSendNewMessage = async () => {
+    setMessageSended(false)
+    const newMessage = { ticket: actualTicket?.id, comment: inputText }
+    console.log(newMessage)
+    setInputText("")
+    const { status, data } = await $Tickets.sendMessage(token, newMessage)
+    if (status) {
+      console.log("Mensaje enviado")
+      setMessageSended(true)
+    }
+  }
   return (
     <>
       <TouchableOpacity
@@ -124,82 +142,8 @@ const RecentTickets = ({
             ))
           )}
         </View>
-        {/*
-
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalTitle}>Detalle de la orden</Text>
-              {selectedOrder && (
-                <View style={styles.modalContent}>
-                  <Text style={styles.modalText}>
-                    Solicitante: {selectedOrder.owner_account_bank_transfer}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    Cuenta a transferir:{" "}
-                    {selectedOrder.number_account_bank_transfer}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    Estado: {selectedOrder.state}
-                  </Text>
-                  <Text style={styles.modalText}>
-                    Monto solicitado: $
-                    {formatNumber(selectedOrder.amount_currency_out)} COPS
-                  </Text>
-                  <Text style={styles.modalText}>
-                    Fecha de solicitud:{" "}
-                    {formatDateTime(selectedOrder.created_at)}
-                  </Text>
-                  {selectedOrder.state === "pending" && (
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center"
-                      }}>
-                      <TextInput
-                        style={styles.inputHash}
-                        placeholder="Pon tu hash"
-                        value={hash}
-                        onChangeText={(value) => setHash(value)}
-                      />
-                      <TouchableOpacity
-                        style={styles.modalCloseButton}
-                        onPress={() => handleUpdateHash(order)}>
-                        <Text style={styles.modalButtonText}>Enviar Hash</Text>
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
-              )}
-
-              <TouchableOpacity
-                style={styles.modalCloseButton}
-                onPress={() => setModalVisible(false)}>
-                <Text style={styles.modalButtonText}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-        <ModalSuccess
-          showSuccessModal={showSuccessModal}
-          succesMessage={succesMessage}
-        />
-        <ModalError
-          showErrorModal={showErrorModal}
-          errorMessage={errorMessage}
-        /> */}
       </ScrollView>
 
-      {/* <ModalSuccess
-        showSuccessModal={showSuccessModalOrder}
-        succesMessage={
-          "Tu solicitud para poder realizar órdenes está pendiente, una vez aprobada podrás disfrutar de este servicio"
-        }
-      /> */}
       {openModalTicket && (
         <ModalNewTicket
           setOpenModalTicket={setOpenModalTicket}
@@ -249,13 +193,13 @@ const RecentTickets = ({
               {actualTicket?.title}
             </Text>
             <Text style={styles.titleTextTwo}>
-              <Text style={styles.titleTextTitle}>Dscripción:</Text>{" "}
+              <Text style={styles.titleTextTitle}>Descripción:</Text>{" "}
               {actualTicket?.description}
             </Text>
             <TouchableOpacity
               style={[styles.titleText, styles.buttonGeneral]}
-              onPress={() => {
-                setOpenModalTicket(true)
+              onPress={(event) => {
+                setMessages(actualTicket?.responses)
               }}>
               <Text
                 style={[
@@ -268,6 +212,68 @@ const RecentTickets = ({
                 Ver mensajes
               </Text>
             </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={messages !== undefined}
+        onRequestClose={() => setActualTicket(undefined)}>
+        <View style={styles.centeredViewMessages}>
+          <View style={styles.modalViewMessages}>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                { position: "absolute", right: "5%", top: "5%" }
+              ]}
+              onPress={() => setMessages(undefined)}>
+              <Feather name="x" size={24} color="white" />
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>Mensajes</Text>
+
+            <ScrollView style={styles.containerMessages}>
+              {messages?.map((message) => (
+                <View
+                  key={message.id}
+                  style={{
+                    backgroundColor:
+                      informationUser?.user.id === message?.whoResponse.id
+                        ? "rgba(195, 245, 60, 0.2)"
+                        : "rgba(255,255,255,0.2)",
+                    padding: 10,
+                    alignSelf:
+                      informationUser?.user.id === message?.whoResponse.id
+                        ? "flex-start"
+                        : "flex-end",
+                    width: 200,
+                    borderRadius: 20,
+                    marginBottom: 10
+                  }}>
+                  <Text style={{ color: "#C3F53C" }}>
+                    {message?.whoResponse?.firstname}:
+                  </Text>
+                  <Text style={{ color: "#fff" }}>{message?.comment}</Text>
+                  <Text style={{ color: "rgba(255,255,255,0.6)" }}>
+                    {formatDateTime(message?.createdAt)}
+                  </Text>
+                </View>
+              ))}
+            </ScrollView>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                value={inputText}
+                onChangeText={setInputText}
+                placeholder="Escribe el nuevo mensaje"
+                placeholderTextColor={"white"}
+              />
+              <TouchableOpacity
+                style={styles.buttonSend}
+                onPress={handleSendNewMessage}>
+                <MaterialIcons name="send" size={24} color="black" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -287,7 +293,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 8,
     width: "60%",
-    textAlign: "center"
+    textAlign: "center",
+    marginTop: 20
   },
   cardContainer: {
     margin: 10,
@@ -387,6 +394,31 @@ const styles = StyleSheet.create({
     width: "80%",
     heifht: "80%"
   },
+  centeredViewMessages: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+    width: "100%",
+    height: "100%"
+  },
+  modalViewMessages: {
+    margin: 20,
+    backgroundColor: "#10231D",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width: "100%",
+    height: "100%"
+  },
   modalTitle: {
     fontSize: 20,
     fontWeight: "bold",
@@ -433,6 +465,50 @@ const styles = StyleSheet.create({
   clearImage: {
     width: 200,
     height: 200
+  },
+  container: {
+    flex: 1,
+    padding: 20
+  },
+  messageContainer: {
+    flex: 1,
+    marginBottom: 20
+  },
+  message: {
+    backgroundColor: "#e0e0e0",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 20,
+    width: "100%"
+  },
+  input: {
+    flex: 1,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    padding: 10,
+    color: "white"
+  },
+  buttonSend: {
+    backgroundColor: "#C3F53C",
+    height: 50,
+    width: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20
+  },
+  containerMessages: {
+    backgroundColor: "rgb(255,255,255,0.9)",
+    width: "100%",
+    height: "100%",
+    padding: 10
   }
 })
 

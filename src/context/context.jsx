@@ -23,7 +23,7 @@ const MyContextProvider = ({ children }) => {
   const $Exchange = useMemo(() => new P2PService(token), [])
   const $Tickets = useMemo(() => new TicketService(token), [])
   const $User = useMemo(() => new UserService(token), [])
-
+  const [messageSended, setMessageSended] = useState()
   const [updatedOrder, setUpdatedOrder] = useState()
   useEffect(() => {
     if (showErrorModal) {
@@ -61,7 +61,9 @@ const MyContextProvider = ({ children }) => {
         updatedOrder,
         setUpdatedOrder,
         $User,
-        $Tickets
+        $Tickets,
+        messageSended,
+        setMessageSended
       }}>
       {children}
     </MyContext.Provider>

@@ -39,4 +39,21 @@ export default class TicketService {
       return { status: false, data: error.response }
     }
   }
+  async sendMessage(token, message) {
+    try {
+      const response = await axios.post(
+        `https://transferx-backend.concilbot.com/api/v1/tickets/response`,
+        message,
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      )
+
+      return { status: true, data: response.data }
+    } catch (error) {
+      return { status: false, data: error.response }
+    }
+  }
 }
