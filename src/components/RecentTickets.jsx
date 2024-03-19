@@ -14,10 +14,18 @@ import ModalSuccess from "./ModalSuccess"
 import ModalError from "./ModalError"
 import { MyContext } from "../context/context"
 import ModalNewTicket from "./ModalNewTicket"
+import { Feather } from "@expo/vector-icons"
 
-const RecentTickets = ({ navigation, token, tickets, setTickets, onSubmit }) => {
+const RecentTickets = ({
+  navigation,
+  token,
+  tickets,
+  setTickets,
+  onSubmit
+}) => {
   const [showErrorModal, setShowErrorModal] = useState(false)
   const [openModalTicket, setOpenModalTicket] = useState(false)
+  const [actualTicket, setActualTicket] = useState(undefined)
   useContext(MyContext)
 
   useEffect(() => {
@@ -28,7 +36,11 @@ const RecentTickets = ({ navigation, token, tickets, setTickets, onSubmit }) => 
       }, 3000)
     }
   }, [showErrorModal])
+  const handleOpenModalTicket = (ticket) => {
+    setActualTicket(ticket)
+  }
 
+  console.log(actualTicket)
   return (
     <>
       <TouchableOpacity
@@ -80,7 +92,11 @@ const RecentTickets = ({ navigation, token, tickets, setTickets, onSubmit }) => 
             </View>
           ) : (
             tickets?.map((ticket) => (
-              <TouchableOpacity key={ticket.id} onPress={() => {}}>
+              <TouchableOpacity
+                key={ticket.id}
+                onPress={() => {
+                  handleOpenModalTicket(ticket)
+                }}>
                 <View style={styles.contentContainer}>
                   <Image
                     source={require("../../assets/tickets.png")}
@@ -96,7 +112,9 @@ const RecentTickets = ({ navigation, token, tickets, setTickets, onSubmit }) => 
                           gap: 3,
                           position: "relative"
                         }}>
-                        <Text style={styles.price}>{ticket.status}</Text>
+                        <Text style={styles.price}>
+                          {ticket.status === "open" ? "Abierto" : "Cerrado"}
+                        </Text>
                       </View>
                     </View>
                     <Text style={styles.timeText}>{ticket.description}</Text>
@@ -175,7 +193,7 @@ const RecentTickets = ({ navigation, token, tickets, setTickets, onSubmit }) => 
           errorMessage={errorMessage}
         /> */}
       </ScrollView>
-      
+
       {/* <ModalSuccess
         showSuccessModal={showSuccessModalOrder}
         succesMessage={
@@ -183,8 +201,76 @@ const RecentTickets = ({ navigation, token, tickets, setTickets, onSubmit }) => 
         }
       /> */}
       {openModalTicket && (
-        <ModalNewTicket setOpenModalTicket={setOpenModalTicket} onSubmit={onSubmit} />
+        <ModalNewTicket
+          setOpenModalTicket={setOpenModalTicket}
+          onSubmit={onSubmit}
+        />
       )}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={actualTicket !== undefined}
+        onRequestClose={() => setActualTicket(undefined)}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                { position: "absolute", right: "5%", top: "5%" }
+              ]}
+              onPress={() => setActualTicket(undefined)}>
+              <Feather name="x" size={24} color="white" />
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>Detalle ticket</Text>
+            <Text style={styles.titleTextTwo}>
+              <Text style={styles.titleTextTitle}>Ticket id:</Text>{" "}
+              {actualTicket?.id}
+            </Text>
+            <Text style={styles.titleTextTwo}>
+              <Text style={styles.titleTextTitle}>Creación:</Text>{" "}
+              {formatDateTime(actualTicket?.createdAt)}
+            </Text>
+            <Text style={styles.titleTextTwo}>
+              <Text style={styles.titleTextTitle}>Actualización:</Text>{" "}
+              {formatDateTime(actualTicket?.updatedAt)}
+            </Text>
+            <Text style={styles.titleTextTwo}>
+              <Text style={styles.titleTextTitle}>Estado:</Text>{" "}
+              {actualTicket?.status === "open" ? "Abierto" : "Cerrado"}
+            </Text>
+            <Text style={styles.titleTextTwo}>
+              <Text style={styles.titleTextTitle}>Tipo:</Text>
+              {actualTicket?.type === "change_account_bank"
+                ? "Cambio información bancaria"
+                : "Cambio de wallet"}
+            </Text>
+            <Text style={styles.titleTextTwo}>
+              <Text style={styles.titleTextTitle}>Título:</Text>{" "}
+              {actualTicket?.title}
+            </Text>
+            <Text style={styles.titleTextTwo}>
+              <Text style={styles.titleTextTitle}>Dscripción:</Text>{" "}
+              {actualTicket?.description}
+            </Text>
+            <TouchableOpacity
+              style={[styles.titleText, styles.buttonGeneral]}
+              onPress={() => {
+                setOpenModalTicket(true)
+              }}>
+              <Text
+                style={[
+                  styles.titleText,
+                  {
+                    color: "#C3F53C",
+                    textAlign: "center"
+                  }
+                ]}>
+                Ver mensajes
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </>
   )
 }
@@ -193,6 +279,15 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     marginTop: 100
+  },
+  buttonGeneral: {
+    color: "#C3F53C",
+    borderRadius: 10,
+    borderColor: "#C3F53C",
+    borderWidth: 1,
+    padding: 8,
+    width: "60%",
+    textAlign: "center"
   },
   cardContainer: {
     margin: 10,
@@ -207,6 +302,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "white"
+  },
+  titleTextTwo: {
+    fontSize: 13,
+    fontWeight: "bold",
+    color: "white",
+    textAlign: "left",
+    width: "100%"
+  },
+  titleTextTitle: {
+    fontSize: 13,
+    fontWeight: "bold",
+    color: "#C3F53C",
+    textAlign: "left",
+    width: "100%"
   },
   send: {
     backgroundColor: "#C3F53C",
@@ -274,13 +383,15 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
+    width: "80%",
+    heifht: "80%"
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 15,
-    color: "#F4F3F5"
+    color: "#C3F53C"
   },
   modalContent: {
     marginBottom: 20,
@@ -315,11 +426,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 160
-  },
-  clear: {
-    fontSize: 16,
-    marginBottom: 10,
-    color: "#C3F53C"
   },
   imageContainer: {
     opacity: 0.5
