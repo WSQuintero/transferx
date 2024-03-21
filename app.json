@@ -40,6 +40,12 @@
             "targetSdkVersion": 31
           }
         }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
       ]
     ]
   }

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import BackButton from "./BackButton";
+import BackButton from "./BackButton"
 
 import {
   View,
@@ -11,9 +11,11 @@ import {
   Switch
 } from "react-native"
 import { MyContext } from "../context/context"
+import MultipleFileInput from "./MultipleFileInput "
 
-const Sarlaft = ({ navigation }) => {
+function Sarlaft({ navigation }) {
   const [numberOfShaldeholders, setNumberOfShaldeholders] = useState(0)
+  const [selectedFiles, setSelectedFiles] = useState([])
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -395,7 +397,28 @@ const Sarlaft = ({ navigation }) => {
       "internationalOperationsDetails",
       JSON.stringify(internationalOperationsDetails)
     )
+    const fetchPromises = []
 
+    selectedFiles.forEach(function (archivo) {
+      // Crear una promesa para cada archivo
+      const fetchPromise = fetch(archivo.uri)
+        .then((response) => response.blob())
+        .then((blob) => {
+          // Agregar el Blob al FormData
+          finalFormData.append("files", blob, archivo.name)
+        })
+        .catch((error) => {
+          console.error("Error al obtener el archivo:", error)
+        })
+
+      // Agregar la promesa al array de promesas
+      fetchPromises.push(fetchPromise)
+    })
+
+    // Esperar a que todas las promesas se resuelvan
+    await Promise.all(fetchPromises)
+
+    // Ahora que todos los archivos se han agregado al FormData, puedes imprimirlo
     const send = await $User.sendSarlaft(token, finalFormData)
     if (send.status) {
       navigation.navigate(
@@ -409,7 +432,6 @@ const Sarlaft = ({ navigation }) => {
   }
 
   return (
-
     <ScrollView style={styles.container}>
       <View style={styles.containerBack}>
         <BackButton />
@@ -736,7 +758,17 @@ const Sarlaft = ({ navigation }) => {
           onChangeText={(value) => setResourceSourceDetails(value)}
         />
       </View>
+      <Text style={{ marginTop: 20, color: "white" }}>
+        <Text style={styles.subtitle}>Recuerda subir:</Text> Foto frontal de
+        documento de identidad, Foto trasera documento de identidad,
+        Certificación bancaria, Rut si eres representante de una persona
+        jurídica y resides en colombia{" "}
+      </Text>
 
+      <MultipleFileInput
+        selectedFiles={selectedFiles}
+        setSelectedFiles={setSelectedFiles}
+      />
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Enviar</Text>
       </TouchableOpacity>
