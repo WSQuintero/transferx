@@ -19,7 +19,8 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/Icon-512.png",
-        "backgroundColor": "#081412"
+        "backgroundColor": "#081412",
+        "resizeMode": "contain"
       },
       "package": "com.transferx.com"
     },

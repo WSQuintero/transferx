@@ -40,6 +40,7 @@ function Sarlaft({ navigation }) {
       secondYear60Days: false
     }
   })
+  const [step, setStep] = useState(0)
   const { $User, informationUser, token } = useContext(MyContext)
   const [initialStatePersonJuridic, setInitialStatePersonJuridic] = useState({
     occupation2PersonalNatural: "",
@@ -436,342 +437,375 @@ function Sarlaft({ navigation }) {
       <View style={styles.containerBack}>
         <BackButton />
       </View>
-      <Text style={styles.title}>
-        Para continuar, por favor ayúdanos a llenar los siguientes datos
-      </Text>
-      <Text style={styles.subtitle}>Información del titular</Text>
-      {Object.keys(formData).map((key, index) => {
-        if (key === "usStayDetails") {
-          return (
-            <View key={index}>
-              <Text style={styles.label}>
-                Detalles de Estadía en Estados Unidos
-              </Text>
-              {Object.keys(formData.usStayDetails).map(
-                (detailKey, detailIndex) => (
-                  <View key={detailIndex} style={styles.inputContainer}>
-                    <Text style={styles.label}>
-                      {labels.usStayDetails[detailKey]}
-                    </Text>
+
+      {step === 0 && (
+        <>
+          <Text style={styles.title}>
+            Para continuar, por favor ayúdanos a llenar los siguientes datos
+          </Text>
+          <TouchableOpacity style={styles.button} onPress={() => setStep(1)}>
+            <Text style={styles.buttonText}>Iniciar</Text>
+          </TouchableOpacity>
+        </>
+      )}
+
+      {step === 1 && (
+        <>
+          <Text style={styles.subtitle}>Información del titular</Text>
+          {Object.keys(formData).map((key, index) => {
+            if (key === "usStayDetails") {
+              return (
+                <View key={index}>
+                  <Text style={styles.label}>
+                    Detalles de Estadía en Estados Unidos
+                  </Text>
+                  {Object.keys(formData.usStayDetails).map(
+                    (detailKey, detailIndex) => (
+                      <View key={detailIndex} style={styles.inputContainer}>
+                        <Text style={styles.label}>
+                          {labels.usStayDetails[detailKey]}
+                        </Text>
+                        <Switch
+                          value={formData.usStayDetails[detailKey]}
+                          onValueChange={() => handleToggleChange(detailKey)}
+                        />
+                      </View>
+                    )
+                  )}
+                </View>
+              )
+            } else {
+              return (
+                <View key={index} style={styles.inputContainer}>
+                  <Text style={styles.label}>{labels[key]}</Text>
+                  {key === "hasTaxObligationsInAnotherCountry" ||
+                  key === "hasPermanentResidencyInAnotherCountry" ? (
                     <Switch
-                      value={formData.usStayDetails[detailKey]}
-                      onValueChange={() => handleToggleChange(detailKey)}
+                      value={formData[key]}
+                      onValueChange={() => handleToggleChange(key)}
                     />
-                  </View>
-                )
+                  ) : (
+                    <TextInput
+                      style={styles.input}
+                      value={formData[key]}
+                      onChangeText={(value) => handleInputChange(key, value)}
+                    />
+                  )}
+                </View>
+              )
+            }
+          })}
+          <Text style={{ ...styles.subtitle, marginTop: 50 }}>
+            Información representante persona jurídica.{" "}
+            <Text style={{ color: "white" }}>{"(Si aplica)"}</Text>
+          </Text>
+          {Object.keys(juridicPerson).map((key, index) => (
+            <View key={index} style={styles.inputContainer}>
+              <Text style={styles.label}>{juridicPerson[key]}</Text>
+              <TextInput
+                style={styles.input}
+                value={initialStatePersonJuridic[key]}
+                onChangeText={(value) =>
+                  handleInputChangeJuridicPerson(key, value)
+                }
+              />
+            </View>
+          ))}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              gap: 5
+            }}>
+            <TouchableOpacity
+              style={{ ...styles.button, width: 170 }}
+              onPress={() => setStep(0)}>
+              <Text style={styles.buttonText}>Anterior</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ ...styles.button, width: 170 }}
+              onPress={() => setStep(2)}>
+              <Text style={styles.buttonText}>Siguiente</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
+      {step === 2 && (
+        <>
+          <Text style={styles.subtitle}>Información accionistas</Text>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Número de accionistas</Text>
+            <TextInput
+              style={styles.input}
+              value={numberOfShaldeholders?.toString()}
+              onChangeText={(value) => {
+                // Verificar si el valor ingresado es un número válido
+                const newValue = parseInt(value)
+                if (!isNaN(newValue) && newValue >= 0) {
+                  setNumberOfShaldeholders(newValue)
+                } else {
+                  // Si el valor no es válido, establecer en 0
+                  setNumberOfShaldeholders("0")
+                }
+              }}
+              keyboardType="numeric"
+            />
+          </View>
+
+          {Array.from(
+            { length: numberOfShaldeholders },
+            (_, index) => index
+          ).map((__, ind) => (
+            <View key={ind}>
+              <Text
+                style={{ ...styles.subtitle, marginTop: 50 }}>{`Accionista ${
+                ind + 1
+              }`}</Text>
+              {Object.keys(shareholderLabels.shareholdersIdentification[0]).map(
+                (a, i) => {
+                  return (
+                    <View
+                      key={shareholderLabels.shareholdersIdentification[0][a]}>
+                      <Text style={styles.label}>
+                        {a !== "usStayDetails" &&
+                          shareholderLabels.shareholdersIdentification[0][a]}
+                      </Text>
+                      <>
+                        {a !== "usStayDetails" && (
+                          <TextInput
+                            style={styles.input}
+                            value={
+                              shareholders.shareholdersIdentification[ind] &&
+                              String(
+                                shareholders.shareholdersIdentification[ind][a]
+                              )
+                            }
+                            onChangeText={(value) =>
+                              handleInputChangeShaldeHolder(ind, a, value)
+                            }
+                          />
+                        )}
+                        {/* {a === "usStayDetails" && (
+                          <>
+                            {shareholders?.shareholdersIdentification[ind] &&
+                              Object.keys(
+                                shareholders.shareholdersIdentification[ind][a]
+                              ).map((detailValue, detailIndex) => (
+                                <View
+                                  key={detailValue + ind}
+                                  style={styles.inputContainer}>
+                                  <Text style={styles.label}>
+                                    {detailValue}
+                                  </Text>
+                                  <Switch
+                                    value={
+                                      shareholders.shareholdersIdentification[
+                                        ind
+                                      ] &&
+                                      shareholders.shareholdersIdentification[
+                                        ind
+                                      ]["usStayDetails"][detailValue]
+                                    }
+                                    onValueChange={(value) =>
+                                      handleUsStayDetailToggleChange(
+                                        ind,
+                                        detailValue,
+                                        value
+                                      )
+                                    }
+                                  />
+                                </View>
+                              ))}
+                          </>
+                        )} */}
+                      </>
+                    </View>
+                  )
+                }
               )}
             </View>
-          )
-        } else {
-          return (
+          ))}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              gap: 5
+            }}>
+            <TouchableOpacity
+              style={{ ...styles.button, width: 170 }}
+              onPress={() => setStep(1)}>
+              <Text style={styles.buttonText}>Anterior</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ ...styles.button, width: 170 }}
+              onPress={() => setStep(3)}>
+              <Text style={styles.buttonText}>Siguiente</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
+      {step === 3 && (
+        <>
+          <Text style={styles.subtitle}>Información bancaria titular</Text>
+          {Object.keys(informationBank).map((key, index) => (
             <View key={index} style={styles.inputContainer}>
-              <Text style={styles.label}>{labels[key]}</Text>
-              {key === "hasTaxObligationsInAnotherCountry" ||
-              key === "hasPermanentResidencyInAnotherCountry" ? (
+              <Text style={styles.label}>{informationBank[key]}</Text>
+              {key === "politicallyExposedPerson" ||
+              key === "InternationalOrgLegalRep" ||
+              key === "AdministratorPEPStatus" ||
+              key === "conductsForeignCurrencyTransactions" ||
+              key === "usesFinancialProductsAbroad" ? (
                 <Switch
-                  value={formData[key]}
-                  onValueChange={() => handleToggleChange(key)}
+                  value={initialStateInformationBank[key]}
+                  onValueChange={(value) =>
+                    handleInputChangeInformationBank(key, value)
+                  }
                 />
               ) : (
                 <TextInput
                   style={styles.input}
-                  value={formData[key]}
-                  onChangeText={(value) => handleInputChange(key, value)}
+                  value={initialStateInformationBank[key]}
+                  onChangeText={(value) =>
+                    handleInputChangeInformationBank(key, value)
+                  }
                 />
               )}
             </View>
-          )
-        }
-      })}
-      <Text style={styles.subtitle}>
-        Información representante persona jurídica
-      </Text>
-      {Object.keys(juridicPerson).map((key, index) => (
-        <View key={index} style={styles.inputContainer}>
-          <Text style={styles.label}>{juridicPerson[key]}</Text>
-          <TextInput
-            style={styles.input}
-            value={initialStatePersonJuridic[key]}
-            onChangeText={(value) => handleInputChangeJuridicPerson(key, value)}
-          />
-        </View>
-      ))}
-
-      <Text style={styles.subtitle}>Información accionistas</Text>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Número de accionistas</Text>
-        <TextInput
-          style={styles.input}
-          value={numberOfShaldeholders?.toString()}
-          onChangeText={(value) => {
-            // Verificar si el valor ingresado es un número válido
-            const newValue = parseInt(value)
-            if (!isNaN(newValue) && newValue >= 0) {
-              setNumberOfShaldeholders(newValue)
-            } else {
-              // Si el valor no es válido, establecer en 0
-              setNumberOfShaldeholders("0")
-            }
-          }}
-          keyboardType="numeric"
-        />
-      </View>
-
-      {Array.from({ length: numberOfShaldeholders }, (_, index) => index).map(
-        (__, ind) => (
-          <View key={ind}>
-            <Text style={styles.subtitle}>{`Accionista ${ind + 1}`}</Text>
-            {Object.keys(shareholderLabels.shareholdersIdentification[0]).map(
-              (a, i) => {
-                return (
-                  <View
-                    key={shareholderLabels.shareholdersIdentification[0][a]}>
-                    <Text style={styles.label}>
-                      {a !== "usStayDetails" &&
-                        shareholderLabels.shareholdersIdentification[0][a]}
-                    </Text>
-                    <>
-                      {a !== "usStayDetails" && (
-                        <TextInput
-                          style={styles.input}
-                          value={
-                            shareholders.shareholdersIdentification[ind] &&
-                            shareholders.shareholdersIdentification[ind][a]
-                          }
-                          onChangeText={(value) =>
-                            handleInputChangeShaldeHolder(ind, a, value)
-                          }
-                        />
-                      )}
-                      {a === "usStayDetails" && (
-                        <>
-                          {shareholders?.shareholdersIdentification[ind] &&
-                            Object.keys(
-                              shareholders.shareholdersIdentification[ind][a]
-                            ).map((detailValue, detailIndex) => (
-                              <View
-                                key={detailValue + ind}
-                                style={styles.inputContainer}>
-                                <Text style={styles.label}>{detailValue}</Text>
-                                <Switch
-                                  value={
-                                    shareholders.shareholdersIdentification[
-                                      ind
-                                    ] &&
-                                    shareholders.shareholdersIdentification[
-                                      ind
-                                    ]["usStayDetails"][detailValue]
-                                  }
-                                  onValueChange={(value) =>
-                                    handleUsStayDetailToggleChange(
-                                      ind,
-                                      detailValue,
-                                      value
-                                    )
-                                  }
-                                />
-                              </View>
-                            ))}
-                        </>
-                      )}
-                    </>
-                  </View>
-                )
-              }
-            )}
+          ))}
+          <Text style={{ ...styles.subtitle, marginTop: 50 }}>
+            Información de cuentas bancarias
+          </Text>
+          {bankAccounts.map((account, index) => (
+            <View key={index} style={styles.inputContainer}>
+              <Text style={styles.label}>Cuenta bancaria {index + 1}</Text>
+              <TextInput
+                style={styles.input}
+                value={account.accountNumber}
+                onChangeText={(value) =>
+                  handleBankAccountInputChange(index, "accountNumber", value)
+                }
+                placeholder="Número de cuenta"
+                placeholderTextColor="#A9A9A9"
+              />
+              <TextInput
+                style={styles.input}
+                value={account.bankName}
+                onChangeText={(value) =>
+                  handleBankAccountInputChange(index, "bankName", value)
+                }
+                placeholder="Nombre del banco"
+                placeholderTextColor="#A9A9A9"
+              />
+              <TextInput
+                style={styles.input}
+                value={account.branchOffice}
+                onChangeText={(value) =>
+                  handleBankAccountInputChange(index, "branchOffice", value)
+                }
+                placeholder="Sucursal"
+                placeholderTextColor="#A9A9A9"
+              />
+              <TextInput
+                style={styles.input}
+                value={account.accountType}
+                onChangeText={(value) =>
+                  handleBankAccountInputChange(index, "accountType", value)
+                }
+                placeholder="Tipo de cuenta"
+                placeholderTextColor="#A9A9A9"
+              />
+            </View>
+          ))}
+          <View style={styles.inputContainer}>
+            <Text style={{ ...styles.subtitle, marginTop: 50 }}>
+              Tipo de operaciones internacionales
+            </Text>
+            <View>
+              <Text style={styles.label}>Transferencias</Text>
+              <Switch
+                value={
+                  internationalOperationsType.internationalOperationsType
+                    .transfers
+                }
+                onValueChange={(value) =>
+                  handleInternationalOperationsTypeChange("transfers", value)
+                }
+              />
+            </View>
+            <View style={styles.switchContainer}>
+              <Text style={styles.label}>Otro</Text>
+              <TextInput
+                style={styles.input}
+                value={
+                  internationalOperationsType.internationalOperationsType.other
+                }
+                onChangeText={(value) =>
+                  handleInternationalOperationsTypeChange("other", value)
+                }
+              />
+            </View>
           </View>
-        )
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              gap: 5
+            }}>
+            <TouchableOpacity
+              style={{ ...styles.button, width: 170 }}
+              onPress={() => setStep(2)}>
+              <Text style={styles.buttonText}>Anterior</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ ...styles.button, width: 170 }}
+              onPress={() => setStep(4)}>
+              <Text style={styles.buttonText}>Siguiente</Text>
+            </TouchableOpacity>
+          </View>
+        </>
       )}
-      <Text style={styles.subtitle}>Información bancaria titular</Text>
-      {Object.keys(informationBank).map((key, index) => (
-        <View key={index} style={styles.inputContainer}>
-          <Text style={styles.label}>{informationBank[key]}</Text>
-          {key === "politicallyExposedPerson" ||
-          key === "InternationalOrgLegalRep" ||
-          key === "AdministratorPEPStatus" ||
-          key === "conductsForeignCurrencyTransactions" ||
-          key === "usesFinancialProductsAbroad" ? (
-            <Switch
-              value={initialStateInformationBank[key]}
-              onValueChange={(value) =>
-                handleInputChangeInformationBank(key, value)
-              }
-            />
-          ) : (
-            <TextInput
-              style={styles.input}
-              value={initialStateInformationBank[key]}
-              onChangeText={(value) =>
-                handleInputChangeInformationBank(key, value)
-              }
-            />
-          )}
-        </View>
-      ))}
-      <Text style={styles.subtitle}>Información de cuentas bancarias</Text>
-      {bankAccounts.map((account, index) => (
-        <View key={index} style={styles.inputContainer}>
-          <Text style={styles.label}>Cuenta bancaria {index + 1}</Text>
-          <TextInput
-            style={styles.input}
-            value={account.accountNumber}
-            onChangeText={(value) =>
-              handleBankAccountInputChange(index, "accountNumber", value)
-            }
-            placeholder="Número de cuenta"
-            placeholderTextColor="#A9A9A9"
-          />
-          <TextInput
-            style={styles.input}
-            value={account.bankName}
-            onChangeText={(value) =>
-              handleBankAccountInputChange(index, "bankName", value)
-            }
-            placeholder="Nombre del banco"
-            placeholderTextColor="#A9A9A9"
-          />
-          <TextInput
-            style={styles.input}
-            value={account.branchOffice}
-            onChangeText={(value) =>
-              handleBankAccountInputChange(index, "branchOffice", value)
-            }
-            placeholder="Sucursal"
-            placeholderTextColor="#A9A9A9"
-          />
-          <TextInput
-            style={styles.input}
-            value={account.accountType}
-            onChangeText={(value) =>
-              handleBankAccountInputChange(index, "accountType", value)
-            }
-            placeholder="Tipo de cuenta"
-            placeholderTextColor="#A9A9A9"
-          />
-        </View>
-      ))}
-      <View style={styles.inputContainer}>
-        <Text style={styles.subtitle}>Tipo de operaciones internacionales</Text>
-        <View>
-          <Text style={styles.label}>Transferencias</Text>
-          <Switch
-            value={
-              internationalOperationsType.internationalOperationsType.transfers
-            }
-            onValueChange={(value) =>
-              handleInternationalOperationsTypeChange("transfers", value)
-            }
-          />
-        </View>
-        <View style={styles.switchContainer}>
-          <Text style={styles.label}>Otro</Text>
-          <TextInput
-            style={styles.input}
-            value={
-              internationalOperationsType.internationalOperationsType.other
-            }
-            onChangeText={(value) =>
-              handleInternationalOperationsTypeChange("other", value)
-            }
-          />
-        </View>
-      </View>
-      <View style={styles.additionalInfoContainer}>
-        <Text style={styles.subtitle}>
-          Detalles de operaciones internacionales
-        </Text>
 
-        {internationalOperationsDetails.map((detail, index) => (
-          <View key={index} style={styles.inputContainer}>
-            <Text style={styles.label}>Tipo de identificación</Text>
-            <TextInput
-              style={styles.input}
-              value={detail.identificationType}
-              onChangeText={(value) =>
-                handleInternationalOperationsDetailChange(
-                  index,
-                  "identificationType",
-                  value
-                )
-              }
-            />
-            <Text style={styles.label}>Entidad</Text>
-            <TextInput
-              style={styles.input}
-              value={detail.entity}
-              onChangeText={(value) =>
-                handleInternationalOperationsDetailChange(
-                  index,
-                  "entity",
-                  value
-                )
-              }
-            />
-            <Text style={styles.label}>País y Ciudad</Text>
-            <TextInput
-              style={styles.input}
-              value={detail.countryCity}
-              onChangeText={(value) =>
-                handleInternationalOperationsDetailChange(
-                  index,
-                  "countryCity",
-                  value
-                )
-              }
-            />
-            <Text style={styles.label}>Cantidad y Moneda</Text>
-            <TextInput
-              style={styles.input}
-              value={detail.amountCurrency}
-              onChangeText={(value) =>
-                handleInternationalOperationsDetailChange(
-                  index,
-                  "amountCurrency",
-                  value
-                )
-              }
-            />
+      {step === 4 && (
+        <>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              gap: 5
+            }}>
+            <TouchableOpacity
+              style={{
+                ...styles.button,
+                width: 150,
+                height: 50,
+                marginTop: 150,
+                paddingVertical: 0,
+                paddingBottom: 0,
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+              onPress={() => setStep(3)}>
+              <Text style={styles.buttonText}>Anterior</Text>
+            </TouchableOpacity>
           </View>
-        ))}
-        <Text style={styles.label}>Nombre completo declarante</Text>
-        <TextInput
-          style={styles.input}
-          value={fullNameDeclarations}
-          onChangeText={(value) => setFullNameDeclarations(value)}
-        />
-        <Text style={styles.label}>Tipo de identificación declarante</Text>
-        <TextInput
-          style={styles.input}
-          value={identificationTypeDeclarations}
-          onChangeText={(value) => setIdentificationTypeDeclarations(value)}
-        />
-        <Text style={styles.label}>Número de identificación declarante</Text>
-        <TextInput
-          style={styles.input}
-          value={identificationNumberDeclarations}
-          onChangeText={(value) => setIdentificationNumberDeclarations(value)}
-        />
-        <Text style={styles.label}>Detalles de fuente de recursos</Text>
-        <TextInput
-          style={styles.input}
-          value={ResourceSourceDetails}
-          onChangeText={(value) => setResourceSourceDetails(value)}
-        />
-      </View>
-      <Text style={{ marginTop: 20, color: "white" }}>
-        <Text style={styles.subtitle}>Recuerda subir:</Text> Foto frontal de
-        documento de identidad, Foto trasera documento de identidad,
-        Certificación bancaria, Rut si eres representante de una persona
-        jurídica y resides en colombia{" "}
-      </Text>
+          <Text style={{ marginTop: 50, color: "white" }}>
+            <Text style={styles.subtitle}>Recuerda subir:</Text> Foto frontal de
+            documento de identidad, Foto trasera documento de identidad,
+            Certificación bancaria, Rut si eres representante de una persona
+            jurídica y resides en colombia{" "}
+          </Text>
 
-      <MultipleFileInput
-        selectedFiles={selectedFiles}
-        setSelectedFiles={setSelectedFiles}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Enviar</Text>
-      </TouchableOpacity>
+          <MultipleFileInput
+            selectedFiles={selectedFiles}
+            setSelectedFiles={setSelectedFiles}
+          />
+
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+            <Text style={styles.buttonText}>Enviar</Text>
+          </TouchableOpacity>
+        </>
+      )}
+
       {/* Espacio adicional para que el botón se muestre completamente */}
       <View style={{ height: 100 }} />
     </ScrollView>
@@ -804,15 +838,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
     marginBottom: 20,
-    marginLeft: 70,
-    marginTop: 50
+
+    marginTop: 250,
+    textAlign: "center"
   },
   subtitle: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#C3F53C",
     marginBottom: 20,
-    marginTop: 50
+    marginTop: 150
   },
   inputContainer: {
     marginBottom: 10

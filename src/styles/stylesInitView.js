@@ -20,13 +20,15 @@ const stylesInitView = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     fontWeight: "bold",
-    color: "#F4F3F5"
+    color: "#F4F3F5",
+    height: 75
   },
   subtitle: {
     fontFamily: "Roboto",
     maxWidth: 300,
     textAlign: "center",
-    color: "#B3B3B3"
+    color: "#B3B3B3",
+    height: 50
   },
   optionsContainer: {
     flexDirection: "row",
