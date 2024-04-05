@@ -13,7 +13,7 @@ import {
 import { MyContext } from "../context/context"
 import MultipleFileInput from "./MultipleFileInput "
 import ContainerStepForm from "../components/ContainerStepForm"
-import { ProgressSteps, ProgressStep } from "react-native-progress-steps"
+import StepIndicator from "react-native-step-indicator"
 
 function Sarlaft({ navigation }) {
   const [numberOfShaldeholders, setNumberOfShaldeholders] = useState(0)
@@ -438,10 +438,44 @@ function Sarlaft({ navigation }) {
   const scrollToTop = () => {
     scrollViewRef.current.scrollTo({ y: 0, animated: true })
   }
+
+  const labelsTwo = ["", "", "", "", "", "", "", "", ""]
+  const customStyles = {
+    stepIndicatorSize: 25,
+    currentStepIndicatorSize: 30,
+    separatorStrokeWidth: 2,
+    currentStepStrokeWidth: 3,
+    stepStrokeCurrentColor: "#C3F53C",
+    stepStrokeWidth: 3,
+    stepStrokeFinishedColor: "#C3F53C",
+    stepStrokeUnFinishedColor: "#aaaaaa",
+    separatorFinishedColor: "#C3F53C",
+    separatorUnFinishedColor: "#aaaaaa",
+    stepIndicatorFinishedColor: "#C3F53C",
+    stepIndicatorUnFinishedColor: "#ffffff",
+    stepIndicatorCurrentColor: "#ffffff",
+    stepIndicatorLabelFontSize: 13,
+    currentStepIndicatorLabelFontSize: 13,
+    stepIndicatorLabelCurrentColor: "#C3F53C",
+    stepIndicatorLabelFinishedColor: "#ffffff",
+    stepIndicatorLabelUnFinishedColor: "#aaaaaa",
+    labelColor: "#999999",
+    labelSize: 13,
+    currentStepLabelColor: "#C3F53C"
+  }
+
   return (
     <ScrollView style={styles.container} ref={scrollViewRef}>
       <View style={styles.containerBack}>
         <BackButton />
+      </View>
+      <View style={{ marginTop: 120 }}>
+        <StepIndicator
+          customStyles={customStyles}
+          currentPosition={step}
+          labels={labelsTwo}
+          stepCount={9}
+        />
       </View>
 
       {step === 0 && (
@@ -535,7 +569,7 @@ function Sarlaft({ navigation }) {
             <TouchableOpacity
               style={{ ...styles.button }}
               onPress={() => {
-                setStep(1.2)
+                setStep(2)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Siguiente</Text>
@@ -543,7 +577,7 @@ function Sarlaft({ navigation }) {
           </View>
         </ContainerStepForm>
       )}
-      {step === 1.2 && (
+      {step === 2 && (
         <ContainerStepForm>
           <Text style={{ ...styles.subtitle, marginTop: 50 }}>
             Información representante persona jurídica.{" "}
@@ -578,7 +612,7 @@ function Sarlaft({ navigation }) {
             <TouchableOpacity
               style={{ ...styles.button }}
               onPress={() => {
-                setStep(2)
+                setStep(3)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Siguiente</Text>
@@ -586,7 +620,7 @@ function Sarlaft({ navigation }) {
           </View>
         </ContainerStepForm>
       )}
-      {step === 2 && (
+      {step === 3 && (
         <ContainerStepForm>
           <Text style={styles.subtitle}>Información accionistas</Text>
           <View style={styles.inputContainer}>
@@ -690,7 +724,7 @@ function Sarlaft({ navigation }) {
             <TouchableOpacity
               style={{ ...styles.button }}
               onPress={() => {
-                setStep(1.2)
+                setStep(2)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Anterior</Text>
@@ -698,7 +732,7 @@ function Sarlaft({ navigation }) {
             <TouchableOpacity
               style={{ ...styles.button }}
               onPress={() => {
-                setStep(3)
+                setStep(4)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Siguiente</Text>
@@ -706,7 +740,7 @@ function Sarlaft({ navigation }) {
           </View>
         </ContainerStepForm>
       )}
-      {step === 3 && (
+      {step === 4 && (
         <ContainerStepForm>
           <Text style={styles.subtitle}>Información bancaria titular</Text>
           {Object.keys(informationBank).map((key, index) => (
@@ -744,7 +778,7 @@ function Sarlaft({ navigation }) {
             <TouchableOpacity
               style={{ ...styles.button }}
               onPress={() => {
-                setStep(2)
+                setStep(3)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Anterior</Text>
@@ -752,7 +786,7 @@ function Sarlaft({ navigation }) {
             <TouchableOpacity
               style={{ ...styles.button }}
               onPress={() => {
-                setStep(3.1)
+                setStep(5)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Siguiente</Text>
@@ -760,7 +794,7 @@ function Sarlaft({ navigation }) {
           </View>
         </ContainerStepForm>
       )}
-      {step === 3.1 && (
+      {step === 5 && (
         <ContainerStepForm>
           <Text style={{ ...styles.subtitle, marginTop: 50 }}>
             Información de cuentas bancarias
@@ -859,7 +893,7 @@ function Sarlaft({ navigation }) {
             <TouchableOpacity
               style={{ ...styles.button }}
               onPress={() => {
-                setStep(3)
+                setStep(4)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Anterior</Text>
@@ -867,7 +901,7 @@ function Sarlaft({ navigation }) {
             <TouchableOpacity
               style={{ ...styles.button }}
               onPress={() => {
-                setStep(3.2)
+                setStep(6)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Siguiente</Text>
@@ -875,7 +909,7 @@ function Sarlaft({ navigation }) {
           </View>
         </ContainerStepForm>
       )}
-      {step === 3.2 && (
+      {step === 6 && (
         <ContainerStepForm>
           <View style={styles.inputContainer}>
             <Text style={{ ...styles.subtitle, marginTop: 50 }}>
@@ -915,7 +949,7 @@ function Sarlaft({ navigation }) {
             <TouchableOpacity
               style={{ ...styles.button }}
               onPress={() => {
-                setStep(3.1)
+                setStep(5)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Anterior</Text>
@@ -923,7 +957,7 @@ function Sarlaft({ navigation }) {
             <TouchableOpacity
               style={{ ...styles.button }}
               onPress={() => {
-                setStep(4)
+                setStep(7)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Siguiente</Text>
@@ -932,7 +966,7 @@ function Sarlaft({ navigation }) {
         </ContainerStepForm>
       )}
 
-      {step === 4 && (
+      {step === 7 && (
         <ContainerStepForm>
           <Text style={styles.subtitle}>Recuerda subir:</Text>
 
@@ -962,7 +996,7 @@ function Sarlaft({ navigation }) {
                 ...styles.button
               }}
               onPress={() => {
-                setStep(3)
+                setStep(6)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Anterior</Text>
@@ -972,7 +1006,7 @@ function Sarlaft({ navigation }) {
                 ...styles.button
               }}
               onPress={() => {
-                setStep(5)
+                setStep(8)
                 scrollToTop()
               }}>
               <Text style={styles.buttonText}>Siguiente</Text>
@@ -980,12 +1014,12 @@ function Sarlaft({ navigation }) {
           </View>
         </ContainerStepForm>
       )}
-      {step === 5 && (
+      {step === 8 && (
         <ContainerStepForm>
           <TouchableOpacity
             style={{ ...styles.button }}
             onPress={() => {
-              setStep(3.1)
+              setStep(7)
               scrollToTop()
             }}>
             <Text style={styles.buttonText}>Anterior</Text>

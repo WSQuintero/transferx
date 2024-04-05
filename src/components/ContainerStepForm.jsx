@@ -9,7 +9,7 @@ function ContainerStepForm({ children }) {
         borderColor: "#C3F53C",
         padding: 20,
         borderRadius: 20,
-        marginTop: 150,
+        marginTop: 10,
         alignItems: "center"
       }}>
       {children}
