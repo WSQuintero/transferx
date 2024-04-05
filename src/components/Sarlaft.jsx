@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState, useRef } from "react"
 import BackButton from "./BackButton"
 
 import {
@@ -12,6 +12,8 @@ import {
 } from "react-native"
 import { MyContext } from "../context/context"
 import MultipleFileInput from "./MultipleFileInput "
+import ContainerStepForm from "../components/ContainerStepForm"
+import { ProgressSteps, ProgressStep } from "react-native-progress-steps"
 
 function Sarlaft({ navigation }) {
   const [numberOfShaldeholders, setNumberOfShaldeholders] = useState(0)
@@ -41,6 +43,8 @@ function Sarlaft({ navigation }) {
     }
   })
   const [step, setStep] = useState(0)
+  const scrollViewRef = useRef()
+
   const { $User, informationUser, token } = useContext(MyContext)
   const [initialStatePersonJuridic, setInitialStatePersonJuridic] = useState({
     occupation2PersonalNatural: "",
@@ -431,26 +435,32 @@ function Sarlaft({ navigation }) {
       console.log(send.data)
     }
   }
-
+  const scrollToTop = () => {
+    scrollViewRef.current.scrollTo({ y: 0, animated: true })
+  }
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} ref={scrollViewRef}>
       <View style={styles.containerBack}>
         <BackButton />
       </View>
 
       {step === 0 && (
-        <>
+        <ContainerStepForm>
           <Text style={styles.title}>
-            Para continuar, por favor ayúdanos a llenar los siguientes datos
+            Para continuar, por favor ayúdanos a llenar los siguientes datos:
           </Text>
-          <TouchableOpacity style={styles.button} onPress={() => setStep(1)}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setStep(1)
+              scrollToTop()
+            }}>
             <Text style={styles.buttonText}>Iniciar</Text>
           </TouchableOpacity>
-        </>
+        </ContainerStepForm>
       )}
-
       {step === 1 && (
-        <>
+        <ContainerStepForm>
           <Text style={styles.subtitle}>Información del titular</Text>
           {Object.keys(formData).map((key, index) => {
             if (key === "usStayDetails") {
@@ -495,6 +505,46 @@ function Sarlaft({ navigation }) {
               )
             }
           })}
+
+          {Object.keys(juridicPerson).map((key, index) => (
+            <View key={index} style={styles.inputContainer}>
+              <Text style={styles.label}>{juridicPerson[key]}</Text>
+              <TextInput
+                style={styles.input}
+                value={initialStatePersonJuridic[key]}
+                onChangeText={(value) =>
+                  handleInputChangeJuridicPerson(key, value)
+                }
+              />
+            </View>
+          ))}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              gap: 5
+            }}>
+            <TouchableOpacity
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(0)
+                scrollToTop()
+              }}>
+              <Text style={styles.buttonText}>Anterior</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(1.2)
+                scrollToTop()
+              }}>
+              <Text style={styles.buttonText}>Siguiente</Text>
+            </TouchableOpacity>
+          </View>
+        </ContainerStepForm>
+      )}
+      {step === 1.2 && (
+        <ContainerStepForm>
           <Text style={{ ...styles.subtitle, marginTop: 50 }}>
             Información representante persona jurídica.{" "}
             <Text style={{ color: "white" }}>{"(Si aplica)"}</Text>
@@ -518,20 +568,26 @@ function Sarlaft({ navigation }) {
               gap: 5
             }}>
             <TouchableOpacity
-              style={{ ...styles.button, width: 170 }}
-              onPress={() => setStep(0)}>
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(1)
+                scrollToTop()
+              }}>
               <Text style={styles.buttonText}>Anterior</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{ ...styles.button, width: 170 }}
-              onPress={() => setStep(2)}>
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(2)
+                scrollToTop()
+              }}>
               <Text style={styles.buttonText}>Siguiente</Text>
             </TouchableOpacity>
           </View>
-        </>
+        </ContainerStepForm>
       )}
       {step === 2 && (
-        <>
+        <ContainerStepForm>
           <Text style={styles.subtitle}>Información accionistas</Text>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Número de accionistas</Text>
@@ -632,20 +688,26 @@ function Sarlaft({ navigation }) {
               gap: 5
             }}>
             <TouchableOpacity
-              style={{ ...styles.button, width: 170 }}
-              onPress={() => setStep(1)}>
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(1.2)
+                scrollToTop()
+              }}>
               <Text style={styles.buttonText}>Anterior</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{ ...styles.button, width: 170 }}
-              onPress={() => setStep(3)}>
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(3)
+                scrollToTop()
+              }}>
               <Text style={styles.buttonText}>Siguiente</Text>
             </TouchableOpacity>
           </View>
-        </>
+        </ContainerStepForm>
       )}
       {step === 3 && (
-        <>
+        <ContainerStepForm>
           <Text style={styles.subtitle}>Información bancaria titular</Text>
           {Object.keys(informationBank).map((key, index) => (
             <View key={index} style={styles.inputContainer}>
@@ -670,6 +732,78 @@ function Sarlaft({ navigation }) {
                   }
                 />
               )}
+            </View>
+          ))}
+
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              gap: 5
+            }}>
+            <TouchableOpacity
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(2)
+                scrollToTop()
+              }}>
+              <Text style={styles.buttonText}>Anterior</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(3.1)
+                scrollToTop()
+              }}>
+              <Text style={styles.buttonText}>Siguiente</Text>
+            </TouchableOpacity>
+          </View>
+        </ContainerStepForm>
+      )}
+      {step === 3.1 && (
+        <ContainerStepForm>
+          <Text style={{ ...styles.subtitle, marginTop: 50 }}>
+            Información de cuentas bancarias
+          </Text>
+          {bankAccounts.map((account, index) => (
+            <View key={index} style={styles.inputContainer}>
+              <Text style={styles.label}>Cuenta bancaria {index + 1}</Text>
+              <TextInput
+                style={styles.input}
+                value={account.accountNumber}
+                onChangeText={(value) =>
+                  handleBankAccountInputChange(index, "accountNumber", value)
+                }
+                placeholder="Número de cuenta"
+                placeholderTextColor="#A9A9A9"
+              />
+              <TextInput
+                style={styles.input}
+                value={account.bankName}
+                onChangeText={(value) =>
+                  handleBankAccountInputChange(index, "bankName", value)
+                }
+                placeholder="Nombre del banco"
+                placeholderTextColor="#A9A9A9"
+              />
+              <TextInput
+                style={styles.input}
+                value={account.branchOffice}
+                onChangeText={(value) =>
+                  handleBankAccountInputChange(index, "branchOffice", value)
+                }
+                placeholder="Sucursal"
+                placeholderTextColor="#A9A9A9"
+              />
+              <TextInput
+                style={styles.input}
+                value={account.accountType}
+                onChangeText={(value) =>
+                  handleBankAccountInputChange(index, "accountType", value)
+                }
+                placeholder="Tipo de cuenta"
+                placeholderTextColor="#A9A9A9"
+              />
             </View>
           ))}
           <Text style={{ ...styles.subtitle, marginTop: 50 }}>
@@ -716,6 +850,33 @@ function Sarlaft({ navigation }) {
               />
             </View>
           ))}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              gap: 5
+            }}>
+            <TouchableOpacity
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(3)
+                scrollToTop()
+              }}>
+              <Text style={styles.buttonText}>Anterior</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(3.2)
+                scrollToTop()
+              }}>
+              <Text style={styles.buttonText}>Siguiente</Text>
+            </TouchableOpacity>
+          </View>
+        </ContainerStepForm>
+      )}
+      {step === 3.2 && (
+        <ContainerStepForm>
           <View style={styles.inputContainer}>
             <Text style={{ ...styles.subtitle, marginTop: 50 }}>
               Tipo de operaciones internacionales
@@ -752,21 +913,44 @@ function Sarlaft({ navigation }) {
               gap: 5
             }}>
             <TouchableOpacity
-              style={{ ...styles.button, width: 170 }}
-              onPress={() => setStep(2)}>
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(3.1)
+                scrollToTop()
+              }}>
               <Text style={styles.buttonText}>Anterior</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{ ...styles.button, width: 170 }}
-              onPress={() => setStep(4)}>
+              style={{ ...styles.button }}
+              onPress={() => {
+                setStep(4)
+                scrollToTop()
+              }}>
               <Text style={styles.buttonText}>Siguiente</Text>
             </TouchableOpacity>
           </View>
-        </>
+        </ContainerStepForm>
       )}
 
       {step === 4 && (
-        <>
+        <ContainerStepForm>
+          <Text style={styles.subtitle}>Recuerda subir:</Text>
+
+          <View>
+            <Text style={{ color: "white", textAlign: "left" }}>
+              1. Foto frontal de documento de identidad
+            </Text>
+            <Text style={{ color: "white", textAlign: "left" }}>
+              2. Foto trasera documento de identidad
+            </Text>
+            <Text style={{ color: "white", textAlign: "left" }}>
+              3. Certificación bancaria
+            </Text>
+            <Text style={{ color: "white", textAlign: "left" }}>
+              4. Rut si eres representante de una persona jurídica y resides en
+              Colombia
+            </Text>
+          </View>
           <View
             style={{
               flexDirection: "row",
@@ -775,37 +959,44 @@ function Sarlaft({ navigation }) {
             }}>
             <TouchableOpacity
               style={{
-                ...styles.button,
-                width: 150,
-                height: 50,
-                marginTop: 150,
-                paddingVertical: 0,
-                paddingBottom: 0,
-                justifyContent: "center",
-                alignItems: "center"
+                ...styles.button
               }}
-              onPress={() => setStep(3)}>
+              onPress={() => {
+                setStep(3)
+                scrollToTop()
+              }}>
               <Text style={styles.buttonText}>Anterior</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                ...styles.button
+              }}
+              onPress={() => {
+                setStep(5)
+                scrollToTop()
+              }}>
+              <Text style={styles.buttonText}>Siguiente</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={{ marginTop: 50, color: "white" }}>
-            <Text style={styles.subtitle}>Recuerda subir:</Text> Foto frontal de
-            documento de identidad, Foto trasera documento de identidad,
-            Certificación bancaria, Rut si eres representante de una persona
-            jurídica y resides en colombia{" "}
-          </Text>
-
+        </ContainerStepForm>
+      )}
+      {step === 5 && (
+        <ContainerStepForm>
+          <TouchableOpacity
+            style={{ ...styles.button }}
+            onPress={() => {
+              setStep(3.1)
+              scrollToTop()
+            }}>
+            <Text style={styles.buttonText}>Anterior</Text>
+          </TouchableOpacity>
           <MultipleFileInput
             selectedFiles={selectedFiles}
             setSelectedFiles={setSelectedFiles}
+            handleSubmit={handleSubmit}
           />
-
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>Enviar</Text>
-          </TouchableOpacity>
-        </>
+        </ContainerStepForm>
       )}
-
       {/* Espacio adicional para que el botón se muestre completamente */}
       <View style={{ height: 100 }} />
     </ScrollView>
@@ -834,27 +1025,27 @@ const styles = StyleSheet.create({
     paddingRight: 10
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#fff",
     marginBottom: 20,
 
-    marginTop: 250,
     textAlign: "center"
   },
   subtitle: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#C3F53C",
-    marginBottom: 20,
-    marginTop: 150
+    marginBottom: 20
   },
   inputContainer: {
-    marginBottom: 10
+    marginBottom: 10,
+    width: "100%"
   },
   label: {
     color: "#fff",
-    marginBottom: 5
+    marginBottom: 5,
+    width: "100%"
   },
   input: {
     backgroundColor: "transparent",
@@ -862,19 +1053,21 @@ const styles = StyleSheet.create({
     borderColor: "#C3F53C",
     borderRadius: 5,
     color: "#fff",
-    padding: 10
+    padding: 10,
+    width: 300
   },
   button: {
     backgroundColor: "#C3F53C",
     borderRadius: 5,
-    paddingVertical: 20,
+    paddingVertical: 10,
     paddingHorizontal: 20,
     alignItems: "center",
-    marginTop: 20
+    marginTop: 20,
+    width: 130
   },
   buttonText: {
     color: "#10231D",
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold"
   }
 })
