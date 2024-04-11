@@ -1,5 +1,5 @@
 import React from "react"
-import { Image, Text, TouchableOpacity, View } from "react-native"
+import { Image, Text, TouchableOpacity, View, Linking } from "react-native"
 import PageWrapper from "../components/PageWrapper"
 import stylesContactView from "../styles/stylesContactView"
 import BackButton from "../components/BackButton"
@@ -49,7 +49,7 @@ function ContactView({ navigation }) {
             <View style={stylesContactView.rightContainer}>
               <View style={stylesContactView.textContainer}>
                 <Text style={stylesContactView.textTitle}>Teléfono</Text>
-                <Text style={stylesContactView.text}>+57 234 455 0000</Text>
+                <Text style={stylesContactView.text}>+57 312 4207521</Text>
               </View>
             </View>
           </View>
@@ -61,12 +61,18 @@ function ContactView({ navigation }) {
                 style={stylesContactView.icon}
               />
             </View>
-            <View style={stylesContactView.rightContainer}>
+            <TouchableOpacity
+              style={stylesContactView.rightContainer}
+              onPress={() =>
+                Linking.openURL(
+                  "https://api.whatsapp.com/send?phone=573124207521&text=Buen%20d%C3%ADa.%20Para%20saber%20"
+                )
+              }>
               <View style={stylesContactView.textContainer}>
                 <Text style={stylesContactView.textTitle}>Whatsapp</Text>
-                <Text style={stylesContactView.text}>+57 234 455 0000</Text>
+                <Text style={stylesContactView.text}>+57 312 4207521</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
 
           <View style={stylesContactView.mainContainer}>

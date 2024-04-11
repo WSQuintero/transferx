@@ -3,15 +3,11 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native"
 import useLoadFonts from "../customHooks/useLoadFonts"
 
 const ButtonColor = ({ children, handleSignUp, width = 350 }) => {
-  const fontsLoaded=useLoadFonts()
+  const fontsLoaded = useLoadFonts()
 
   return (
-    <TouchableOpacity style={[styles.button, {width}]} onPress={handleSignUp}>
-      <Text
-        style={styles.buttonText}
-        >
-        {children}
-      </Text>
+    <TouchableOpacity style={[styles.button, { width }]} onPress={handleSignUp}>
+      <Text style={styles.buttonText}>{children}</Text>
     </TouchableOpacity>
   )
 }
@@ -29,8 +25,8 @@ const styles = StyleSheet.create({
     color: "#05000F",
     fontSize: 14,
     fontFamily: "Roboto",
-    zIndex:1060,
-    fontWeight:"bold"
+    zIndex: 1060,
+    fontWeight: "bold"
   }
 })
 

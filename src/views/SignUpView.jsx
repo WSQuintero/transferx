@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  Modal, 
+  Modal,
   ActivityIndicator
 } from "react-native"
 import ButtonColor from "../components/ButtonColor"
@@ -17,7 +17,7 @@ import AuthService from "../services/AuthService"
 import ModalError from "../components/ModalError"
 import CellphonePicker from "../components/CellphonePicker"
 import ModalConfirmationRegister from "../components/ModalConfirmationRegister"
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 function SignUpView({ navigation }) {
   const {
@@ -43,7 +43,7 @@ function SignUpView({ navigation }) {
     useState(false)
   const [confirmationRegisterMessage, setConfirmationRegisterMessage] =
     useState(true)
-  const [sending, setSending] = useState(false);
+  const [sending, setSending] = useState(false)
   const validation = async () => {
     // Verificar que todos los campos estén llenos
     if (!name || !lastName || !email || !cellphone || !password) {
@@ -97,22 +97,22 @@ function SignUpView({ navigation }) {
   }
 
   const onCancel = () => {
-    setName("");
-    setLastName("");
-    setReferalCode("");
-    setEmail("");
-    setCellPhone("");
-    setPassword("");
+    setName("")
+    setLastName("")
+    setReferalCode("")
+    setEmail("")
+    setCellPhone("")
+    setPassword("")
     setShowModalConfirmationRegister(false)
     setConfirmationRegisterMessage("")
   }
 
   const onConfirm = async () => {
-    setSending(true);
+    setSending(true)
 
     setShowModalConfirmationRegister(false)
     setConfirmationRegisterMessage("")
-    
+
     const { status, data } = await $Auth.signUp({
       firstname: name,
       lastname: lastName,
@@ -121,7 +121,7 @@ function SignUpView({ navigation }) {
       cellphone,
       password
     })
-    setSending(false);
+    setSending(false)
     if (data.data.message === "User already exists") {
       setErrorMessage(
         "El usuario ya está registrado. Por favor, inicia sesión o utiliza otra dirección de correo electrónico."
@@ -131,7 +131,7 @@ function SignUpView({ navigation }) {
     }
 
     if (status) {
-      onCancel();
+      onCancel()
       navigation.navigate("confirmationCode")
     } else {
       console.error("Error en el registro:", data)
@@ -140,20 +140,23 @@ function SignUpView({ navigation }) {
   return (
     <PageWrapper>
       <View style={stylesSignUp.container}>
-        {
-        !sending?
-        (<View style={stylesSignUp.centerContent}>
-          <Image
-            source={require("../../assets/image.png")}
-            style={{ width: "80%", objectFit: "contain" }}
-          />
-          <Text style={stylesSignUp.title}>Registrate para crear tu cuenta</Text>
-          <Text style={stylesSignUp.subtitle}>
-            Bienvenido, por favor ingrese la información
-          </Text>
-          <KeyboardAwareScrollView>
+        {!sending ? (
+          <View style={stylesSignUp.centerContent}>
+            <Image
+              source={require("../../assets/image.png")}
+              style={{ width: "80%", objectFit: "contain" }}
+            />
+            <Text style={stylesSignUp.title}>
+              Registrate para crear tu cuenta
+            </Text>
+            <Text style={stylesSignUp.subtitle}>
+              Bienvenido, por favor ingrese la información
+            </Text>
+            <KeyboardAwareScrollView>
               <View style={stylesSignUp.inputContainer}>
-                <Text style={stylesSignUp.inputLabel}>Código de quién te refiere</Text>
+                <Text style={stylesSignUp.inputLabel}>
+                  Código de quién te refiere
+                </Text>
                 <View style={stylesSignUp.textInputContainer}>
                   <Image
                     source={require("../../assets/icons/transfer.png")}
@@ -235,7 +238,9 @@ function SignUpView({ navigation }) {
                 </View>
               </View>
               <View style={stylesSignUp.buttonContainer}>
-                <ButtonColor width={370} handleSignUp={handleSignUp}>Iniciar</ButtonColor>
+                <ButtonColor width={"98%"} handleSignUp={handleSignUp}>
+                  Iniciar
+                </ButtonColor>
               </View>
               <Text
                 style={stylesSignUp.footerText}
@@ -243,13 +248,13 @@ function SignUpView({ navigation }) {
                 Ya tienes una cuenta?{" "}
                 <Text style={stylesSignUp.signupTextBold}>Ingresar</Text>
               </Text>
-          </KeyboardAwareScrollView>
-        </View>)
-        :
-        (<View style={stylesSignUp.centerContent}>
-          <ActivityIndicator size="small" color="#FFFFFF" />
-        </View>)
-        }
+            </KeyboardAwareScrollView>
+          </View>
+        ) : (
+          <View style={stylesSignUp.centerContent}>
+            <ActivityIndicator size="small" color="#FFFFFF" />
+          </View>
+        )}
       </View>
       <ModalError showErrorModal={showErrorModal} errorMessage={errorMessage} />
       <ModalConfirmationRegister
