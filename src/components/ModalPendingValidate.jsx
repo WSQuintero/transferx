@@ -21,41 +21,48 @@ function ModalPendingValidate({
   elseCellphoneValidated,
   navigation
 }) {
-  const [sending, setSending] = useState(false);
+  const [sending, setSending] = useState(false)
   const [cellPhone, setCellPhone] = useState()
   const { $Auth, token, ...more } = useContext(MyContext)
-  const [newEmail, setNewEmail] = useState('')
+  const [newEmail, setNewEmail] = useState("")
 
   const handleValidate = async () => {
-    setSending(true);
+    setSending(true)
 
-    if(message == "No has validado tu correo."){
-      const { status, data } = await $Auth.resendConfirmationEmail(
-        { email: newEmail },
+    if (message == "No has validado tu correo.") {
+      const { status, data } = await $Auth.resendConfirmationEmail({
+        email: newEmail,
         token
-      )
-  
+      })
+
       if (status) {
-        setShowSuccessModal(false);
-        setSending(false);
-        more.setEmail(newEmail);
-        Alert.alert(`Correo de validación enviado a ${newEmail}, por favor verifica.`);
-      }else{
-        setSending(false);
+        setShowSuccessModal(false)
+        setSending(false)
+        more.setEmail(newEmail)
+        Alert.alert(
+          `Correo de validación enviado a ${newEmail}, por favor verifica.`
+        )
+        console.log(data)
+      } else {
+        setSending(false)
+        console.log(data)
       }
-    }else{
-      const { status, data } = await $Auth.resendConfirmationCode(
-        { cellphone: cellPhone },
+    } else {
+      const { status, data } = await $Auth.resendConfirmationCode({
+        cellphone: cellPhone,
         token
-      )
-  
+      })
+
       if (status) {
-        setShowSuccessModal(false);
-        setSending(false);
+        setShowSuccessModal(false)
+        setSending(false)
         more.setCellPhone(cellPhone)
         navigation.navigate("confirmationCode")
-      }else{
-        setSending(false);
+        console.log(data)
+      } else {
+        setSending(false)
+        console.log(data)
+        Alert.alert("Hubo un error al enviar el código")
       }
     }
   }
@@ -85,45 +92,46 @@ function ModalPendingValidate({
   return (
     <Modal visible={showSuccessModal} animationType="slide" transparent={true}>
       <View style={stylesModalPendingValidate.modalContainer}>
-        {
-          !sending ? 
-            (<View style={stylesModalPendingValidate.modalContent}>
-              <Text style={stylesModalPendingValidate.modalTitle}>
-                Por favor confirma
-              </Text>
-              <Text style={stylesModalPendingValidate.modalMessage}>{message}</Text>
-              {input && (
-                <View style={stylesModalPendingValidate.inputContainer}>
-                  <Text style={stylesModalPendingValidate.label}>
-                    {message === "No has validado tu correo."
-                      ? "Modificar correo"
-                      : "Modificar celular"}
-                  </Text>
-                  {input}
-                </View>
-              )}
-              <View style={stylesModalPendingValidate.buttonContainer}>
-                <TouchableOpacity
-                  style={stylesModalPendingValidate.modalButton}
-                  onPress={handleValidate}>
-                  <Text style={stylesModalPendingValidate.modalButtonText}>
-                    Enviar
-                  </Text>
-                </TouchableOpacity>
-                {/*<TouchableOpacity
+        {!sending ? (
+          <View style={stylesModalPendingValidate.modalContent}>
+            <Text style={stylesModalPendingValidate.modalTitle}>
+              Por favor confirma
+            </Text>
+            <Text style={stylesModalPendingValidate.modalMessage}>
+              {message}
+            </Text>
+            {input && (
+              <View style={stylesModalPendingValidate.inputContainer}>
+                <Text style={stylesModalPendingValidate.label}>
+                  {message === "No has validado tu correo."
+                    ? "Modificar correo"
+                    : "Modificar celular"}
+                </Text>
+                {input}
+              </View>
+            )}
+            <View style={stylesModalPendingValidate.buttonContainer}>
+              <TouchableOpacity
+                style={stylesModalPendingValidate.modalButton}
+                onPress={handleValidate}>
+                <Text style={stylesModalPendingValidate.modalButtonText}>
+                  Enviar
+                </Text>
+              </TouchableOpacity>
+              {/*<TouchableOpacity
                   style={stylesModalPendingValidate.modalButton}
                   onPress={() => setShowSuccessModal(false)}>
                   <Text style={stylesModalPendingValidate.modalButtonText}>
                     Cerrar
                   </Text>
                 </TouchableOpacity>*/}
-              </View>
-            </View>)
-          :
-            (<View style={stylesModalPendingValidate.modalContent}>
-              <ActivityIndicator size="small" color="#FFFFFF" />
-            </View>)
-          }
+            </View>
+          </View>
+        ) : (
+          <View style={stylesModalPendingValidate.modalContent}>
+            <ActivityIndicator size="small" color="#FFFFFF" />
+          </View>
+        )}
       </View>
     </Modal>
   )

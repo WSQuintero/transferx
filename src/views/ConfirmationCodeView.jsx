@@ -36,14 +36,14 @@ const ConfirmationCodeView = ({ navigation }) => {
     $Auth,
     errorMessage,
     setErrorMessage,
-    showErrorModal
+    showErrorModal,
+    setShowErrorModal
   } = useContext(MyContext)
 
   const [clipboardContent, setClipboardContent] = useState("")
   const [succesMessage, setSuccesMessage] = useState("")
   const [showSuccessModal, setShowSuccessModal] = useState(false)
-  const [sending, setSending] = useState(false);
-
+  const [sending, setSending] = useState(false)
 
   const handlePaste = (event) => {
     Clipboard.getString()
@@ -73,18 +73,18 @@ const ConfirmationCodeView = ({ navigation }) => {
   }
 
   const handleConfirmateOtp = async () => {
-    setSending(true);
+    setSending(true)
 
     const { status, data } = await $Auth.confirmCellphone({
       cellphone,
       code: `${one}${two}${three}${four}${five}${six}`
     })
 
-    setSending(false);
+    setSending(false)
 
     if (status) {
-      setSuccesMessage("Tu número de teléfono ha sido validado correctamente");
-      setShowSuccessModal(true);
+      setSuccesMessage("Tu número de teléfono ha sido validado correctamente")
+      setShowSuccessModal(true)
     } else {
       setErrorMessage("Por favor intenta nuevamente, ha habido un error")
       setShowErrorModal(true)
@@ -143,15 +143,14 @@ const ConfirmationCodeView = ({ navigation }) => {
     <PageWrapper>
       {/* <BackButton /> */}
       <View style={stylesConfrrmationCodeView.container}>
-        {
-          !sending ?
-          (<View style={stylesConfrrmationCodeView.content}>
+        {!sending ? (
+          <View style={stylesConfrrmationCodeView.content}>
             <Text style={stylesConfrrmationCodeView.title}>
               Verificación de OTP
             </Text>
             <Text style={stylesConfrrmationCodeView.subtitle}>
-              Para registrarte en tu cuenta, ingresa el código de 6 dígitos que te
-              enviamos al {cellphone}.
+              Para registrarte en tu cuenta, ingresa el código de 6 dígitos que
+              te enviamos al {cellphone}.
             </Text>
 
             <View style={stylesConfrrmationCodeView.inputContainer}>
@@ -160,8 +159,8 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setOne(text)
-                    if(text){
-                      focusInput2();
+                    if (text) {
+                      focusInput2()
                     }
                   }}
                   value={one}
@@ -177,14 +176,14 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setTwo(text)
-                    if(text){
+                    if (text) {
                       focusInput3()
-                    }else{
+                    } else {
                       focusInput1()
                     }
                   }}
                   onKeyPress={(event) => {
-                    if (event.nativeEvent.key === 'Backspace'&&!two) {
+                    if (event.nativeEvent.key === "Backspace" && !two) {
                       focusInput1()
                     }
                   }}
@@ -201,14 +200,14 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setThree(text)
-                    if(text){
+                    if (text) {
                       focusInput4()
-                    }else{
+                    } else {
                       focusInput2()
                     }
                   }}
                   onKeyPress={(event) => {
-                    if (event.nativeEvent.key === 'Backspace'&&!three) {
+                    if (event.nativeEvent.key === "Backspace" && !three) {
                       focusInput2()
                     }
                   }}
@@ -225,14 +224,14 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setFour(text)
-                    if(text){
+                    if (text) {
                       focusInput5()
-                    }else{
+                    } else {
                       focusInput3()
                     }
                   }}
                   onKeyPress={(event) => {
-                    if (event.nativeEvent.key === 'Backspace'&&!four) {
+                    if (event.nativeEvent.key === "Backspace" && !four) {
                       focusInput3()
                     }
                   }}
@@ -249,14 +248,14 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setFive(text)
-                    if(text){
+                    if (text) {
                       focusInput6()
-                    }else{
+                    } else {
                       focusInput4()
                     }
                   }}
                   onKeyPress={(event) => {
-                    if (event.nativeEvent.key === 'Backspace'&&!five) {
+                    if (event.nativeEvent.key === "Backspace" && !five) {
                       focusInput4()
                     }
                   }}
@@ -273,12 +272,12 @@ const ConfirmationCodeView = ({ navigation }) => {
                   style={stylesConfrrmationCodeView.textInput}
                   onChangeText={(text) => {
                     setSix(text)
-                    if(!text){
+                    if (!text) {
                       focusInput5()
                     }
                   }}
                   onKeyPress={(event) => {
-                    if (event.nativeEvent.key === 'Backspace'&&!six) {
+                    if (event.nativeEvent.key === "Backspace" && !six) {
                       focusInput5()
                     }
                   }}
@@ -315,15 +314,19 @@ const ConfirmationCodeView = ({ navigation }) => {
                 Confirmar
               </ButtonColor>
             </View>
-          </View>)
-          :
-          (<View style={stylesConfrrmationCodeView.content}>
+          </View>
+        ) : (
+          <View style={stylesConfrrmationCodeView.content}>
             <ActivityIndicator size="small" color="#FFFFFF" />
-          </View>)
-        }
+          </View>
+        )}
       </View>
       <ModalError errorMessage={errorMessage} showErrorModal={showErrorModal} />
-      <ModalSuccess succesMessage={succesMessage} showSuccessModal={showSuccessModal} onClose={()=>navigation.navigate("login")} />
+      <ModalSuccess
+        succesMessage={succesMessage}
+        showSuccessModal={showSuccessModal}
+        onClose={() => navigation.navigate("login")}
+      />
     </PageWrapper>
   )
 }

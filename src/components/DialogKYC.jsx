@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { UploadIdPhoto } from "../components/UploadIdPhoto"
-import { Text, View } from "react-native"
+import { Text, View, ActivityIndicator } from "react-native" // Importamos ActivityIndicator para mostrar el indicador de carga
 import BackButton from "./BackButton"
 import StylesKYC from "../styles/StylesKYC"
 import { UploadFacePhoto } from "./UploadFacePhoto"
@@ -15,6 +15,7 @@ function DialogKYC({ navigation }) {
   const [selectedImagePhotoTwo, setSelectedImagePhotoTwo] = useState(null)
   const [sectionPhoto, setSectionPhoto] = useState()
   const [showErrorModal, setShowErrorModal] = useState(false)
+  const [loading, setLoading] = useState(false) // Estado para controlar la carga
 
   const handleNext = () => {
     setSectionPhoto(false)
@@ -66,6 +67,7 @@ function DialogKYC({ navigation }) {
     const body = new FormData()
 
     try {
+      setLoading(true) // Establecemos el estado de carga a true al comenzar la solicitud
       // Convertir las imágenes seleccionadas en objetos Blob
       const blobImageId = await convertToBlob(selectedImageId)
       const blobImagePhoto = await convertToBlob(selectedImagePhoto)
@@ -93,15 +95,20 @@ function DialogKYC({ navigation }) {
       if (status) {
         if (informationUser?.user?.sarlaft_validated === 1) {
           navigation.navigate("newExchange")
+          console.log(data)
         } else {
           navigation.navigate("sarlaft")
+          console.log(data)
         }
       } else {
         setShowErrorModal(true)
+        console.log(data)
       }
+      setLoading(false) // Establecemos el estado de carga a false al finalizar la solicitud
       return status
     } catch (error) {
       console.error("Error al enviar los datos al servidor:", error)
+      setLoading(false) // Establecemos el estado de carga a false en caso de error
       throw error
     }
   }
@@ -118,7 +125,9 @@ function DialogKYC({ navigation }) {
       <View style={StylesKYC.containerBack}>
         <BackButton />
       </View>
-      {sectionPhoto === undefined ? (
+      {loading ? ( // Mostramos el indicador de carga si loading es true
+        <ActivityIndicator size="large" color="#C3F53C" />
+      ) : sectionPhoto === undefined ? (
         <>
           <Text style={StylesKYC.alert}>
             ¡Para crear una orden, necesitamos la siguiente información!

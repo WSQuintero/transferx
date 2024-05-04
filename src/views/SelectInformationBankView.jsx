@@ -192,7 +192,7 @@ const SelectInformationBankView = ({ navigation }) => {
                 selectedValue={selectedBank}
                 style={SelectInformationBankViewStyle.picker}
                 onValueChange={(itemValue, itemIndex) => {
-                  const selectedBank = colombianBanks.find(
+                  const selectedBank = colombianBanks?.find(
                     (bank) => bank.name === itemValue
                   )
                   setSelectedBank(itemValue)

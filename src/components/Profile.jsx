@@ -204,10 +204,10 @@ function Profile() {
               borderRadius: 10
             }}>
             {
-              colombianBanks.find(
+              colombianBanks?.find(
                 (bank) =>
-                  bank.id === informationUser?.user?.id_bank_transfer_out
-              ).name
+                  bank?.id === informationUser?.user?.id_bank_transfer_out
+              )?.name
             }
           </Text>
           <Text
